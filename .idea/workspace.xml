@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c55e6501-5eea-499f-8bce-0b082fabb7aa" name="Default Changelist" comment="create src directory">
-      <change afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/gruppo11/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -58,8 +57,21 @@
       <workItem from="1584462431864" duration="35000" />
       <workItem from="1584462724277" duration="22000" />
       <workItem from="1584462900902" duration="726000" />
+      <workItem from="1584637656678" duration="54000" />
+      <workItem from="1584891151295" duration="54000" />
     </task>
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="WindowStateProjectService">
     <state x="367" y="99" key="CommitChangelistDialog2" timestamp="1584463466690">
