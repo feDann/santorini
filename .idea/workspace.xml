@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="c55e6501-5eea-499f-8bce-0b082fabb7aa" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="c55e6501-5eea-499f-8bce-0b082fabb7aa" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -59,7 +57,7 @@
       <workItem from="1584462900902" duration="726000" />
       <workItem from="1584637656678" duration="54000" />
       <workItem from="1584891151295" duration="54000" />
-      <workItem from="1584983164893" duration="253000" />
+      <workItem from="1584983164893" duration="825000" />
     </task>
     <task id="LOCAL-00001" summary="add the .gitignore file">
       <created>1584983279962</created>
