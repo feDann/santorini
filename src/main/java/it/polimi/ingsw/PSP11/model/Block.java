@@ -4,7 +4,7 @@ public enum Block {
     GROUND,
     BASE,
     MIDDLE,
-    TOP
+    TOP;
 
 }
 
