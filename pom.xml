@@ -7,6 +7,10 @@
     <groupId>it.polimi.ingsw.PSP11</groupId>
     <artifactId>ing-sw-2020-fadini-ferrazzo-figini</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <properties>
+        <maven.compiler.source>1.13</maven.compiler.source>
+        <maven.compiler.target>1.13</maven.compiler.target>
+    </properties>
 
 
 </project>
