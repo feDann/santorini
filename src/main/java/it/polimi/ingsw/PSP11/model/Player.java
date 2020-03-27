@@ -36,19 +36,41 @@ public class Player {
     }
 
 
+    /**
+     * Setter method for god attribute
+     * @param chosenGod god card chosen by the player
+     */
     public void setGod(Card chosenGod) {
         this.god = chosenGod;
     }
 
 
+    /**
+     * Setter method for playerTurn attribute
+     * @param sharedTurn shared turn to decorate
+     */
     public void setPlayerTurn (Turn sharedTurn) {
         god.setTurn(sharedTurn);
         this.playerTurn = god.getTurn();
     }
 
 
+    /**
+     * Method to select a player worker
+     * @param workerIndex index of the worker to return
+     * @return worker at the specified index
+     */
     public Worker chooseWorker (int workerIndex) {
         return workers.get(workerIndex);
+    }
+
+
+    /**
+     * Method to check if the player is eliminated
+     * @return true if player is eliminated
+     */
+    public boolean isEliminated() {
+        return this.eliminated;
     }
 
 
