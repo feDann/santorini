@@ -9,8 +9,8 @@ public class Deck {
     /**
      * class constructor
      */
-    public Deck(ArrayList cards){
-        cards = new ArrayList<Card>();
+    public Deck(){
+        cards = new ArrayList<>();
     }
 
 
