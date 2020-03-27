@@ -37,7 +37,7 @@ public class Board {
         int x = (int) point.getX();
         int y = (int) point.getY();
 
-        return board[x][y].hasWorkerOnTop();
+        return board[x][y].hasDomeOnTop();
     }
 
     /**
