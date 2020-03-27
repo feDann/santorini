@@ -18,6 +18,11 @@ public class BoardTest {
         board.init();
     }
 
+    @After
+    public void tearDown() {
+        board = null;
+    }
+
 
     @Test
     public void initTest() {
