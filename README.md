@@ -1,4 +1,4 @@
-# Prova Finale Ingegneria del Software 2019 - Gruppo PSP11
+# Prova Finale Ingegneria del Software 2020 - Gruppo PSP11
 
 ## Componenti del gruppo
 - ###       Francesco Fadini ([@frafad](https://github.com/frafad))
