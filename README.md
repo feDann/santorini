@@ -6,7 +6,7 @@
 - ###       Andrea Figini ([@anath3m98](https://github.com/anath3m98))
 
 ### Stato del Progetto
-| Functionality | State |
+| Funzionalità | Stato |
 |:-----------------------|:------------------------------------:|
 | Regole semplificate | [![RED](https://placehold.it/15/f03c15/f03c15)](#) |
 | Regole complete | [![RED](https://placehold.it/15/f03c15/f03c15)](#) |
