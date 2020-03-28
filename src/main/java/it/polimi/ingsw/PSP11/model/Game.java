@@ -13,13 +13,12 @@ public class Game {
     private ArrayList<Player> players;
     private ArrayList<Card> chosenCards;
     private Deck deck;
-    private int currentPlayer;
+    private int indexOfCurrentPlayer;
     private int numOfPlayer;
     private int winner;
     private Turn sharedTurn;
     private boolean gameStarted;
     private boolean gameEnded;
-    private boolean gameSetup;
 
     /**
      * Class constructor
@@ -30,7 +29,7 @@ public class Game {
         players = new ArrayList<>();
         chosenCards = new ArrayList<>();
         deck = new Deck();
-        currentPlayer = -1;
+        indexOfCurrentPlayer = -1;
         numOfPlayer = -1;
         winner = -1;
         //sharedTurn = new ConcreteTurn;
@@ -81,7 +80,7 @@ public class Game {
      */
 
     public Card selectPlayerGod (int indexOfChosenGod){
-        return deck.pickGod(indexOfChosenGod);
+        return chosenCards.get(indexOfChosenGod);
     }
 
     /**
@@ -122,11 +121,11 @@ public class Game {
 
     /**
      *
-     * @return the currentPlayer value
+     * @return the index of the current player
      */
 
-    public int getCurrentPlayer(){
-        return currentPlayer;
+    public int getIndexOfCurrentPlayer(){
+        return indexOfCurrentPlayer;
     }
 
     /**
@@ -134,8 +133,8 @@ public class Game {
      */
 
     public void nextPlayer(){
-        if(++currentPlayer >= numOfPlayer){
-            currentPlayer = 0;
+        if(++indexOfCurrentPlayer >= numOfPlayer){
+            indexOfCurrentPlayer = 0;
         }
     }
 
@@ -163,8 +162,9 @@ public class Game {
 
     public void startGame(){
         board.init();
-        currentPlayer = 0;
+        indexOfCurrentPlayer = 0;
         gameStarted = true;
     }
+
 
 }
