@@ -36,8 +36,8 @@ public abstract class Card {
 
     }
 
-    public Turn getTurn() {
-        return null;
+    public GodTurn getTurn() {
+        return cardTurn;
     }
 
 }
