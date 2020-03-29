@@ -21,20 +21,38 @@ public class PlayerTest {
     }
 
     @Test
-    public void eliminate() {
+    public void eliminateTest() {
         player.eliminate();
         assertTrue(player.isEliminated());
     }
 
     @Test
-    public void setGod() {
+    public void setGodTest() {
+
     }
 
     @Test
-    public void setPlayerTurn() {
+    public void setPlayerTurnTest() {
+
     }
 
     @Test
-    public void chooseWorker() {
+    public void chooseWorkerTest() {
+        Worker worker = new Worker(Color.RED);
+        player.addWorker(worker);
+        assertEquals(worker, player.chooseWorker(0));
     }
+
+    @Test
+    public void addWorkerTest() {
+        Worker worker1 = new Worker(Color.BLUE);
+        Worker worker2 = new Worker(Color.BLUE);
+        player.addWorker(worker1);
+        player.addWorker(worker2);
+        assertEquals(worker1, player.chooseWorker(0));
+        assertEquals(worker2, player.chooseWorker(1));
+        assertEquals(Color.BLUE, player.chooseWorker(0).getColor());
+        assertEquals(Color.BLUE, player.chooseWorker(1).getColor());
+    }
+
 }

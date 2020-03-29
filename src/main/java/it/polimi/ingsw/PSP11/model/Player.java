@@ -74,5 +74,14 @@ public class Player {
     }
 
 
+    /**
+     * Method to add a worker to the player
+     * @param workerToAdd the worker to add
+     */
+    public void addWorker (Worker workerToAdd) {
+        this.workers.add(workerToAdd);
+    }
+
+
 
 }
