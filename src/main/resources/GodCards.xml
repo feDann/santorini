@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<java version="13.0.2" class="java.beans.XMLDecoder">
+    <object class="it.polimi.ingsw.PSP11.model.Deck">
+        <void property="cards">
+
+            <!-- Apollo  -->
+            <void method="add">
+                <object class="it.polimi.ingsw.PSP11.model.Card">
+                    <void property="godTurnDecorator">
+                        <object class="it.polimi.ingsw.PSP11.model.TurnDecorator.ApolloPowerTurnDecorator"/>
+                    </void>
+                    <void property="name">
+                        <string>Apollo</string>
+                    </void>
+                    <void property="description">
+                        <string>Your Move: Your Worker may move into an opponent Worker’s space by forcing their Worker to the space yours just vacated.</string>
+                    </void>
+                    <void property="idCard">
+                        <int>1</int>
+                    </void>
+                </object>
+            </void>
+
+            <!-- Artemis -->
+            <void method="add">
+                <object class="it.polimi.ingsw.PSP11.model.Card">
+                    <void property="godTurnDecorator">
+                        <object class="it.polimi.ingsw.PSP11.model.TurnDecorator.ArtemisPowerTurnDecorator"/>
+                    </void>
+                    <void property="name">
+                        <string>Artemis</string>
+                    </void>
+                    <void property="description">
+                        <string>Your Move: Your Worker may move one additional time, but not back to its initial space. </string>
+                    </void>
+                    <void property="idCard">
+                        <int>2</int>
+                    </void>
+                </object>
+            </void>
+
+            <!--  Athena -->
+            <void method="add">
+                <object class="it.polimi.ingsw.PSP11.model.Card">
+                    <void property="godTurnDecorator">
+                        <object class="it.polimi.ingsw.PSP11.model.TurnDecorator.AthenaPowerTurnDecorator"/>
+                    </void>
+                    <void property="name">
+                        <string>Athena</string>
+                    </void>
+                    <void property="description">
+                        <string>Opponent’s Turn: If one of your Workers moved up on your last turn, opponent Workers cannot move up this turn.</string>
+                    </void>
+                    <void property="idCard">
+                        <int>3</int>
+                    </void>
+                </object>
+            </void>
+
+            <!--  Atlas -->
+            <void method="add">
+                <object class="it.polimi.ingsw.PSP11.model.Card">
+                    <void property="godTurnDecorator">
+                        <object class="it.polimi.ingsw.PSP11.model.TurnDecorator.AtlasPowerTurnDecorator"/>
+                    </void>
+                    <void property="name">
+                        <string>Atlas</string>
+                    </void>
+                    <void property="description">
+                        <string>Your Build: Your Worker may build a dome at any level. </string>
+                    </void>
+                    <void property="idCard">
+                        <int>4</int>
+                    </void>
+                </object>
+            </void>
+
+            <!--  Demeter -->
+            <void method="add">
+                <object class="it.polimi.ingsw.PSP11.model.Card">
+                    <void property="godTurnDecorator">
+                        <object class="it.polimi.ingsw.PSP11.model.TurnDecorator.DemeterPowerTurnDecorator"/>
+                    </void>
+                    <void property="name">
+                        <string>Demeter</string>
+                    </void>
+                    <void property="description">
+                        <string>Your Build: Your Worker may build one additional time, but not on the same space.</string>
+                    </void>
+                    <void property="idCard">
+                        <int>5</int>
+                    </void>
+                </object>
+            </void>
+
+            <!--  Hephaestus -->
+            <void method="add">
+                <object class="it.polimi.ingsw.PSP11.model.Card">
+                    <void property="godTurnDecorator">
+                        <object class="it.polimi.ingsw.PSP11.model.TurnDecorator.HephaestusPowerTurnDecorator"/>
+                    </void>
+                    <void property="name">
+                        <string>Hephaestus</string>
+                    </void>
+                    <void property="description">
+                        <string>Your Build: Your Worker may build one additional block (not dome) on top of your first block</string>
+                    </void>
+                    <void property="idCard">
+                        <int>6</int>
+                    </void>
+                </object>
+            </void>
+
+            <!--  Minotaur -->
+            <void method="add">
+                <object class="it.polimi.ingsw.PSP11.model.Card">
+                    <void property="godTurnDecorator">
+                        <object class="it.polimi.ingsw.PSP11.model.TurnDecorator.MinotaurPowerTurnDecorator"/>
+                    </void>
+                    <void property="name">
+                        <string>Minotaur</string>
+                    </void>
+                    <void property="description">
+                        <string>Your Move: Your Worker may move into an opponent Worker’s space, if their Worker can be forced one space straight backwards to an unoccupied space at any level.</string>
+                    </void>
+                    <void property="idCard">
+                        <int>7</int>
+                    </void>
+                </object>
+            </void>
+
+            <!-- Pan  -->
+            <void method="add">
+                <object class="it.polimi.ingsw.PSP11.model.Card">
+                    <void property="godTurnDecorator">
+                        <object class="it.polimi.ingsw.PSP11.model.TurnDecorator.PanPowerTurnDecorator"/>
+                    </void>
+                    <void property="name">
+                        <string>Pan</string>
+                    </void>
+                    <void property="description">
+                        <string>Win Condition: You also win if your Worker moves down two or more levels.</string>
+                    </void>
+                    <void property="idCard">
+                        <int>8</int>
+                    </void>
+                </object>
+            </void>
+
+            <!--  Prometheus -->
+            <void method="add">
+                <object class="it.polimi.ingsw.PSP11.model.Card">
+                    <void property="godTurnDecorator">
+                        <object class="it.polimi.ingsw.PSP11.model.TurnDecorator.PrometheusPowerTurnDecorator"/>
+                    </void>
+                    <void property="name">
+                        <string>Prometheus</string>
+                    </void>
+                    <void property="description">
+                        <string>Your Turn: If your Worker does not move up, it may build both before and after moving.</string>
+                    </void>
+                    <void property="idCard">
+                        <int>9</int>
+                    </void>
+                </object>
+            </void>
+
+        </void>
+    </object>
+</java>

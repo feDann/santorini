@@ -1,7 +1,7 @@
 package it.polimi.ingsw.PSP11.model;
 
-public abstract class Card {
-    private GodTurn cardTurn;
+public class Card {
+    private GodTurn godTurnDecorator;
     private String name;
     private int idCard;
     //texture??
@@ -31,13 +31,15 @@ public abstract class Card {
         this.idCard = idCard;
     }
 
-
     public void setTurn(Turn sharedTurn) {
-
+        godTurnDecorator.setSharedTurn(sharedTurn);
     }
 
-    public GodTurn getTurn() {
-        return cardTurn;
+    public GodTurn getGodTurnDecorator() {
+        return godTurnDecorator;
     }
 
+    public void setGodTurnDecorator(GodTurn cardTurnDecorator) {
+        this.godTurnDecorator = cardTurnDecorator;
+    }
 }

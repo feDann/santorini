@@ -51,7 +51,7 @@ public class Player {
      */
     public void setPlayerTurn (Turn sharedTurn) {
         god.setTurn(sharedTurn);
-        this.playerTurn = god.getTurn();
+        this.playerTurn = god.getGodTurnDecorator();
     }
 
 

@@ -1,5 +1,8 @@
 package it.polimi.ingsw.PSP11.model;
 
+import it.polimi.ingsw.PSP11.XMLParser;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.jar.JarOutputStream;
 
@@ -19,6 +22,7 @@ public class Game {
     private Turn sharedTurn;
     private boolean gameStarted;
     private boolean gameEnded;
+    private final String godCardsXMLPath = "src/main/resources/GodCards.xml";
 
     /**
      * Class constructor
@@ -28,13 +32,24 @@ public class Game {
         board = new Board();
         players = new ArrayList<>();
         chosenCards = new ArrayList<>();
-        deck = new Deck();
+        deck = null;
         indexOfCurrentPlayer = -1;
         numOfPlayer = -1;
         winner = -1;
         //sharedTurn = new ConcreteTurn;
         gameEnded = false;
         gameStarted = false;
+    }
+
+    /**
+     * inizialize the deck
+     */
+    public void deckInit(){
+        try {
+            deck = XMLParser.deserializeDeckFromXML(godCardsXMLPath);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -162,8 +177,10 @@ public class Game {
 
     public void startGame(){
         board.init();
+        deckInit();
         indexOfCurrentPlayer = 0;
         gameStarted = true;
+
     }
 
 
