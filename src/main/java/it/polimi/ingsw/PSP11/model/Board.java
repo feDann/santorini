@@ -51,6 +51,14 @@ public class Board {
         board[x][y].placeWorker();
     }
 
+    public void removeWorker(Point point){
+        int x = (int) point.getX();
+        int y = (int) point.getY();
+
+        board[x][y].removeWorker();
+    }
+
+
     /**
      * place the dome in the designated point
      * @param point indicates the spot in witch the player wants to put the dome

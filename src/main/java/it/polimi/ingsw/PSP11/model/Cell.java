@@ -57,4 +57,7 @@ public class Cell {
         return this.currentLevel;
     }
 
+    public void removeWorker(){
+        this.worker = false;
+    }
 }

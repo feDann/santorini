@@ -10,6 +10,8 @@ public class StandardTurn implements Turn{
     private boolean movedAgain;
     private boolean buildAgain;
 
+
+
     private ArrayList<Point> getLegalPosition (Worker worker, Board board, int whatToDo){
 
         Point workerPosition = worker.getPosition();
@@ -52,8 +54,14 @@ public class StandardTurn implements Turn{
     }
 
     @Override
-    public void applyMove(Worker worker, Board board, Point point) {
-
+    public void applyMove(Worker worker, Board board, Point newPosition) {
+        board.removeWorker(worker.getPosition());
+        if(board.getCurrentLevel(newPosition).ordinal() - board.getCurrentLevel(worker.getPosition()).ordinal() == 1){
+            movedUp = true;
+        }
+        worker.setPosition(newPosition);
+        board.placeWorker(newPosition);
+        //worker.setMoved(true);
     }
 
     @Override
@@ -62,8 +70,13 @@ public class StandardTurn implements Turn{
     }
 
     @Override
-    public void applyBuild(Worker worker, Board board, Point point) {
-        //executeorder66
+    public void applyBuild(Worker worker, Board board, Point buildPosition) {
+        if(board.getCurrentLevel(buildPosition).equals(Block.TOP)){
+            board.addDome(buildPosition);
+            return;
+        }
+        board.addBlock(buildPosition);
+        return;
     }
 
     @Override
@@ -73,6 +86,5 @@ public class StandardTurn implements Turn{
         }
         return false;
     }
-
 
 }
