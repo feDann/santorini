@@ -7,9 +7,40 @@ public class StandardTurn implements Turn{
 
     private boolean movedUp;
     private boolean movedDown;
-    private boolean movedAgain;
+    private boolean moveAgain;
     private boolean buildAgain;
 
+    public boolean isMovedUp() {
+        return movedUp;
+    }
+
+    public void setMovedUp(boolean movedUp) {
+        this.movedUp = movedUp;
+    }
+
+    public boolean isMovedDown() {
+        return movedDown;
+    }
+
+    public void setMovedDown(boolean movedDown) {
+        this.movedDown = movedDown;
+    }
+
+    public boolean isMoveAgain() {
+        return moveAgain;
+    }
+
+    public void setMoveAgain(boolean moveAgain) {
+        this.moveAgain = moveAgain;
+    }
+
+    public boolean isBuildAgain() {
+        return buildAgain;
+    }
+
+    public void setBuildAgain(boolean buildAgain) {
+        this.buildAgain = buildAgain;
+    }
 
 
     private ArrayList<Point> getLegalPosition (Worker worker, Board board, int whatToDo){
@@ -48,11 +79,25 @@ public class StandardTurn implements Turn{
         return possiblePosition;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void startTurn() {
+        movedUp = false;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public ArrayList<Point> move(Worker worker, Board board){
         return getLegalPosition(worker,board,0);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void applyMove(Worker worker, Board board, Point newPosition) {
         board.removeWorker(worker.getPosition());
@@ -64,11 +109,17 @@ public class StandardTurn implements Turn{
         //worker.setMoved(true);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public ArrayList<Point> build(Worker worker, Board board) {
         return getLegalPosition(worker,board,1);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void applyBuild(Worker worker, Board board, Point buildPosition) {
         if(board.getCurrentLevel(buildPosition).equals(Block.TOP)){
@@ -79,6 +130,9 @@ public class StandardTurn implements Turn{
         return;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean winCondition(Worker worker, Board board) {
         if(movedUp && board.getCurrentLevel(worker.getPosition()).equals(Block.TOP)){
