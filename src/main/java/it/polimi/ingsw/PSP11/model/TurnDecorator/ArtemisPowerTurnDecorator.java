@@ -21,15 +21,16 @@ public class ArtemisPowerTurnDecorator extends GodTurn {
 
     @Override
     public ArrayList<Point> move(Worker worker, Board board) {
-        //the first time call the normal move
+        //the first move invokes the standard move method
         if(numberOfTimesAlredyMoved == 0){
             numberOfTimesAlredyMoved++;
             return getSharedTurn().move(worker, board);
         }
-        //the second time call the power move
+        //the second move also removes the oldPosition from possibleMoves
         else {
             ArrayList<Point> possibleMoves = getSharedTurn().move(worker,board);
             possibleMoves.remove(oldPosition);
+            getSharedTurn().setMoveAgain(false);
             return possibleMoves;
         }
     }

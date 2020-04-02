@@ -36,14 +36,13 @@ public class DemeterPowerTurnDecorator extends GodTurn {
             numberOfTimesAlreadyBuilt++;
             return getSharedTurn().build(worker, board);
         }
-
-        //the second build also removes the oldBuild position from possibleBuildPoints
-        ArrayList<Point> possibleBuildPoints = getSharedTurn().build(worker, board);
-
-        possibleBuildPoints.remove(oldBuildPosition);
-
-        return possibleBuildPoints;
-
+        else {
+            //the second build also removes the oldBuild position from possibleBuildPoints
+            ArrayList<Point> possibleBuildPoints = getSharedTurn().build(worker, board);
+            possibleBuildPoints.remove(oldBuildPosition);
+            getSharedTurn().setBuildAgain(false);
+            return possibleBuildPoints;
+        }
     }
 
     @Override
