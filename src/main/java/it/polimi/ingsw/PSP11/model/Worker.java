@@ -22,13 +22,6 @@ public class Worker {
         this.color = chosenColor;
     }
 
-    public Worker (Worker worker){
-        this.position = worker.getPosition();
-        this.moved = worker.isMoved();
-        this.color = worker.getColor();
-    }
-
-
     /**
      * Setter method for position attribute
      * @param newPosition the new position of this worker
