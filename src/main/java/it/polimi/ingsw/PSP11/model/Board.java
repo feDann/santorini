@@ -44,13 +44,29 @@ public class Board {
      * place the worker in the designated point
      * @param point indicates the spot in witch the player wants to put the worker
      */
-    public void placeWorker(Point point){
+    public void placeWorker(Point point, Worker worker){
         int x = (int) point.getX();
         int y = (int) point.getY();
 
-        board[x][y].placeWorker();
+        board[x][y].placeWorker(worker);
     }
 
+    /**
+     *
+     * @param point the position of worker
+     * @return the worker on top of the cell
+     */
+    public Worker getWorker(Point point){
+        int x = (int) point.getX();
+        int y = (int) point.getY();
+
+        return board[x][y].getCurrentWorker();
+    }
+
+    /**
+     * Remove the worker on top of the cell
+     * @param point the position of worker
+     */
     public void removeWorker(Point point){
         int x = (int) point.getX();
         int y = (int) point.getY();
