@@ -31,36 +31,18 @@ public class DemeterPowerTurnDecorator extends GodTurn {
     @Override
     public ArrayList<Point> build(Worker worker, Board board) {
 
+        //the first build invokes the standard build method
         if (numberOfTimesAlreadyBuilt == 0) {
             numberOfTimesAlreadyBuilt++;
             return getSharedTurn().build(worker, board);
         }
 
-        Point workerPosition = worker.getPosition();
-        int x = (int) workerPosition.getX();
-        int y = (int) workerPosition.getY();
-        ArrayList<Point> possiblePosition = new ArrayList<Point>();
+        //the second build also removes the oldBuild position from possibleBuildPoints
+        ArrayList<Point> possibleBuildPoints = getSharedTurn().build(worker, board);
 
-        int startX = ((x - 1) < 0)? x : x-1;
-        int startY = ((y - 1) < 0)? y : y-1;
-        int endX = ((x + 1) > 4)? x : x+1;
-        int endY = ((y + 1) > 4)? y : y+1;
+        possibleBuildPoints.remove(oldBuildPosition);
 
-        for (int i = startX; i <= endX; i++){
-            for (int j = startY; j < endY; j++){
-
-                Point neighbouringPoint = new Point(i,j);
-
-                if(!board.hasDomeOnTop(neighbouringPoint)){
-                    if(!board.hasWorkerOnTop(neighbouringPoint)){
-                        if(!neighbouringPoint.equals(oldBuildPosition)){
-                            possiblePosition.add(neighbouringPoint);
-                        }
-                    }
-                }
-            }
-        }
-        return possiblePosition;
+        return possibleBuildPoints;
 
     }
 
