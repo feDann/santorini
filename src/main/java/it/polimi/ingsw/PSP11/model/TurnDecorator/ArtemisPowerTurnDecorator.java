@@ -5,10 +5,85 @@ import it.polimi.ingsw.PSP11.model.GodTurn;
 import it.polimi.ingsw.PSP11.model.Worker;
 
 import java.awt.*;
+import java.util.ArrayList;
 
 public class ArtemisPowerTurnDecorator extends GodTurn {
 
+    public Point oldPosition;
+    private int numberOfTimesAlredyMoved = 0;
+
+    @Override
+    public void startTurn() {
+        getSharedTurn().startTurn();
+        getSharedTurn().setMoveAgain(true);
+    }
 
 
+    @Override
+    public ArrayList<Point> move(Worker worker, Board board) {
+        //la prima volta chiama la move normale
+        if(numberOfTimesAlredyMoved == 0){
+            numberOfTimesAlredyMoved++;
+            return getSharedTurn().move(worker, board);
+        }
+        //la seconda volta chiama la move data dal potere
+        else {
+            Point workerPosition = worker.getPosition();
+            int x = (int) workerPosition.getX();
+            int y = (int) workerPosition.getY();
+            ArrayList<Point> possiblePosition = new ArrayList<>();
 
+            int startX = ((x - 1) < 0) ? x : x - 1;
+            int startY = ((y - 1) < 0) ? y : y - 1;
+            int endX = ((x + 1) > 4) ? x : x + 1;
+            int endY = ((y + 1) > 4) ? y : y + 1;
+
+            for (int i = startX; i <= endX; i++) {
+                for (int j = startY; j < endY; j++) {
+
+                    Point neighbouringPoint = new Point(i, j);
+
+                    if (!board.hasDomeOnTop(neighbouringPoint)) {
+                        if (!board.hasWorkerOnTop(neighbouringPoint)) {
+                            //non inserisce oldPosition fra le possibili mosse
+                            if (!neighbouringPoint.equals(oldPosition)) {
+                                if (board.getCurrentLevel(neighbouringPoint).ordinal() - board.getCurrentLevel(workerPosition).ordinal() <= 1) {
+                                    possiblePosition.add(neighbouringPoint);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            return possiblePosition;
+        }
+    }
+    
+
+    @Override
+    public ArrayList<Point> build(Worker worker, Board board) {
+        return getSharedTurn().build(worker, board);
+    }
+
+    @Override
+    public boolean winCondition(Worker worker, Board board) {
+        return getSharedTurn().winCondition(worker, board);
+    }
+
+
+    @Override
+    public void applyMove(Worker worker, Board board, Point newPosition) {
+        oldPosition = worker.getPosition();
+        getSharedTurn().applyMove(worker, board, newPosition);
+    }
+
+    @Override
+    public void applyBuild(Worker worker, Board board, Point buildPosition) {
+        getSharedTurn().applyBuild(worker, board, buildPosition);
+    }
+
+    @Override
+    public void endTurn() {
+        numberOfTimesAlredyMoved = 0;
+    }
 }
