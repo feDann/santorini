@@ -21,41 +21,16 @@ public class ArtemisPowerTurnDecorator extends GodTurn {
 
     @Override
     public ArrayList<Point> move(Worker worker, Board board) {
-        //la prima volta chiama la move normale
+        //the first time call the normal move
         if(numberOfTimesAlredyMoved == 0){
             numberOfTimesAlredyMoved++;
             return getSharedTurn().move(worker, board);
         }
-        //la seconda volta chiama la move data dal potere
+        //the second time call the power move
         else {
-            Point workerPosition = worker.getPosition();
-            int x = (int) workerPosition.getX();
-            int y = (int) workerPosition.getY();
-            ArrayList<Point> possiblePosition = new ArrayList<>();
-
-            int startX = ((x - 1) < 0) ? x : x - 1;
-            int startY = ((y - 1) < 0) ? y : y - 1;
-            int endX = ((x + 1) > 4) ? x : x + 1;
-            int endY = ((y + 1) > 4) ? y : y + 1;
-
-            for (int i = startX; i <= endX; i++) {
-                for (int j = startY; j < endY; j++) {
-
-                    Point neighbouringPoint = new Point(i, j);
-
-                    if (!board.hasDomeOnTop(neighbouringPoint)) {
-                        if (!board.hasWorkerOnTop(neighbouringPoint)) {
-                            //non inserisce oldPosition fra le possibili mosse
-                            if (!neighbouringPoint.equals(oldPosition)) {
-                                if (board.getCurrentLevel(neighbouringPoint).ordinal() - board.getCurrentLevel(workerPosition).ordinal() <= 1) {
-                                    possiblePosition.add(neighbouringPoint);
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            return possiblePosition;
+            ArrayList<Point> possibleMoves = getSharedTurn().move(worker,board);
+            possibleMoves.remove(oldPosition);
+            return possibleMoves;
         }
     }
     
