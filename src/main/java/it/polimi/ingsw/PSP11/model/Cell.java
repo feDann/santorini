@@ -5,6 +5,7 @@ public class Cell {
     private Block currentLevel;
     private boolean dome;
     private boolean worker;
+    private Worker currentWorker;
 
     /**
      * constructor of the default cell
@@ -32,8 +33,9 @@ public class Cell {
     /**
      * set worker attributes to true
      */
-    public void placeWorker(){
+    public void placeWorker(Worker worker){
         this.worker = true;
+        this.currentWorker = new Worker(worker);
     }
 
     /**
@@ -59,5 +61,26 @@ public class Cell {
 
     public void removeWorker(){
         this.worker = false;
+        currentWorker = null;
+    }
+
+    /**
+     *
+     * @return if there, the current worker on top, null otherwise
+     */
+
+    public Worker getCurrentWorker() {
+        if(worker = true){
+            return currentWorker;
+        }
+        return null;
+    }
+
+    /**
+     * Set the current worker on top of the cell
+     * @param currentWorker the worker to set on cell
+     */
+    public void setCurrentWorker(Worker currentWorker) {
+        this.currentWorker = new Worker(currentWorker);
     }
 }

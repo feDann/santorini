@@ -31,7 +31,7 @@ public class Card {
         this.idCard = idCard;
     }
 
-    public void setTurn(Turn sharedTurn) {
+    public void setTurn(StandardTurn sharedTurn) {
         godTurnDecorator.setSharedTurn(sharedTurn);
     }
 

@@ -84,7 +84,10 @@ public class StandardTurn implements Turn{
      */
     @Override
     public void startTurn() {
+        movedDown= false;
         movedUp = false;
+        moveAgain = false;
+        buildAgain = false;
     }
 
     /**
@@ -105,7 +108,7 @@ public class StandardTurn implements Turn{
             movedUp = true;
         }
         worker.setPosition(newPosition);
-        board.placeWorker(newPosition);
+        board.placeWorker(newPosition , worker);
         //worker.setMoved(true);
     }
 

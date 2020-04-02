@@ -19,7 +19,7 @@ public class Game {
     private int indexOfCurrentPlayer;
     private int numOfPlayer;
     private int winner;
-    private Turn sharedTurn;
+    private StandardTurn sharedTurn;
     private boolean gameStarted;
     private boolean gameEnded;
     private final String godCardsXMLPath = "src/main/resources/GodCards.xml";
@@ -36,7 +36,7 @@ public class Game {
         indexOfCurrentPlayer = -1;
         numOfPlayer = -1;
         winner = -1;
-        //sharedTurn = new ConcreteTurn;
+        sharedTurn = new StandardTurn();
         gameEnded = false;
         gameStarted = false;
     }
