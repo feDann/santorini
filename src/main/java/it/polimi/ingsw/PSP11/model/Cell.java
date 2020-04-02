@@ -35,7 +35,7 @@ public class Cell {
      */
     public void placeWorker(Worker worker){
         this.worker = true;
-        this.currentWorker = new Worker(worker);
+        this.currentWorker = worker;
     }
 
     /**
@@ -76,11 +76,4 @@ public class Cell {
         return null;
     }
 
-    /**
-     * Set the current worker on top of the cell
-     * @param currentWorker the worker to set on cell
-     */
-    public void setCurrentWorker(Worker currentWorker) {
-        this.currentWorker = new Worker(currentWorker);
-    }
 }
