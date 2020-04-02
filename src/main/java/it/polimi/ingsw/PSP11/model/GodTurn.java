@@ -22,8 +22,20 @@ public abstract class GodTurn implements Turn{
         return false;
     }
 
+    @Override
+    public void startTurn() {
 
+    }
 
+    @Override
+    public void applyMove(Worker worker, Board board, Point newPosition) {
+
+    }
+
+    @Override
+    public void applyBuild(Worker worker, Board board, Point buildPosition) {
+
+    }
 
     public void setSharedTurn(Turn sharedTurn) {
         this.sharedTurn = sharedTurn;
