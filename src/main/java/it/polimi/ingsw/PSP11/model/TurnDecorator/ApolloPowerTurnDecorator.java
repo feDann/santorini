@@ -19,7 +19,6 @@ public class ApolloPowerTurnDecorator extends GodTurn {
     @Override
     public ArrayList<Point> move(Worker worker, Board board) {
         ArrayList<Point> possiblePosition = new ArrayList<>();
-        possiblePosition = getSharedTurn().move(worker,board);
         Point workerPosition = new Point(worker.getPosition());
         int x = (int) workerPosition.getX();
         int y = (int) workerPosition.getY();
