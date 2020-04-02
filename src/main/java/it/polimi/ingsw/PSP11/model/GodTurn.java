@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 public abstract class GodTurn implements Turn{
 
-    private Turn sharedTurn;
+    private StandardTurn sharedTurn;
 
     @Override
     public ArrayList<Point> move(Worker worker, Board board) {
@@ -23,6 +23,11 @@ public abstract class GodTurn implements Turn{
     }
 
     @Override
+    public void endTurn() {
+
+    }
+
+    @Override
     public void startTurn() {
 
     }
@@ -37,11 +42,11 @@ public abstract class GodTurn implements Turn{
 
     }
 
-    public void setSharedTurn(Turn sharedTurn) {
+    public void setSharedTurn(StandardTurn sharedTurn) {
         this.sharedTurn = sharedTurn;
     }
 
-    public Turn getSharedTurn() {
+    public StandardTurn getSharedTurn() {
         return sharedTurn;
     }
 

@@ -141,4 +141,9 @@ public class StandardTurn implements Turn{
         return false;
     }
 
+    @Override
+    public void endTurn() {
+
+    }
+
 }
