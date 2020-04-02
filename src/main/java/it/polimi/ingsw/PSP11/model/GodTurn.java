@@ -23,6 +23,11 @@ public abstract class GodTurn implements Turn{
     }
 
     @Override
+    public void endTurn() {
+
+    }
+
+    @Override
     public void startTurn() {
 
     }

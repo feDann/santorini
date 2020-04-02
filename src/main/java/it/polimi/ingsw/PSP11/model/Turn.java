@@ -50,4 +50,6 @@ public interface Turn {
      */
     public boolean winCondition(Worker worker, Board board);
 
+    public void endTurn();
+
 }
