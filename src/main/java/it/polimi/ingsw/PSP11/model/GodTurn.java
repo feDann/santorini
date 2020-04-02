@@ -41,4 +41,8 @@ public abstract class GodTurn implements Turn{
         this.sharedTurn = sharedTurn;
     }
 
+    public Turn getSharedTurn() {
+        return sharedTurn;
+    }
+
 }
