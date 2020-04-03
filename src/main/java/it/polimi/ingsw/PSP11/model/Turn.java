@@ -39,8 +39,9 @@ public interface Turn {
      * @param worker the selected worker
      * @param board the game board
      * @param buildPosition the build position
+     * @param buildDome true if Atlas power is activated
      */
-    public void applyBuild(Worker worker, Board board, Point buildPosition);
+    public void applyBuild(Worker worker, Board board, Point buildPosition, boolean buildDome);
 
     /**
      *Method that check if a player's worker won

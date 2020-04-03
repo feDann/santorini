@@ -10,6 +10,15 @@ public class StandardTurn implements Turn{
     private boolean moveAgain;
     private boolean buildAgain;
     private boolean cantMoveUp = false;
+    private boolean canBuildDomeAnyLevel = false;
+
+    public boolean isCanBuildDomeAnyLevel() {
+        return canBuildDomeAnyLevel;
+    }
+
+    public void setCanBuildDomeAnyLevel(boolean canBuildDomeAnyLevel) {
+        this.canBuildDomeAnyLevel = canBuildDomeAnyLevel;
+    }
 
     public boolean isCantMoveUp() {
         return cantMoveUp;
@@ -136,7 +145,7 @@ public class StandardTurn implements Turn{
      * {@inheritDoc}
      */
     @Override
-    public void applyBuild(Worker worker, Board board, Point buildPosition) {
+    public void applyBuild(Worker worker, Board board, Point buildPosition, boolean buildDome) {
         if(board.getCurrentLevel(buildPosition).equals(Block.TOP)){
             board.addDome(buildPosition);
             return;

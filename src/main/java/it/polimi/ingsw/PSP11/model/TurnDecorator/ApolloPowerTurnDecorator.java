@@ -10,7 +10,6 @@ import java.util.ArrayList;
 public class ApolloPowerTurnDecorator extends GodTurn {
 
 
-
     @Override
     public void startTurn() {
         getSharedTurn().startTurn();
@@ -41,8 +40,6 @@ public class ApolloPowerTurnDecorator extends GodTurn {
         return possiblePosition;
     }
 
-
-
     @Override
     public void applyMove(Worker worker, Board board, Point newPosition) {
         Point oldPosition = worker.getPosition();
@@ -68,15 +65,14 @@ public class ApolloPowerTurnDecorator extends GodTurn {
         }
     }
 
-
     @Override
     public ArrayList<Point> build(Worker worker, Board board) {
         return getSharedTurn().build(worker , board);
     }
 
     @Override
-    public void applyBuild(Worker worker, Board board, Point buildPosition) {
-        getSharedTurn().applyBuild(worker, board, buildPosition);
+    public void applyBuild(Worker worker, Board board, Point buildPosition, boolean buildDome) {
+        getSharedTurn().applyBuild(worker, board, buildPosition, false);
     }
 
     @Override

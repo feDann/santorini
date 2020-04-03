@@ -30,17 +30,25 @@ public class AtlasPowerTurnDecorator extends GodTurn {
     }
 
     @Override
-    public void applyBuild(Worker worker, Board board, Point buildPosition) {
-        getSharedTurn().applyBuild(worker, board, buildPosition);
-    }
-
-    public void power(Worker worker, Board board, Point point) {
-
+    public void applyBuild(Worker worker, Board board, Point buildPosition, boolean buildDome) {
+        if(buildDome){
+            board.addDome(buildPosition);
+            return;
+        }
+        else {
+            getSharedTurn().applyBuild(worker, board, buildPosition, false);
+            return;
+        }
     }
 
     @Override
     public boolean winCondition(Worker worker, Board board) {
         return getSharedTurn().winCondition(worker, board);
+    }
+
+    @Override
+    public void endTurn() {
+        getSharedTurn().endTurn();
     }
 
 
