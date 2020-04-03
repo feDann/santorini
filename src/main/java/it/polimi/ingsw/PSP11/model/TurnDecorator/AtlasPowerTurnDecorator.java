@@ -30,8 +30,8 @@ public class AtlasPowerTurnDecorator extends GodTurn {
     }
 
     @Override
-    public void applyBuild(Worker worker, Board board, Point buildPosition, boolean buildDome) {
-        if(buildDome){
+    public void applyBuild(Worker worker, Board board, Point buildPosition, boolean forceBuildDome) {
+        if(forceBuildDome){
             board.addDome(buildPosition);
             return;
         }

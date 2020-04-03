@@ -38,7 +38,7 @@ public abstract class GodTurn implements Turn{
     }
 
     @Override
-    public void applyBuild(Worker worker, Board board, Point buildPosition) {
+    public void applyBuild(Worker worker, Board board, Point buildPosition,boolean forceBuildDome) {
 
     }
 

@@ -28,7 +28,7 @@ public class ApolloPowerTurnDecorator extends GodTurn {
         int endY = ((y + 1) > 4)? y : y+1;
 
         for (int i = startX; i <= endX; i++){
-            for (int j = startY; j < endY; j++){
+            for (int j = startY; j <= endY; j++){
                 Point neighbouringPoint = new Point(i,j);
                 if(!board.hasDomeOnTop(neighbouringPoint)){
                     if (board.getCurrentLevel(neighbouringPoint).ordinal() - board.getCurrentLevel(workerPosition).ordinal() <= 1) {
@@ -37,6 +37,7 @@ public class ApolloPowerTurnDecorator extends GodTurn {
                 }
             }
         }
+        possiblePosition.remove(workerPosition);
         return possiblePosition;
     }
 
@@ -71,7 +72,7 @@ public class ApolloPowerTurnDecorator extends GodTurn {
     }
 
     @Override
-    public void applyBuild(Worker worker, Board board, Point buildPosition, boolean buildDome) {
+    public void applyBuild(Worker worker, Board board, Point buildPosition, boolean forceBuildDome) {
         getSharedTurn().applyBuild(worker, board, buildPosition, false);
     }
 

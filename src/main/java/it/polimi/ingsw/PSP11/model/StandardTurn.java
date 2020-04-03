@@ -74,7 +74,7 @@ public class StandardTurn implements Turn{
         int endY = ((y + 1) > 4)? y : y+1;
 
         for (int i = startX; i <= endX; i++){
-            for (int j = startY; j < endY; j++){
+            for (int j = startY; j <= endY; j++){
 
                 Point neighbouringPoint = new Point(i,j);
 
@@ -97,6 +97,7 @@ public class StandardTurn implements Turn{
                 }
             }
         }
+        possiblePosition.remove(workerPosition);
         return possiblePosition;
     }
 
@@ -145,7 +146,7 @@ public class StandardTurn implements Turn{
      * {@inheritDoc}
      */
     @Override
-    public void applyBuild(Worker worker, Board board, Point buildPosition, boolean buildDome) {
+    public void applyBuild(Worker worker, Board board, Point buildPosition, boolean forceBuildDome) {
         if(board.getCurrentLevel(buildPosition).equals(Block.TOP)){
             board.addDome(buildPosition);
             return;

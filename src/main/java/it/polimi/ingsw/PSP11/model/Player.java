@@ -49,7 +49,7 @@ public class Player {
      * Setter method for playerTurn attribute
      * @param sharedTurn shared turn to decorate
      */
-    public void setPlayerTurn (Turn sharedTurn) {
+    public void setPlayerTurn (StandardTurn sharedTurn) {
         god.setTurn(sharedTurn);
         this.playerTurn = god.getGodTurnDecorator();
     }

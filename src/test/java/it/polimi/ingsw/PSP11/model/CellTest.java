@@ -32,7 +32,7 @@ public class CellTest {
 
     @Test
     public void placeWorkerTest() {
-        cell.placeWorker();
+        cell.placeWorker(new Worker(Color.RED));
         assertTrue(cell.hasWorkerOnTop());
     }
 

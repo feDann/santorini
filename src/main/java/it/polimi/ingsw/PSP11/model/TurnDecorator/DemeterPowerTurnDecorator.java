@@ -46,7 +46,7 @@ public class DemeterPowerTurnDecorator extends GodTurn {
     }
 
     @Override
-    public void applyBuild(Worker worker, Board board, Point buildPosition, boolean buildDome) {
+    public void applyBuild(Worker worker, Board board, Point buildPosition, boolean forceBuildDome) {
         oldBuildPosition = buildPosition;
         getSharedTurn().applyBuild(worker, board, buildPosition, false);
     }

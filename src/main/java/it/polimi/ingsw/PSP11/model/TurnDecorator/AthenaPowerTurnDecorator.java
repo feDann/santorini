@@ -45,7 +45,7 @@ public class AthenaPowerTurnDecorator extends GodTurn {
     }
 
     @Override
-    public void applyBuild(Worker worker, Board board, Point buildPosition,boolean buildDome) {
+    public void applyBuild(Worker worker, Board board, Point buildPosition,boolean forceBuildDome) {
         getSharedTurn().applyBuild(worker, board, buildPosition, false);
     }
 }

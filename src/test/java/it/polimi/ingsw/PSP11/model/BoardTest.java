@@ -61,7 +61,7 @@ public class BoardTest {
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 5; j++) {
                 point.setLocation(i, j);
-                board.placeWorker(point);
+                board.placeWorker(point, new Worker(Color.RED));
                 assertTrue(board.hasWorkerOnTop(point));
             }
         }
