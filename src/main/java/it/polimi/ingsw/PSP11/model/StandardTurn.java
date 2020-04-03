@@ -9,6 +9,15 @@ public class StandardTurn implements Turn{
     private boolean movedDown;
     private boolean moveAgain;
     private boolean buildAgain;
+    private boolean cantMoveUp = false;
+
+    public boolean isCantMoveUp() {
+        return cantMoveUp;
+    }
+
+    public void setCantMoveUp(boolean cantMoveUp) {
+        this.cantMoveUp = cantMoveUp;
+    }
 
     public boolean isMovedUp() {
         return movedUp;
@@ -65,7 +74,10 @@ public class StandardTurn implements Turn{
                         //move
                         if( whatToDo == 0 ) {
                             if (board.getCurrentLevel(neighbouringPoint).ordinal() - board.getCurrentLevel(workerPosition).ordinal() <= 1) {
-                                possiblePosition.add(neighbouringPoint);
+                                //check for Athena power
+                                if(!(board.getCurrentLevel(neighbouringPoint).ordinal() - board.getCurrentLevel(workerPosition).ordinal() == 1 && cantMoveUp == true)) {
+                                    possiblePosition.add(neighbouringPoint);
+                                }
                             }
                         }
                         //build
