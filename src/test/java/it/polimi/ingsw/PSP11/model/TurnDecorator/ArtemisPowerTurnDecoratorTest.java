@@ -20,7 +20,7 @@ public class ArtemisPowerTurnDecoratorTest {
     ArtemisPowerTurnDecorator artemisTurn;
 
     @Before
-    public void setUp() {
+    public void artemis_SetUp() {
         artemisTurn = new ArtemisPowerTurnDecorator();
         turn = new StandardTurn();
         artemisTurn.setSharedTurn(turn);
@@ -30,7 +30,7 @@ public class ArtemisPowerTurnDecoratorTest {
     }
 
     @After
-    public void tearDown() {
+    public void artemis_TearDown() {
         turn = null;
         board = null;
         worker = null;
@@ -98,7 +98,7 @@ public class ArtemisPowerTurnDecoratorTest {
     }
 
     @Test
-    public void Board_With_Blocks_And_Dome_Build_Test() {
+    public void artemis_board_With_Blocks_And_Dome_Build_Test() {
         ArrayList<Point> actualPosition;
         board.init();
 
@@ -127,7 +127,7 @@ public class ArtemisPowerTurnDecoratorTest {
     }
 
     @Test
-    public void apply_Build_Test() {
+    public void artemis_Apply_Build_Test() {
         board.init();
 
         assertEquals(Block.GROUND,board.getCurrentLevel(new Point(2,3)));
@@ -151,7 +151,7 @@ public class ArtemisPowerTurnDecoratorTest {
     }
 
     @Test
-    public void win_Condition_Returns_False_Test() {
+    public void artemis_Win_Condition_Returns_False_Test() {
         board.init();
 
         board.addBlock(new Point(2,3));
@@ -170,7 +170,7 @@ public class ArtemisPowerTurnDecoratorTest {
     }
 
     @Test
-    public void win_Condition_Returns_True_Test() {
+    public void artemis_win_Condition_Returns_True_Test() {
         board.init();
 
         board.addBlock(new Point(2,3));
@@ -189,7 +189,7 @@ public class ArtemisPowerTurnDecoratorTest {
 
 
     @Test
-    public void endTurn() {
+    public void artemis_EndTurn() {
         board.init();
         worker.setPosition(new Point(2,3));
 

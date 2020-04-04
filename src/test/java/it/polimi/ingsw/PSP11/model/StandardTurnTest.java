@@ -279,6 +279,23 @@ public class StandardTurnTest {
     }
 
     @Test
+    public void win_Condition_Returns_False_Moved_Up_Test() {
+        board.init();
+
+        board.addBlock(new Point(2,3));
+
+        board.addBlock(new Point(3,3));
+        board.addBlock(new Point(3,3));
+
+
+        worker.setPosition(new Point(2,3));
+        board.placeWorker(new Point(2,3),worker);
+        turn.applyMove(worker, board, new Point(3,3));
+        assertFalse(turn.winCondition(worker,board));
+
+    }
+
+    @Test
     public void win_Condition_Returns_True_Test() {
         board.init();
 
