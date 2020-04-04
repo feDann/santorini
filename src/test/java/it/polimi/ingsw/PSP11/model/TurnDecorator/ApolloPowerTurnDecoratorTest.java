@@ -40,7 +40,6 @@ public class ApolloPowerTurnDecoratorTest {
 
     @Test
     public void apollo_startTurn_Test() {
-        turn.startTurn();
         assertFalse(apolloTurn.getSharedTurn().isMovedDown());
         assertFalse(apolloTurn.getSharedTurn().isMovedUp());
         assertFalse(apolloTurn.getSharedTurn().isMoveAgain());
