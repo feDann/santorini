@@ -24,6 +24,7 @@ public class Game {
     private boolean gameEnded;
     private final String godCardsXMLPath = "src/main/resources/GodCards.xml";
 
+
     /**
      * Class constructor
      */
@@ -69,6 +70,7 @@ public class Game {
     public int getNumOfPlayer(){
         return numOfPlayer;
     }
+
 
     /**
      * Add new player in game
@@ -169,6 +171,18 @@ public class Game {
 
     public void setWinner(int indexOfWinner){
         winner = indexOfWinner;
+    }
+
+    public Deck getDeck() {
+        return deck;
+    }
+
+    public ArrayList<Player> getPlayers() {
+        return players;
+    }
+
+    public ArrayList<Card> getChosenCards() {
+        return chosenCards;
     }
 
     /**

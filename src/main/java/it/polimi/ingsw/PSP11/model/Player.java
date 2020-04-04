@@ -83,5 +83,19 @@ public class Player {
     }
 
 
+    public String getNickname() {
+        return nickname;
+    }
 
+    public Turn getPlayerTurn() {
+        return playerTurn;
+    }
+
+    public Card getGod() {
+        return god;
+    }
+
+    public ArrayList<Worker> getWorkers() {
+        return workers;
+    }
 }

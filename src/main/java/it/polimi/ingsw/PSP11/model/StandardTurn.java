@@ -60,7 +60,13 @@ public class StandardTurn implements Turn{
         this.buildAgain = buildAgain;
     }
 
-
+    /**
+     * method to get the legal position for a build or a move
+     * @param worker that wants to build or move
+     * @param board the game board
+     * @param whatToDo 0 if move and 1 if build
+     * @return arraylist of points representing the legal positions
+     */
     private ArrayList<Point> getLegalPosition (Worker worker, Board board, int whatToDo){
 
         Point workerPosition = worker.getPosition();
