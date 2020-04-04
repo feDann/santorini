@@ -30,9 +30,14 @@ public class ApolloPowerTurnDecorator extends GodTurn {
         for (int i = startX; i <= endX; i++){
             for (int j = startY; j <= endY; j++){
                 Point neighbouringPoint = new Point(i,j);
-                if(!board.hasDomeOnTop(neighbouringPoint)){
-                    if (board.getCurrentLevel(neighbouringPoint).ordinal() - board.getCurrentLevel(workerPosition).ordinal() <= 1) {
-                        possiblePosition.add(neighbouringPoint);
+                //this if check if the worker is of another player
+                if(!(board.hasWorkerOnTop(neighbouringPoint) && (worker.getColor().equals(board.getWorker(neighbouringPoint).getColor())))) {
+                    if (!board.hasDomeOnTop(neighbouringPoint)) {
+                        if (board.getCurrentLevel(neighbouringPoint).ordinal() - board.getCurrentLevel(workerPosition).ordinal() <= 1) {
+                            if(!(board.getCurrentLevel(neighbouringPoint).ordinal() - board.getCurrentLevel(workerPosition).ordinal() == 1 && getSharedTurn().isCantMoveUp() == true)) {
+                                possiblePosition.add(neighbouringPoint);
+                            }
+                        }
                     }
                 }
             }

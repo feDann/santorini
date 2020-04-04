@@ -22,6 +22,7 @@ public class StandardTurnTest {
         turn = new StandardTurn();
         board = new Board();
         worker = new Worker(Color.RED);
+        turn.startTurn();
     }
 
     @After
@@ -107,6 +108,40 @@ public class StandardTurnTest {
         ArrayList<Point> expectedPosition =  new ArrayList<>(Arrays.asList(new Point[]{new Point(1,1),new Point(1,3),new Point(2,1),new Point(3,2),new Point(3,1),new Point(3,3)}));
         assertTrue(expectedPosition.containsAll(actualPosition));
         //actualPosition.forEach((point)-> System.out.println(point.toString()));
+        assertTrue(actualPosition.containsAll(expectedPosition));
+    }
+
+    @Test
+    public void cant_Move_Up_Move_Test(){
+        ArrayList<Point> actualPosition;
+        ArrayList<Point> expectedPosition =  new ArrayList<>(Arrays.asList(new Point[]{new Point(1,1),new Point(1,3),new Point(2,1),new Point(3,2),new Point(3,1)}));
+        Point workerPosition = new Point(2,2);
+        Point baseBlockPosition = new Point(1,1);
+        Point middleBlockPosition = new Point(3,3);
+        Point topBlockPosition = new Point(2,3);
+        Point domePosition = new Point(1,2);
+
+        turn.setCantMoveUp(true);
+        board.init();
+        //base block on worker position
+        board.addBlock(workerPosition);
+        //base block, can move
+        board.addBlock(baseBlockPosition);
+        //middle block, can't move
+        board.addBlock(middleBlockPosition);
+        board.addBlock(middleBlockPosition);
+        //top block , can't move
+        board.addBlock(topBlockPosition);
+        board.addBlock(topBlockPosition);
+        board.addBlock(topBlockPosition);
+        //dome, can't move
+        board.addDome(domePosition);
+
+        worker.setPosition(workerPosition);
+        board.placeWorker(workerPosition, worker);
+
+        actualPosition = turn.move(worker, board);
+        assertTrue(expectedPosition.containsAll(actualPosition));
         assertTrue(actualPosition.containsAll(expectedPosition));
     }
 
