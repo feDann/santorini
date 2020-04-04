@@ -41,6 +41,7 @@ public class DemeterPowerTurnDecorator extends GodTurn {
             ArrayList<Point> possibleBuildPoints = getSharedTurn().build(worker, board);
             possibleBuildPoints.remove(oldBuildPosition);
             getSharedTurn().setBuildAgain(false);
+            numberOfTimesAlreadyBuilt++;
             return possibleBuildPoints;
         }
     }
@@ -60,6 +61,10 @@ public class DemeterPowerTurnDecorator extends GodTurn {
     @Override
     public void endTurn() {
         numberOfTimesAlreadyBuilt = 0;
+    }
+
+    public int getNumberOfTimesAlreadyBuilt() {
+        return numberOfTimesAlreadyBuilt;
     }
 
 }

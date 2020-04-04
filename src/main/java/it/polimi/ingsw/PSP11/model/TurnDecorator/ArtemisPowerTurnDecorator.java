@@ -10,6 +10,11 @@ import java.util.ArrayList;
 public class ArtemisPowerTurnDecorator extends GodTurn {
 
     public Point oldPosition;
+
+    public int getNumberOfTimesAlredyMoved() {
+        return numberOfTimesAlredyMoved;
+    }
+
     private int numberOfTimesAlredyMoved = 0;
 
     @Override
