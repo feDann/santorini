@@ -5,7 +5,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.awt.*;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -18,15 +17,17 @@ public class StandardTurnTest {
     Worker worker;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         turn = new StandardTurn();
         board = new Board();
         worker = new Worker(Color.RED);
     }
 
     @After
-    public void tearDown() throws Exception {
+    public void tearDown() {
         turn = null;
+        board = null;
+        worker = null;
     }
 
     @Test
@@ -45,7 +46,7 @@ public class StandardTurnTest {
         worker.setPosition(new Point(2,2));
         board.placeWorker(new Point(2,2),worker);
         actualPosition = turn.move(worker, board);
-        ArrayList<Point> expectedPosition =  new ArrayList<>(Arrays.asList(new Point[]{new Point(1,1),new Point(1,2),new Point(1,3),new Point(2,3),new Point(2,1),new Point(3,2),new Point(3,1),new Point(3,3)}));
+        ArrayList<Point> expectedPosition =  new ArrayList<>(Arrays.asList(new Point(1,1),new Point(1,2),new Point(1,3),new Point(2,3),new Point(2,1),new Point(3,2),new Point(3,1),new Point(3,3)));
         assertTrue(expectedPosition.containsAll(actualPosition));
         //actualPosition.forEach((point)-> System.out.println(point.toString()));
         assertTrue(actualPosition.containsAll(expectedPosition));
@@ -58,7 +59,7 @@ public class StandardTurnTest {
         worker.setPosition(new Point(0,0));
         board.placeWorker(new Point(0,0),worker);
         actualPosition = turn.move(worker, board);
-        ArrayList<Point> expectedPosition =  new ArrayList<>(Arrays.asList(new Point[]{new Point(1,1),new Point(0,1),new Point(1,0)}));
+        ArrayList<Point> expectedPosition =  new ArrayList<>(Arrays.asList(new Point(1,1),new Point(0,1),new Point(1,0)));
         assertTrue(expectedPosition.containsAll(actualPosition));
         //actualPosition.forEach((point)-> System.out.println(point.toString()));
         assertTrue(actualPosition.containsAll(expectedPosition));
@@ -76,7 +77,7 @@ public class StandardTurnTest {
         villainWorker.setPosition(new Point(2,3));
         board.placeWorker(new Point(2,3),villainWorker);
         actualPosition = turn.move(worker, board);
-        ArrayList<Point> expectedPosition =  new ArrayList<>(Arrays.asList(new Point[]{new Point(1,1),new Point(1,2),new Point(1,3),new Point(2,1),new Point(3,2),new Point(3,1),new Point(3,3)}));
+        ArrayList<Point> expectedPosition =  new ArrayList<>(Arrays.asList(new Point(1,1),new Point(1,2),new Point(1,3),new Point(2,1),new Point(3,2),new Point(3,1),new Point(3,3)));
         assertTrue(expectedPosition.containsAll(actualPosition));
         //actualPosition.forEach((point)-> System.out.println(point.toString()));
         assertTrue(actualPosition.containsAll(expectedPosition));
@@ -104,7 +105,7 @@ public class StandardTurnTest {
         board.placeWorker(new Point(2,2),worker);
 
         actualPosition = turn.move(worker, board);
-        ArrayList<Point> expectedPosition =  new ArrayList<>(Arrays.asList(new Point[]{new Point(1,1),new Point(1,3),new Point(2,1),new Point(3,2),new Point(3,1),new Point(3,3)}));
+        ArrayList<Point> expectedPosition =  new ArrayList<>(Arrays.asList(new Point(1,1),new Point(1,3),new Point(2,1),new Point(3,2),new Point(3,1),new Point(3,3)));
         assertTrue(expectedPosition.containsAll(actualPosition));
         //actualPosition.forEach((point)-> System.out.println(point.toString()));
         assertTrue(actualPosition.containsAll(expectedPosition));
@@ -123,7 +124,7 @@ public class StandardTurnTest {
         assertTrue(board.hasWorkerOnTop(new Point(2,3)));
         assertFalse(board.hasWorkerOnTop(new Point(2,2)));
         assertEquals(worker, board.getWorker(new Point(2,3)));
-        assertEquals(null, board.getWorker(new Point(2,2)));
+        assertNull(board.getWorker(new Point(2, 2)));
     }
 
     @Test
@@ -140,7 +141,7 @@ public class StandardTurnTest {
         assertTrue(board.hasWorkerOnTop(new Point(2,3)));
         assertFalse(board.hasWorkerOnTop(new Point(2,2)));
         assertEquals(worker, board.getWorker(new Point(2,3)));
-        assertEquals(null, board.getWorker(new Point(2,2)));
+        assertNull(board.getWorker(new Point(2, 2)));
     }
 
     @Test
@@ -150,7 +151,7 @@ public class StandardTurnTest {
         worker.setPosition(new Point(2,2));
         board.placeWorker(new Point(2,2),worker);
         actualPosition = turn.build(worker, board);
-        ArrayList<Point> expectedPosition =  new ArrayList<>(Arrays.asList(new Point[]{new Point(1,1),new Point(1,2),new Point(1,3),new Point(2,3),new Point(2,1),new Point(3,2),new Point(3,1),new Point(3,3)}));
+        ArrayList<Point> expectedPosition =  new ArrayList<>(Arrays.asList(new Point(1,1),new Point(1,2),new Point(1,3),new Point(2,3),new Point(2,1),new Point(3,2),new Point(3,1),new Point(3,3)));
         assertTrue(expectedPosition.containsAll(actualPosition));
         //actualPosition.forEach((point)-> System.out.println(point.toString()));
         assertTrue(actualPosition.containsAll(expectedPosition));
@@ -163,7 +164,7 @@ public class StandardTurnTest {
         worker.setPosition(new Point(0,0));
         board.placeWorker(new Point(0,0),worker);
         actualPosition = turn.build(worker, board);
-        ArrayList<Point> expectedPosition =  new ArrayList<>(Arrays.asList(new Point[]{new Point(1,1),new Point(0,1),new Point(1,0)}));
+        ArrayList<Point> expectedPosition =  new ArrayList<>(Arrays.asList(new Point(1,1),new Point(0,1),new Point(1,0)));
         assertTrue(expectedPosition.containsAll(actualPosition));
         //actualPosition.forEach((point)-> System.out.println(point.toString()));
         assertTrue(actualPosition.containsAll(expectedPosition));
@@ -192,7 +193,7 @@ public class StandardTurnTest {
         board.placeWorker(new Point(2,2),worker);
         actualPosition = turn.build(worker, board);
 
-        ArrayList<Point> expectedPosition =  new ArrayList<>(Arrays.asList(new Point[]{new Point(1,1),new Point(1,3),new Point(2,3),new Point(2,1),new Point(3,2),new Point(3,1),new Point(3,3)}));
+        ArrayList<Point> expectedPosition =  new ArrayList<>(Arrays.asList(new Point(1,1),new Point(1,3),new Point(2,3),new Point(2,1),new Point(3,2),new Point(3,1),new Point(3,3)));
         assertTrue(expectedPosition.containsAll(actualPosition));
         //actualPosition.forEach((point)-> System.out.println(point.toString()));
         assertTrue(actualPosition.containsAll(expectedPosition));
