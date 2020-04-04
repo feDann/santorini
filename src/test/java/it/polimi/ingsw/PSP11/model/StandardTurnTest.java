@@ -298,6 +298,6 @@ public class StandardTurnTest {
 
     @Test
     public void endTurnTest() {
-
+        turn.endTurn();
     }
 }

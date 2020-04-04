@@ -226,5 +226,9 @@ public class AthenaPowerTurnDecoratorTest {
         assertTrue(athenaTurn.winCondition(worker,board));
 
     }
+    @Test
+    public void endTurnTest() {
+        athenaTurn.endTurn();
+    }
  }
 
