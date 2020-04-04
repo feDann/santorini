@@ -8,7 +8,7 @@
 ### Stato del Progetto
 | Funzionalità | Stato |
 |:-----------------------|:------------------------------------:|
-| Regole semplificate | [![RED](https://placehold.it/15/f03c15/f03c15)](#) |
+| Regole semplificate | [![YELLOW](https://placehold.it/15/ffdd00/ffdd00)](#) |
 | Regole complete | [![RED](https://placehold.it/15/f03c15/f03c15)](#) |
 | Socket | [![RED](https://placehold.it/15/f03c15/f03c15)](#) |
 | CLI | [![RED](https://placehold.it/15/f03c15/f03c15)](#)|
