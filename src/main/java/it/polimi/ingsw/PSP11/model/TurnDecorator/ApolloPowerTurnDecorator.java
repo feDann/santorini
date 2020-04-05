@@ -34,7 +34,7 @@ public class ApolloPowerTurnDecorator extends GodTurn {
                 if(!(board.hasWorkerOnTop(neighbouringPoint) && (worker.getColor().equals(board.getWorker(neighbouringPoint).getColor())))) {
                     if (!board.hasDomeOnTop(neighbouringPoint)) {
                         if (board.getCurrentLevel(neighbouringPoint).ordinal() - board.getCurrentLevel(workerPosition).ordinal() <= 1) {
-                            if(!(board.getCurrentLevel(neighbouringPoint).ordinal() - board.getCurrentLevel(workerPosition).ordinal() == 1 && getSharedTurn().isCantMoveUp() == true)) {
+                            if(!(board.getCurrentLevel(neighbouringPoint).ordinal() - board.getCurrentLevel(workerPosition).ordinal() == 1 && getSharedTurn().isCantMoveUp())) {
                                 possiblePosition.add(neighbouringPoint);
                             }
                         }
@@ -56,7 +56,7 @@ public class ApolloPowerTurnDecorator extends GodTurn {
         if(board.hasWorkerOnTop(newPosition)){
             Worker opponentWorker = board.getWorker(newPosition);
             //remove the opponent worker from his position
-            board.removeWorker(opponentWorker.getPosition());
+            board.removeWorker(newPosition);
             //switch worker and opponent worker position
             worker.setPosition(newPosition);
             board.placeWorker(newPosition, worker);
