@@ -84,6 +84,9 @@ public class MinotaurPowerTurnDecorator extends GodTurn {
             getSharedTurn().applyMove(worker, board, newPosition);
         }
         else{
+            if(board.getCurrentLevel(newPosition).ordinal() - board.getCurrentLevel(worker.getPosition()).ordinal() == 1){
+                getSharedTurn().setMovedUp(true);
+            }
             Worker opponentWorker = board.getWorker(newPosition);
             Point oldPosition = worker.getPosition();
             Point opponentWorkerNewPosition = new Point(newPosition);
