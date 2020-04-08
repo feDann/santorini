@@ -185,6 +185,14 @@ public class Game {
         return chosenCards;
     }
 
+    public StandardTurn getSharedTurn() {
+        return sharedTurn;
+    }
+
+    public Player getCurrentPlayer(){
+        return players.get(indexOfCurrentPlayer);
+    }
+
     /**
      * Start the game
      */
