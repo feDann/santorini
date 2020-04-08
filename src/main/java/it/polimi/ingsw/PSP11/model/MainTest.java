@@ -32,50 +32,65 @@ public class MainTest {
 
 
         Board board = game.getBoard();
-        player1.chooseWorker(0).setPosition(new Point(0,0));
-        player1.chooseWorker(1).setPosition(new Point(3,3));
-        board.placeWorker(new Point(0,0) , player1.chooseWorker(0));
-        board.placeWorker(new Point(3,3) , player1.chooseWorker(1));
 
-        player2.chooseWorker(0).setPosition(new Point(2,2));
-        player2.chooseWorker(1).setPosition(new Point(1,1));
-        board.placeWorker(new Point(2,2) , player2.chooseWorker(0));
-        board.placeWorker(new Point(1,1) , player2.chooseWorker(1));
+        Point player1Worker1Position = new Point(0,0);
+        Point player1Worker2Position = new Point(4,4);
+        player1.chooseWorker(0).setPosition(player1Worker1Position);
+        player1.chooseWorker(1).setPosition(player1Worker2Position);
+        board.placeWorker(player1Worker1Position , player1.chooseWorker(0));
+        board.placeWorker(player1Worker2Position , player1.chooseWorker(1));
+
+        Point player2Worker1Position = new Point(2,2);
+        Point player2Worker2Position = new Point(1,1);
+        player2.chooseWorker(0).setPosition(player2Worker1Position);
+        player2.chooseWorker(1).setPosition(player2Worker2Position);
+        board.placeWorker(player2Worker1Position , player2.chooseWorker(0));
+        board.placeWorker(player2Worker2Position , player2.chooseWorker(1));
 
         board.printBoard();
 
         Scanner scanner = new Scanner(System.in);
 
         while(!game.isGameEnded()){
-            System.out.println("\n\n");
+
+            System.out.println();
             System.out.println("Turno di " + game.getPlayers().get(game.getIndexOfCurrentPlayer()).getNickname());
             game.getCurrentPlayer().getPlayerTurn().startTurn();
             System.out.println("seleziona il worker da muovere: 0 o 1?");
-            System.out.println("coordinate del worker 0: " + game.getCurrentPlayer().chooseWorker(0).getPosition().toString());
-            System.out.println("coordinate del worker 1: " + game.getCurrentPlayer().chooseWorker(1).getPosition().toString());
+            Point worker0Position = game.getCurrentPlayer().chooseWorker(0).getPosition();
+            Point worker1Position = game.getCurrentPlayer().chooseWorker(1).getPosition();
+            System.out.println("coordinate del worker 0:  (" + worker0Position.x + "," + worker0Position.y + ")");
+            System.out.println("coordinate del worker 1:  (" + worker1Position.x + "," + worker1Position.y + ")");
 
             int chosenWorker = scanner.nextInt();
-            ArrayList<Point> possiblieMoves = game.getCurrentPlayer().getPlayerTurn().move(game.getCurrentPlayer().chooseWorker(chosenWorker),board);
-            System.out.println("\n\n");
-            System.out.println(possiblieMoves.toString());
-            System.out.println("inserisici le coordinate in cui vuoi muoverti x,y");
+            ArrayList<Point> possibleMoves = game.getCurrentPlayer().getPlayerTurn().move(game.getCurrentPlayer().chooseWorker(chosenWorker),board);
+            System.out.println();
+            System.out.print("Possible moves:");
+            for (Point p : possibleMoves){
+                System.out.print("  (" + p.x + "," + p.y + ")");
+            }
+            System.out.println();
+            System.out.println("inserisici le coordinate in cui vuoi muoverti (x,y)");
             String chosenPosition = scanner.next();
             int x = Integer.parseInt( chosenPosition.substring(0,1));
             int y = Integer.parseInt( chosenPosition.substring(2,3));
-            System.out.println("hai scelto" + x + y);
+            System.out.println("hai scelto (" + x + "," + y + ")");
             game.getCurrentPlayer().getPlayerTurn().applyMove(game.getCurrentPlayer().chooseWorker(chosenWorker), board, new Point(x,y));
             board.printBoard();
-
-            ArrayList<Point> possiblieBuild = game.getCurrentPlayer().getPlayerTurn().build(game.getCurrentPlayer().chooseWorker(chosenWorker),board);
-            System.out.println("\n\n");
-            System.out.println(possiblieBuild.toString());
-            System.out.println("inserisici le coordinate in cui vuoi costruire x,y");
+            ArrayList<Point> possibleBuild = game.getCurrentPlayer().getPlayerTurn().build(game.getCurrentPlayer().chooseWorker(chosenWorker),board);
+            System.out.println();
+            System.out.print("Possible builds:");
+            for (Point p : possibleBuild){
+                System.out.print("  (" + p.x + "," + p.y + ")");
+            }
+            System.out.println();
+            System.out.println("inserisici le coordinate in cui vuoi costruire (x,y)");
             chosenPosition = scanner.next();
             x = Integer.parseInt( chosenPosition.substring(0,1));
             y = Integer.parseInt( chosenPosition.substring(2,3));
-            System.out.println("hai scelto" + x + y);
+            System.out.println("hai scelto (" + x + "," + y +")");
             game.getCurrentPlayer().getPlayerTurn().applyBuild(game.getCurrentPlayer().chooseWorker(chosenWorker), board, new Point(x,y),false);
-            System.out.println("\n\n");
+            System.out.println();
             board.printBoard();
 
             game.nextPlayer();
