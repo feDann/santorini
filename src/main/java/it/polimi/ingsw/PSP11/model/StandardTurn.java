@@ -104,6 +104,7 @@ public class StandardTurn implements Turn{
         movedUp = false;
         moveAgain = false;
         buildAgain = false;
+        canBuildDomeAnyLevel= false;
     }
 
     /**

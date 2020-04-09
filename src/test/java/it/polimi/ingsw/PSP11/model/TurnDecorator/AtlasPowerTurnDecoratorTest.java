@@ -46,6 +46,7 @@ public class AtlasPowerTurnDecoratorTest {
         assertFalse(atlasTurn.getSharedTurn().isMovedUp());
         assertFalse(atlasTurn.getSharedTurn().isBuildAgain());
         assertFalse(atlasTurn.getSharedTurn().isMoveAgain());
+        assertTrue(atlasTurn.getSharedTurn().isCanBuildDomeAnyLevel());
     }
 
     @Test
@@ -162,5 +163,6 @@ public class AtlasPowerTurnDecoratorTest {
     @Test
     public void endTurn() {
         atlasTurn.endTurn();
+        assertFalse(atlasTurn.getSharedTurn().isCanBuildDomeAnyLevel());
     }
 }

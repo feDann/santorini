@@ -12,6 +12,7 @@ public class AtlasPowerTurnDecorator extends GodTurn {
     @Override
     public void startTurn() {
         getSharedTurn().startTurn();
+        getSharedTurn().setCanBuildDomeAnyLevel(true);
     }
 
     @Override
@@ -49,6 +50,7 @@ public class AtlasPowerTurnDecorator extends GodTurn {
     @Override
     public void endTurn() {
         getSharedTurn().endTurn();
+        getSharedTurn().setCanBuildDomeAnyLevel(false);
     }
 
 
