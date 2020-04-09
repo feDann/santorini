@@ -19,9 +19,7 @@ public class MinotaurPowerTurnDecorator extends GodTurn {
         if(newPositionX > 0 && newPositionX <5 && newPositionY > 0 && newPositionY <5 ){
             Point newPosition = new Point(newPositionX, newPositionY);
             if(!board.hasDomeOnTop(newPosition) && !board.hasWorkerOnTop(newPosition)){
-                if(board.getCurrentLevel(newPosition).ordinal()- board.getCurrentLevel(villainWorkerPosition).ordinal() <=1){
-                    return true;
-                }
+                return board.getCurrentLevel(newPosition).ordinal() - board.getCurrentLevel(villainWorkerPosition).ordinal() <= 1;
             }
         }
         return false;
@@ -36,44 +34,35 @@ public class MinotaurPowerTurnDecorator extends GodTurn {
     public ArrayList<Point> move(Worker worker, Board board) {
 
         Point workerPosition = worker.getPosition();
-        int x = (int) workerPosition.getX();
-        int y = (int) workerPosition.getY();
-        ArrayList<Point> possiblePosition = new ArrayList<Point>();
+        ArrayList<Point> neighbouringPoints = board.getNeighbouringPoints(workerPosition);
+        ArrayList<Point> possiblePosition = new ArrayList<>();
 
-        int startX = ((x - 1) < 0) ? x : x - 1;
-        int startY = ((y - 1) < 0) ? y : y - 1;
-        int endX = ((x + 1) > 4) ? x : x + 1;
-        int endY = ((y + 1) > 4) ? y : y + 1;
 
-        for (int i = startX; i <= endX; i++) {
-            for (int j = startY; j <= endY; j++) {
+            for (Point position : neighbouringPoints) {
 
-                Point neighbouringPoint = new Point(i, j);
 
-                if (!board.hasDomeOnTop(neighbouringPoint)) {
-                    if (board.hasWorkerOnTop(neighbouringPoint)) {
+                if (!board.hasDomeOnTop(position)) {
+                    if (board.hasWorkerOnTop(position)) {
                         //move
-                        if (!board.getWorker(workerPosition).getColor().equals(board.getWorker(neighbouringPoint).getColor()) && canBePushed(board.getWorker(neighbouringPoint), workerPosition, board)) {
-                            if (board.getCurrentLevel(neighbouringPoint).ordinal() - board.getCurrentLevel(workerPosition).ordinal() <= 1) {
+                        if (!board.getWorker(workerPosition).getColor().equals(board.getWorker(position).getColor()) && canBePushed(board.getWorker(position), workerPosition, board)) {
+                            if (board.getCurrentLevel(position).ordinal() - board.getCurrentLevel(workerPosition).ordinal() <= 1) {
                                 //check for Athena power
-                                if (!(board.getCurrentLevel(neighbouringPoint).ordinal() - board.getCurrentLevel(workerPosition).ordinal() == 1 && getSharedTurn().isCantMoveUp())) {
-                                    possiblePosition.add(neighbouringPoint);
+                                if (!(board.getCurrentLevel(position).ordinal() - board.getCurrentLevel(workerPosition).ordinal() == 1 && getSharedTurn().isCantMoveUp())) {
+                                    possiblePosition.add(position);
                                 }
                             }
 
                         }
                     } else {
-                        if (board.getCurrentLevel(neighbouringPoint).ordinal() - board.getCurrentLevel(workerPosition).ordinal() <= 1) {
+                        if (board.getCurrentLevel(position).ordinal() - board.getCurrentLevel(workerPosition).ordinal() <= 1) {
                             //check for Athena power
-                            if (!(board.getCurrentLevel(neighbouringPoint).ordinal() - board.getCurrentLevel(workerPosition).ordinal() == 1 && getSharedTurn().isCantMoveUp())) {
-                                possiblePosition.add(neighbouringPoint);
+                            if (!(board.getCurrentLevel(position).ordinal() - board.getCurrentLevel(workerPosition).ordinal() == 1 && getSharedTurn().isCantMoveUp())) {
+                                possiblePosition.add(position);
                             }
                         }
                     }
                 }
             }
-
-        }
         possiblePosition.remove(workerPosition);
         return possiblePosition;
     }
