@@ -223,5 +223,10 @@ public class HephaestusPowerTurnDecoratorTest {
 
     @Test
     public void hephaestus_endTurn() {
+        hephaestusTurn.endTurn();
+        assertFalse(hephaestusTurn.getSharedTurn().isMovedUp());
+        assertFalse(hephaestusTurn.getSharedTurn().isMovedDown());
+        assertFalse(hephaestusTurn.getSharedTurn().isMoveAgain());
+        assertFalse(hephaestusTurn.getSharedTurn().isBuildAgain());
     }
 }

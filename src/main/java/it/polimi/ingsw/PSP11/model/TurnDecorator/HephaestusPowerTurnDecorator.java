@@ -59,6 +59,7 @@ public class HephaestusPowerTurnDecorator extends GodTurn {
     @Override
     public void endTurn() {
         getSharedTurn().endTurn();
+        getSharedTurn().setBuildAgain(false);
         numberOfTimesAlreadyBuilt = 0;
     }
 
