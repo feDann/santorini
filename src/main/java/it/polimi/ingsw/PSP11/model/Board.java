@@ -1,6 +1,7 @@
 package it.polimi.ingsw.PSP11.model;
 
 import java.awt.*;
+import java.util.ArrayList;
 
 public class Board {
 
@@ -107,6 +108,25 @@ public class Board {
         int y = (int) point.getY();
 
         return board[x][y].getCurrentLevel();
+    }
+
+    public ArrayList<Point> getNeighbouringPoints(Point position){
+        ArrayList<Point> positions = new ArrayList<>();
+        int x = (int) position.getX();
+        int y = (int) position.getY();
+
+        int startX = ((x - 1) < 0)? x : x-1;
+        int startY = ((y - 1) < 0)? y : y-1;
+        int endX = ((x + 1) > 4)? x : x+1;
+        int endY = ((y + 1) > 4)? y : y+1;
+
+        for (int i = startX; i <= endX; i++){
+            for (int j = startY; j <= endY; j++) {
+                positions.add(new Point(i,j));
+                }
+            }
+
+        return positions;
     }
 
     public void printBoard() {

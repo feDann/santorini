@@ -48,6 +48,7 @@ public class MainTest {
         board.placeWorker(player2Worker2Position , player2.chooseWorker(1));
 
         board.printBoard();
+        System.out.println("Points: " + board.getNeighbouringPoints(new Point(2,2)).toString());
 
         Scanner scanner = new Scanner(System.in);
 
