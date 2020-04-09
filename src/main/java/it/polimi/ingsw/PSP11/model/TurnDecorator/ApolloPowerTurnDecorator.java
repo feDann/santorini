@@ -17,32 +17,23 @@ public class ApolloPowerTurnDecorator extends GodTurn {
 
     @Override
     public ArrayList<Point> move(Worker worker, Board board) {
+
+        Point workerPosition = worker.getPosition();
+        ArrayList<Point> neighbouringPoints = board.getNeighbouringPoints(workerPosition);
         ArrayList<Point> possiblePosition = new ArrayList<>();
-        Point workerPosition = new Point(worker.getPosition());
-        int x = (int) workerPosition.getX();
-        int y = (int) workerPosition.getY();
 
-        int startX = ((x - 1) < 0)? x : x-1;
-        int startY = ((y - 1) < 0)? y : y-1;
-        int endX = ((x + 1) > 4)? x : x+1;
-        int endY = ((y + 1) > 4)? y : y+1;
-
-        for (int i = startX; i <= endX; i++){
-            for (int j = startY; j <= endY; j++){
-                Point neighbouringPoint = new Point(i,j);
-                //this if check if the worker is of another player
-                if(!(board.hasWorkerOnTop(neighbouringPoint) && (worker.getColor().equals(board.getWorker(neighbouringPoint).getColor())))) {
-                    if (!board.hasDomeOnTop(neighbouringPoint)) {
-                        if (board.getCurrentLevel(neighbouringPoint).ordinal() - board.getCurrentLevel(workerPosition).ordinal() <= 1) {
-                            if(!(board.getCurrentLevel(neighbouringPoint).ordinal() - board.getCurrentLevel(workerPosition).ordinal() == 1 && getSharedTurn().isCantMoveUp())) {
-                                possiblePosition.add(neighbouringPoint);
-                            }
+        for(Point position : neighbouringPoints){
+            if(!(board.hasWorkerOnTop(position) && (worker.getColor().equals(board.getWorker(position).getColor())))) {
+                if (!board.hasDomeOnTop(position)) {
+                    if (board.getCurrentLevel(position).ordinal() - board.getCurrentLevel(workerPosition).ordinal() <= 1) {
+                        if(!(board.getCurrentLevel(position).ordinal() - board.getCurrentLevel(workerPosition).ordinal() == 1 && getSharedTurn().isCantMoveUp())) {
+                            possiblePosition.add(position);
                         }
                     }
                 }
             }
         }
-        possiblePosition.remove(workerPosition);
+
         return possiblePosition;
     }
 
