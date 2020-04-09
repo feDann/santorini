@@ -48,7 +48,6 @@ public class MainTest {
         board.placeWorker(player2Worker2Position , player2.chooseWorker(1));
 
         board.printBoard();
-        System.out.println("Points: " + board.getNeighbouringPoints(new Point(2,2)).toString());
 
         Scanner scanner = new Scanner(System.in);
 
@@ -62,7 +61,6 @@ public class MainTest {
             Point worker1Position = game.getCurrentPlayer().chooseWorker(1).getPosition();
             System.out.println("coordinate del worker 0:  (" + worker0Position.x + "," + worker0Position.y + ")");
             System.out.println("coordinate del worker 1:  (" + worker1Position.x + "," + worker1Position.y + ")");
-
             int chosenWorker = scanner.nextInt();
             ArrayList<Point> possibleMoves = game.getCurrentPlayer().getPlayerTurn().move(game.getCurrentPlayer().chooseWorker(chosenWorker),board);
             System.out.println();

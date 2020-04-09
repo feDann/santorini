@@ -131,10 +131,11 @@ public class Board {
 
     public void printBoard() {
         for (int i = 0; i < 5; i++) {
+            System.out.println("------------------------------------");
             for (int j = 0; j < 5; j++) {
                 System.out.print("|" + board[i][j].getCurrentLevel().ordinal());
                 if (board[i][j].hasWorkerOnTop()){
-                    System.out.print("W("+ board[i][j].getCurrentWorker().getColor().toString().charAt(0) +") ");
+                    System.out.print(board[i][j].getCurrentWorker().getColor().getEscape() +"W("+ board[i][j].getCurrentWorker().getColor().toString().charAt(0) +") " + Color.RESET);
                 }
                 else if(board[i][j].hasDomeOnTop()){
                     System.out.print(" D   ");
@@ -146,5 +147,6 @@ public class Board {
             System.out.print("|");
             System.out.print("\n");
         }
+        System.out.println("------------------------------------");
     }
 }
