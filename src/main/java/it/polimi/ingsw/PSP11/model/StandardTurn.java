@@ -123,6 +123,11 @@ public class StandardTurn implements Turn{
         if(board.getCurrentLevel(newPosition).ordinal() - board.getCurrentLevel(worker.getPosition()).ordinal() == 1){
             movedUp = true;
         }
+
+        if (board.getCurrentLevel(newPosition).ordinal() - board.getCurrentLevel(worker.getPosition()).ordinal() < 0) {
+            movedDown = true;
+        }
+
         worker.setPosition(newPosition);
         board.placeWorker(newPosition , worker);
         //worker.setMoved(true);
