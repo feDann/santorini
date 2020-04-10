@@ -95,6 +95,5 @@ public class MainTest {
             game.nextPlayer();
 
         }
-
     }
 }
