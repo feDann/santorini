@@ -20,10 +20,11 @@ public class Server {
 
 
     public void start(){
-        System.out.println("She Santorini server is up and running...");
+        System.out.println("The Santorini server is up and running...");
         while (true){
             try {
                 Socket newClientSocket = serverSocket.accept();
+                //System.out.println("\nAccepted new client on port: " + newClientSocket.getPort() + "\n");
                 ClientSocketConnection socketConnection = new ClientSocketConnection(newClientSocket, this);
                 executor.submit(socketConnection);
             } catch (IOException e) {

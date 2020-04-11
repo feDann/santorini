@@ -1,6 +1,8 @@
 package it.polimi.ingsw.PSP11.client;
 
 
+import it.polimi.ingsw.PSP11.messages.Message;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -36,12 +38,7 @@ public class Client {
                 try {
                     while (isActive()) {
                         Object inputObject = socketIn.readObject();
-                        if(inputObject instanceof String){
-                            System.out.println((String)inputObject);
-                        }
-                        else {
-                            throw new IllegalArgumentException();
-                        }
+                        MessageDecoder.decodeMessage((Message)inputObject);
                     }
                 } catch (Exception e){
                     setActive(false);
