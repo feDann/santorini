@@ -23,7 +23,6 @@ public class Controller implements Observer<Message> {
             //chiama la remote view e non insulta il giocatore
         }
         else{
-            //Ajj a vidi si mi pozzu fida i tia
             //chiama la remote view e insulta il giocatore
         }
 
