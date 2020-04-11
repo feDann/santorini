@@ -1,9 +1,12 @@
 package it.polimi.ingsw.PSP11.controller.state;
 
+import it.polimi.ingsw.PSP11.messages.Message;
 import it.polimi.ingsw.PSP11.model.Game;
+import it.polimi.ingsw.PSP11.model.Player;
 
 public class SelectPlayerGodState implements GameState{
-
+    int index;
+    String requestingPlayer;
     private Game game;
 
     public SelectPlayerGodState (Game game){
@@ -11,8 +14,10 @@ public class SelectPlayerGodState implements GameState{
     }
 
     @Override
-    public void selectPlayerGod(int index) {
-
+    public String selectPlayerGod(int index) {
+        game.getCurrentPlayer().setGod(game.selectPlayerGod(index));
+        game.getCurrentPlayer().setPlayerTurn(game.getSharedTurn());
+        return "You choose poorly";
     }
 
     @Override
@@ -66,7 +71,8 @@ public class SelectPlayerGodState implements GameState{
     }
 
     @Override
-    public void execute() {
-
+    public String execute(Message msg){
+        //SPACCHETTAMENTO RAGAZZI 30000 GEMME CLASH ROYALE
+        return selectPlayerGod(index);
     }
 }

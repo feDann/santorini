@@ -1,10 +1,9 @@
 package it.polimi.ingsw.PSP11.model;
 
-import it.polimi.ingsw.PSP11.XMLParser;
+import it.polimi.ingsw.PSP11.utils.XMLParser;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.jar.JarOutputStream;
 
 /**
  * Class for the Game

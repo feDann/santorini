@@ -1,7 +1,6 @@
 package it.polimi.ingsw.PSP11.model;
 
-import it.polimi.ingsw.PSP11.XMLParser;
-import it.polimi.ingsw.PSP11.model.TurnDecorator.ApolloPowerTurnDecorator;
+import it.polimi.ingsw.PSP11.utils.XMLParser;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

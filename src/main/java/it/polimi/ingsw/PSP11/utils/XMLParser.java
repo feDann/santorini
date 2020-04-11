@@ -1,4 +1,4 @@
-package it.polimi.ingsw.PSP11;
+package it.polimi.ingsw.PSP11.utils;
 
 import it.polimi.ingsw.PSP11.model.Deck;
 

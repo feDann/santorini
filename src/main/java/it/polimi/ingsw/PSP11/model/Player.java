@@ -98,4 +98,5 @@ public class Player {
     public ArrayList<Worker> getWorkers() {
         return workers;
     }
+
 }
