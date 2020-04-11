@@ -3,7 +3,6 @@ package it.polimi.ingsw.PSP11.server;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -21,7 +20,7 @@ public class Server {
 
 
     public void start(){
-        System.out.println("the santorini server is up and running...");
+        System.out.println("She Santorini server is up and running...");
         while (true){
             try {
                 Socket newClientSocket = serverSocket.accept();

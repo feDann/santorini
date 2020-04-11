@@ -12,7 +12,7 @@ public class Client {
 
     private String ip;
     private int port;
-    private boolean active;
+    private boolean active = true;
 
     public synchronized boolean isActive(){
         return active;
@@ -27,28 +27,7 @@ public class Client {
         this.port = port;
     }
 
-    public void start() throws IOException {
-        Socket clientSocket = new Socket(ip,port);
-        System.out.println("connection established");
-        ObjectInputStream socketIn = new ObjectInputStream(clientSocket.getInputStream());
-        ObjectOutputStream socketOut = new ObjectOutputStream(clientSocket.getOutputStream());
-        Scanner stdin = new Scanner(System.in);
 
-        try{
-            Thread t0 = asyncRead(socketIn);
-            Thread t1 = asyncWrite(stdin, socketOut);
-            t0.join();
-            t1.join();
-        } catch(InterruptedException | NoSuchElementException e){
-            System.out.println("Connection closed from the client side");
-        } finally {
-            stdin.close();
-            socketIn.close();
-            socketOut.close();
-            clientSocket.close();
-        }
-
-    }
 
     public Thread asyncRead(final ObjectInputStream socketIn){
         Thread t = new Thread(new Runnable() {
@@ -91,6 +70,29 @@ public class Client {
         });
         t.start();
         return t;
+    }
+
+    public void start() throws IOException {
+        Socket clientSocket = new Socket(ip,port);
+        System.out.println("connection established");
+        ObjectInputStream socketIn = new ObjectInputStream(clientSocket.getInputStream());
+        ObjectOutputStream socketOut = new ObjectOutputStream(clientSocket.getOutputStream());
+        Scanner stdin = new Scanner(System.in);
+
+        try{
+            Thread t0 = asyncRead(socketIn);
+            Thread t1 = asyncWrite(stdin, socketOut);
+            t0.join();
+            t1.join();
+        } catch(InterruptedException | NoSuchElementException e){
+            System.out.println("Connection closed from the client side");
+        } finally {
+            stdin.close();
+            socketIn.close();
+            socketOut.close();
+            clientSocket.close();
+        }
+
     }
 
 
