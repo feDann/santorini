@@ -17,15 +17,16 @@ public class Server {
 
     public Server () throws IOException {
         serverSocket = new ServerSocket(serverPort);
-
-
     }
+
 
     public void start(){
         System.out.println("the santorini server is up and running...");
         while (true){
             try {
                 Socket newClientSocket = serverSocket.accept();
+                ClientSocketConnection socketConnection = new ClientSocketConnection(newClientSocket, this);
+                executor.submit(socketConnection);
             } catch (IOException e) {
                 System.err.println("Cannot connect the client " + e.getMessage() + "!");
             }

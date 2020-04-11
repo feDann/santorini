@@ -1,4 +1,4 @@
-package it.polimi.ingsw.PSP11.client;
+package it.polimi.ingsw.PSP11.server;
 
 import it.polimi.ingsw.PSP11.messages.Message;
 import it.polimi.ingsw.PSP11.server.Server;
@@ -15,6 +15,11 @@ public class ClientSocketConnection implements Runnable{
     private ObjectOutputStream out;
     private boolean active = true;
 
+    public ClientSocketConnection(Socket socket, Server server){
+        this.clientSocket = socket;
+        this.server = server;
+    }
+
     private synchronized boolean isActive(){
         return active;
     }
@@ -29,6 +34,7 @@ public class ClientSocketConnection implements Runnable{
         try {
             in = new ObjectInputStream(clientSocket.getInputStream());
             out = new ObjectOutputStream(clientSocket.getOutputStream());
+            send("benvenuto nel gioco coglione!");
             while (isActive()){
                 message = (Message) in.readObject();
                 //do the notify
