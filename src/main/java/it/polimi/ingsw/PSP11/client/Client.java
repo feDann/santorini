@@ -1,6 +1,7 @@
 package it.polimi.ingsw.PSP11.client;
 
 
+import it.polimi.ingsw.PSP11.exception.IllegalInputException;
 import it.polimi.ingsw.PSP11.messages.Message;
 
 import java.io.IOException;
@@ -15,6 +16,7 @@ public class Client {
     private String ip;
     private int port;
     private boolean active = true;
+    private Message message;
 
     public synchronized boolean isActive(){
         return active;
@@ -29,16 +31,14 @@ public class Client {
         this.port = port;
     }
 
-
-
     public Thread asyncRead(final ObjectInputStream socketIn){
         Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
                     while (isActive()) {
-                        Object inputObject = socketIn.readObject();
-                        MessageDecoder.decodeMessage((Message)inputObject);
+                        message =  (Message)socketIn.readObject();
+                        ClientMessageDecoder.decodeMessage(message);
                     }
                 } catch (Exception e){
                     setActive(false);
@@ -55,10 +55,16 @@ public class Client {
             public void run() {
                 try {
                     while (isActive()) {
-                        String inputLine = stdin.nextLine();
-                        //build Message;
-                        socketOut.writeObject(inputLine);
-                        socketOut.flush();
+                        try {
+                            String inputLine = stdin.nextLine();
+                            Message answer = null;
+                            answer = ClientMessageEncoder.encodeMessage(message, inputLine);
+                            socketOut.writeObject(answer);
+                            socketOut.flush();
+                        } catch (IllegalInputException e) {
+                            System.out.println(e.getErrorMessage());
+                            System.out.print(">>>");
+                        }
                     }
                 }catch(Exception e){
                     setActive(false);
@@ -91,6 +97,5 @@ public class Client {
         }
 
     }
-
 
 }

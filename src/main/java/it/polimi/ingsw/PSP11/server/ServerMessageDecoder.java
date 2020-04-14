@@ -1,10 +1,9 @@
-package it.polimi.ingsw.PSP11.client;
+package it.polimi.ingsw.PSP11.server;
 
 import it.polimi.ingsw.PSP11.messages.Message;
 import it.polimi.ingsw.PSP11.messages.WelcomeMessage;
 
-public class MessageDecoder {
-
+public class ServerMessageDecoder {
 
     public static void decodeMessage(Message message) {
 
@@ -14,6 +13,4 @@ public class MessageDecoder {
         }
 
     }
-
-
 }
