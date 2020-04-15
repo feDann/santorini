@@ -2,13 +2,14 @@ package it.polimi.ingsw.PSP11.server;
 
 import it.polimi.ingsw.PSP11.messages.*;
 import it.polimi.ingsw.PSP11.model.Color;
+import it.polimi.ingsw.PSP11.observer.Observable;
 import it.polimi.ingsw.PSP11.server.Server;
 
 import java.io.*;
 import java.net.Socket;
 import java.util.Scanner;
 
-public class ClientSocketConnection implements Runnable{
+public class ClientSocketConnection extends Observable<Message> implements Runnable{
 
     private Socket clientSocket;
     private Server server;
@@ -74,8 +75,8 @@ public class ClientSocketConnection implements Runnable{
             }
             server.lobby();
             while (isActive()){
-                //message = (Message) in.readObject();
-                //do the notify
+                message = (Message) in.readObject();
+                notify(message);
             }
         } catch (IOException | ClassNotFoundException | InterruptedException e) {
             e.printStackTrace();

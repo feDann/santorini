@@ -40,9 +40,6 @@ public class Client {
                     while (isActive()) {
                         message =  (Message)socketIn.readObject();
                         ClientMessageDecoder.decodeMessage(message);
-//                        if(message instanceof ConnectionClosedMessage){
-//                            setActive(false);
-//                        }
                     }
                 } catch (Exception e){
                     setActive(false);

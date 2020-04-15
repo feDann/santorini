@@ -1,11 +1,12 @@
 package it.polimi.ingsw.PSP11.controller;
 
 import it.polimi.ingsw.PSP11.controller.state.GameState;
+import it.polimi.ingsw.PSP11.messages.ControllerMessage;
 import it.polimi.ingsw.PSP11.messages.Message;
 import it.polimi.ingsw.PSP11.model.Game;
 import it.polimi.ingsw.PSP11.observer.Observer;
 
-public class Controller implements Observer<Message> {
+public class Controller implements Observer<ControllerMessage> {
 
     private GameState gameState;
     private final Game game;
@@ -30,8 +31,7 @@ public class Controller implements Observer<Message> {
     }
 
     @Override
-    public void update(Message message) {
-        readMessage(message);
-    }
+    public void update(ControllerMessage message) {
 
+    }
 }

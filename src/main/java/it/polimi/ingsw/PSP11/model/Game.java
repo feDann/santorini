@@ -1,5 +1,7 @@
 package it.polimi.ingsw.PSP11.model;
 
+import it.polimi.ingsw.PSP11.messages.UpdateMessage;
+import it.polimi.ingsw.PSP11.observer.Observable;
 import it.polimi.ingsw.PSP11.utils.XMLParser;
 
 import java.io.IOException;
@@ -9,7 +11,7 @@ import java.util.ArrayList;
  * Class for the Game
  */
 
-public class Game {
+public class Game extends Observable<UpdateMessage> {
 
     private Board board;
     private ArrayList<Player> players;
