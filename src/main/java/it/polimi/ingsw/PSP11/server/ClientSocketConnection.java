@@ -44,6 +44,16 @@ public class ClientSocketConnection implements Runnable{
     }
 
 
+    public synchronized void closeConnection() {
+        send(new ConnectionClosedMessage());
+        try {
+            clientSocket.close();
+        } catch (IOException e) {
+            System.err.println("Error when closing socket!");
+        }
+        active = false;
+    }
+
     @Override
     public void run() {
         ObjectInputStream in;
@@ -67,7 +77,7 @@ public class ClientSocketConnection implements Runnable{
                 //message = (Message) in.readObject();
                 //do the notify
             }
-        } catch (IOException | ClassNotFoundException e) {
+        } catch (IOException | ClassNotFoundException | InterruptedException e) {
             e.printStackTrace();
         }
     }

@@ -2,6 +2,7 @@ package it.polimi.ingsw.PSP11.server;
 
 import it.polimi.ingsw.PSP11.controller.Controller;
 import it.polimi.ingsw.PSP11.messages.ConnectionMessage;
+import it.polimi.ingsw.PSP11.messages.TooManyPeopleMessage;
 import it.polimi.ingsw.PSP11.model.Game;
 
 import java.io.IOException;
@@ -13,6 +14,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 public class Server {
 
@@ -21,8 +23,9 @@ public class Server {
 
     private ExecutorService executor = Executors.newFixedThreadPool(64);
     private Map<String,ClientSocketConnection> waitingList = new HashMap<>();
+    private Map<String,ClientSocketConnection> playingList = new HashMap<>();
     private List<String> waitingNameList = new ArrayList<>();
-    private List<String> playingList = new ArrayList<>();
+    private List<String> playingNameList = new ArrayList<>();
     int numOfPlayers = -1;
 
     public Server () throws IOException {
@@ -42,14 +45,48 @@ public class Server {
         waitingNameList.add(nickname);
     }
 
-    public synchronized void lobby() throws IOException, ClassNotFoundException {
+    private void bouncer(int startingIndex) throws InterruptedException {
+        if(waitingNameList.size() == startingIndex){
+            waitingNameList.clear();
+            waitingList.clear();
+            return;
+        }
+        for (int i = startingIndex; i < waitingList.size(); i++){
+            ClientSocketConnection clientToDisconnect = waitingList.get(waitingNameList.get(i));
+            clientToDisconnect.asyncSend(new TooManyPeopleMessage());
+            TimeUnit.SECONDS.sleep(1);
+            clientToDisconnect.closeConnection();
+        }
+        waitingList.clear();
+        waitingNameList.clear();
+    }
+
+    public synchronized void lobby() throws InterruptedException {
         if (waitingList.size() >= numOfPlayers) {
             if (numOfPlayers == 2) {
-                //TODO
+                String nickname1 = waitingNameList.get(0);
+                String nickname2 = waitingNameList.get(1);
+
+                playingNameList.add(nickname1);
+                playingNameList.add(nickname2);
+                playingList.put(nickname1, waitingList.get(nickname1));
+                playingList.put(nickname2, waitingList.get(nickname2));
+
             }
             if (numOfPlayers == 3) {
-                //TODO
+                String nickname1 = waitingNameList.get(0);
+                String nickname2 = waitingNameList.get(1);
+                String nickname3 = waitingNameList.get(2);
+
+                playingNameList.add(nickname1);
+                playingNameList.add(nickname2);
+                playingNameList.add(nickname3);
+                playingList.put(nickname1, waitingList.get(nickname1));
+                playingList.put(nickname2, waitingList.get(nickname2));
+                playingList.put(nickname3, waitingList.get(nickname3));
             }
+            bouncer(numOfPlayers);
+
         }
     }
 

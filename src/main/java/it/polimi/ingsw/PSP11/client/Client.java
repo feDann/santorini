@@ -2,6 +2,7 @@ package it.polimi.ingsw.PSP11.client;
 
 
 import it.polimi.ingsw.PSP11.exception.IllegalInputException;
+import it.polimi.ingsw.PSP11.messages.ConnectionClosedMessage;
 import it.polimi.ingsw.PSP11.messages.Message;
 
 import java.io.IOException;
@@ -39,6 +40,9 @@ public class Client {
                     while (isActive()) {
                         message =  (Message)socketIn.readObject();
                         ClientMessageDecoder.decodeMessage(message);
+//                        if(message instanceof ConnectionClosedMessage){
+//                            setActive(false);
+//                        }
                     }
                 } catch (Exception e){
                     setActive(false);
