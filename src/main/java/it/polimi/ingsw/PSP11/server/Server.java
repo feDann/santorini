@@ -20,8 +20,9 @@ public class Server {
     private ServerSocket serverSocket;
 
     private ExecutorService executor = Executors.newFixedThreadPool(64);
-    private Map<ClientSocketConnection,String> waitingList = new HashMap<>();
-
+    private Map<String,ClientSocketConnection> waitingList = new HashMap<>();
+    private List<String> waitingNameList = new ArrayList<>();
+    private List<String> playingList = new ArrayList<>();
     int numOfPlayers = -1;
 
     public Server () throws IOException {
@@ -33,17 +34,25 @@ public class Server {
     }
 
     public synchronized String getFirstOfWaitlingList(){
-        List<String> waitingPlayers = new ArrayList<>(waitingList.values());
-        return waitingPlayers.get(0);
+        return waitingNameList.get(0);
     }
 
-    public synchronized void lobby(ClientSocketConnection connection, String nickname){
-        waitingList.put(connection,nickname);
-        if(waitingList.size() == 1){
-            connection.asyncSend(new ConnectionMessage());
+    public synchronized void insertInWaitingList(ClientSocketConnection connection, String nickname){
+        waitingList.put(nickname,connection);
+        waitingNameList.add(nickname);
+    }
+
+    public synchronized void lobby() throws IOException, ClassNotFoundException {
+        if (waitingList.size() >= numOfPlayers) {
+            if (numOfPlayers == 2) {
+                //TODO
+            }
+            if (numOfPlayers == 3) {
+                //TODO
+            }
         }
-
     }
+
 
     public void start(){
         System.out.println("The Santorini server is up and running...");
