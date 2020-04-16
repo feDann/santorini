@@ -12,9 +12,16 @@ public class ClientMessageEncoder {
             return new NicknameMessage(inputLine);
         }
         else if(message instanceof ConnectionMessage){
-            int i = Integer.parseInt(inputLine);
+            int i=0;
+            try{
+                 i = Integer.parseInt(inputLine);
+            }
+            catch (NumberFormatException e){
+                //remind to do a log
+            }
+
             if (i < 2 || i > 3 ){
-                throw new IllegalInputException("Invalid input, coglione, insert 2 o 3!");
+                throw new IllegalInputException("Invalid input, insert 2 o 3!");
             }
             return new PlayerSetupMessage(inputLine);
         }
