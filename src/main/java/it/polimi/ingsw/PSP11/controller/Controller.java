@@ -30,14 +30,12 @@ public class Controller implements Observer<ControllerMessage> {
     public synchronized void readMessage(ControllerMessage message){
         requestingView = message.getVirtualView();
         requestingPlayer = requestingView.getPlayer();
-
         if (requestingPlayer.equals(game.getCurrentPlayer().getNickname())){
             //fa le istance of
             //chiama execute
             //chiama la remote view e non insulta il giocatore
         }
         else{
-            System.out.println("not your turn");
             requestingView.sendMessage(new NotYourTurnMessage(game.getCurrentPlayer().getNickname()));
         }
     }

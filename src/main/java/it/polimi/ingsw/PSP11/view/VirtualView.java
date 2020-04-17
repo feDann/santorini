@@ -18,7 +18,6 @@ public class VirtualView extends Observable<ControllerMessage> implements Observ
 
         @Override
         public void update(Message message) {
-            System.out.println("Recived something");
             handleControllerMessage(message);
         }
     }
@@ -32,6 +31,7 @@ public class VirtualView extends Observable<ControllerMessage> implements Observ
         connection.asyncSend(new OpponentMessage(opponent));
         connection.addObserver(new MessageReceiver());
         this.connection = connection;
+        this.player = player;
     }
 
     //tres jugadores

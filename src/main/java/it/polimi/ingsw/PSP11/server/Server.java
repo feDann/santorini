@@ -61,7 +61,7 @@ public class Server {
     }
 
     public synchronized void lobby() throws InterruptedException {
-        if (waitingList.size() >= numOfPlayers) {
+        if (waitingList.size() >= numOfPlayers && numOfPlayers != -1) {
             if (numOfPlayers == 2) {
                 String nickname1 = waitingNameList.get(0);
                 String nickname2 = waitingNameList.get(1);
