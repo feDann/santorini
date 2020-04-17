@@ -14,4 +14,8 @@ public abstract class Message implements Serializable {
         return message;
     }
 
+    public void setMessage(String string){
+        message = string;
+    }
+
 }

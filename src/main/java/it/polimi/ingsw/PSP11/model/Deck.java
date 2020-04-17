@@ -2,7 +2,7 @@ package it.polimi.ingsw.PSP11.model;
 
 import java.util.ArrayList;
 
-public class Deck {
+public class Deck{
 
     private ArrayList<Card> cards;
 
@@ -38,4 +38,15 @@ public class Deck {
         return cards.get(i);
     }
 
+    public Deck deckClone() {
+        Deck deckCopy = new Deck();
+        for(Card card : cards){
+            Card cardCopy = new Card();
+            cardCopy.setIdCard(card.getIdCard());
+            cardCopy.setName(card.getName());
+            cardCopy.setDescription(card.getDescription());
+            deckCopy.addCard(cardCopy);
+        }
+        return deckCopy;
+    }
 }

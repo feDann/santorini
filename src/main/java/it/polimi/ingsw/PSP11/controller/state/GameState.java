@@ -4,10 +4,8 @@ import it.polimi.ingsw.PSP11.messages.Message;
 
 public interface GameState {
 
-    /**
-     * sets the god chosen by the player
-     * @param index of the selected god
-     */
+    public void selectGameGods();
+
     public String selectPlayerGod(int index);
 
     public void placeWorker();

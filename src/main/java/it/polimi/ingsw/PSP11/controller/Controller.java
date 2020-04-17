@@ -2,9 +2,11 @@ package it.polimi.ingsw.PSP11.controller;
 
 import it.polimi.ingsw.PSP11.client.Client;
 import it.polimi.ingsw.PSP11.controller.state.GameState;
+import it.polimi.ingsw.PSP11.controller.state.SelectGameGodsState;
 import it.polimi.ingsw.PSP11.messages.ControllerMessage;
 import it.polimi.ingsw.PSP11.messages.Message;
 import it.polimi.ingsw.PSP11.messages.NotYourTurnMessage;
+import it.polimi.ingsw.PSP11.messages.SelectGameGodsMessage;
 import it.polimi.ingsw.PSP11.model.Game;
 import it.polimi.ingsw.PSP11.observer.Observer;
 import it.polimi.ingsw.PSP11.server.ClientSocketConnection;
@@ -20,6 +22,7 @@ public class Controller implements Observer<ControllerMessage> {
     private String requestingPlayer;
     private Map<String, ClientSocketConnection> currentPlayers = new HashMap<>();
     private VirtualView requestingView;
+
 
     public Controller(Game game, Map<String, ClientSocketConnection> currentPlayers) {
         this.game = game;
@@ -41,9 +44,11 @@ public class Controller implements Observer<ControllerMessage> {
     }
 
     public void start (){
+        ClientSocketConnection firstPlayerConnection;
         game.startGame();
-        //this.gameState = new PickGodState();
-
+        this.gameState = new SelectGameGodsState();
+        firstPlayerConnection = currentPlayers.get(game.getCurrentPlayer().getNickname());
+        firstPlayerConnection.asyncSend(new SelectGameGodsMessage(game.getDeck().deckClone()));
     }
 
     @Override
