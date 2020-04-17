@@ -1,5 +1,6 @@
 package it.polimi.ingsw.PSP11.server;
 
+import it.polimi.ingsw.PSP11.client.Client;
 import it.polimi.ingsw.PSP11.controller.Controller;
 import it.polimi.ingsw.PSP11.messages.ConnectionMessage;
 import it.polimi.ingsw.PSP11.messages.TooManyPeopleMessage;
@@ -10,10 +11,7 @@ import it.polimi.ingsw.PSP11.view.VirtualView;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -28,6 +26,7 @@ public class Server {
     private Map<String,ClientSocketConnection> playingList = new HashMap<>();
     private List<String> waitingNameList = new ArrayList<>();
     private List<String> playingNameList = new ArrayList<>();
+    private Map<ClientSocketConnection, ArrayList<ClientSocketConnection>> playingConnections = new HashMap<>();
     int numOfPlayers = -1;
 
     public Server () throws IOException {
@@ -82,6 +81,21 @@ public class Server {
                 VirtualView vv1 = new VirtualView(connection1, nickname2, nickname1);
                 VirtualView vv2 = new VirtualView(connection2, nickname1, nickname2);
 
+                Game game = new Game();
+                game.setNumOfPlayer(numOfPlayers);
+                game.addPlayer(player1);
+                game.addPlayer(player2);
+
+                Controller controller = new Controller(game);
+                game.addObserver(vv1);
+                game.addObserver(vv2);
+                vv1.addObserver(controller);
+                vv2.addObserver(controller);
+
+                playingConnections.put(connection1, new ArrayList<>(Collections.singletonList(connection2)));
+                playingConnections.put(connection2, new ArrayList<>(Collections.singletonList(connection1)));
+
+
             }
             if (numOfPlayers == 3) {
                 String nickname1 = waitingNameList.get(0);
@@ -106,8 +120,28 @@ public class Server {
                 VirtualView vv2 = new VirtualView(connection2, nickname1, nickname3, nickname2);
                 VirtualView vv3 = new VirtualView(connection3, nickname1, nickname2, nickname3);
 
+                Game game = new Game();
+                game.setNumOfPlayer(numOfPlayers);
+                game.addPlayer(player1);
+                game.addPlayer(player2);
+                game.addPlayer(player3);
+
+                Controller controller = new Controller(game);
+                game.addObserver(vv1);
+                game.addObserver(vv2);
+                game.addObserver(vv3);
+                vv1.addObserver(controller);
+                vv2.addObserver(controller);
+                vv3.addObserver(controller);
+
+                playingConnections.put(connection1, new ArrayList<>(Arrays.asList(connection2, connection3)));
+                playingConnections.put(connection2, new ArrayList<>(Arrays.asList(connection1, connection3)));
+                playingConnections.put(connection3, new ArrayList<>(Arrays.asList(connection1, connection2)));
+
             }
             bouncer(numOfPlayers);
+            numOfPlayers = -1;
+
 
         }
     }
