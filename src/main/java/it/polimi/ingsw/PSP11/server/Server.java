@@ -1,8 +1,6 @@
 package it.polimi.ingsw.PSP11.server;
 
-import it.polimi.ingsw.PSP11.client.Client;
 import it.polimi.ingsw.PSP11.controller.Controller;
-import it.polimi.ingsw.PSP11.messages.ConnectionMessage;
 import it.polimi.ingsw.PSP11.messages.TooManyPeopleMessage;
 import it.polimi.ingsw.PSP11.model.Game;
 import it.polimi.ingsw.PSP11.model.Player;
@@ -86,7 +84,11 @@ public class Server {
                 game.addPlayer(player1);
                 game.addPlayer(player2);
 
-                Controller controller = new Controller(game);
+                Map <String,ClientSocketConnection> currentPlayers = new HashMap<>();
+                currentPlayers.put(nickname1,connection1);
+                currentPlayers.put(nickname2,connection2);
+
+                Controller controller = new Controller(game, currentPlayers);
                 game.addObserver(vv1);
                 game.addObserver(vv2);
                 vv1.addObserver(controller);
@@ -95,6 +97,8 @@ public class Server {
                 playingConnections.put(connection1, new ArrayList<>(Collections.singletonList(connection2)));
                 playingConnections.put(connection2, new ArrayList<>(Collections.singletonList(connection1)));
 
+                //TODO
+                controller.start();
 
             }
             if (numOfPlayers == 3) {
@@ -126,7 +130,12 @@ public class Server {
                 game.addPlayer(player2);
                 game.addPlayer(player3);
 
-                Controller controller = new Controller(game);
+                Map <String,ClientSocketConnection> currentPlayers = new HashMap<>();
+                currentPlayers.put(nickname1,connection1);
+                currentPlayers.put(nickname2,connection2);
+                currentPlayers.put(nickname3,connection3);
+
+                Controller controller = new Controller(game, currentPlayers);
                 game.addObserver(vv1);
                 game.addObserver(vv2);
                 game.addObserver(vv3);
@@ -137,6 +146,10 @@ public class Server {
                 playingConnections.put(connection1, new ArrayList<>(Arrays.asList(connection2, connection3)));
                 playingConnections.put(connection2, new ArrayList<>(Arrays.asList(connection1, connection3)));
                 playingConnections.put(connection3, new ArrayList<>(Arrays.asList(connection1, connection2)));
+
+
+                //TODO
+                controller.start();
 
             }
             bouncer(numOfPlayers);

@@ -30,5 +30,5 @@ public interface GameState {
 
     public void endTurn();
 
-    public String execute(Message msg);
+    public String execute(Message message);
 }

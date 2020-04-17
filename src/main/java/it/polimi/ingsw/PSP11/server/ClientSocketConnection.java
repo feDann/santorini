@@ -76,6 +76,7 @@ public class ClientSocketConnection extends Observable<Message> implements Runna
             server.lobby();
             while (isActive()){
                 message = (Message) in.readObject();
+                System.out.println("Recived something");
                 notify(message);
             }
         } catch (IOException | ClassNotFoundException | InterruptedException e) {

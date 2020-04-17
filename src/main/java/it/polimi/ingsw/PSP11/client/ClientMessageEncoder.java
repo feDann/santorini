@@ -7,11 +7,11 @@ import java.util.Scanner;
 
 public class ClientMessageEncoder {
 
-    public static Message encodeMessage(Message message, String inputLine) throws IllegalInputException{
-        if(message instanceof WelcomeMessage){
+    public static Message encodeMessage(Message lastServerMessage, String inputLine) throws IllegalInputException{
+        if(lastServerMessage instanceof WelcomeMessage){
             return new NicknameMessage(inputLine);
         }
-        else if(message instanceof ConnectionMessage){
+        else if(lastServerMessage instanceof ConnectionMessage){
             int i=0;
             try{
                  i = Integer.parseInt(inputLine);
