@@ -6,7 +6,9 @@ package it.polimi.ingsw.PSP11.model;
 public enum Color {
     BLUE("\u001B[34m"),
     RED("\u001B[31m"),
-    GREEN("\u001B[32m");
+    GREEN("\u001B[32m"),
+    BROWN("\u001B[33m"),
+    PURPLE("\u001B[35m");
 
     public static final String RESET = "\u001B[0m";
 
