@@ -67,6 +67,7 @@ public class Server {
             waitingNameList.remove(nickname);
             return;
         }
+        if(playingNameList.contains(nickname)){
         for (ClientSocketConnection c : playingConnections.get(playingList.get(nickname))){
             c.closeConnection();
             String nick = playingList.keySet().stream().filter(s -> playingList.get(s).equals(c)).collect(Collectors.toList()).get(0);
@@ -77,11 +78,7 @@ public class Server {
         playingConnections.remove(playingList.get(nickname));
         playingList.remove(nickname);
         playingNameList.remove(nickname);
-
-        System.out.println("playing name list: ");
-        playingNameList.forEach(s -> System.out.print(s+ " "));
-        System.out.println("HashMap: ");
-        playingList.forEach((n,s) -> System.out.print(n + " " + s.toString() +", "));
+        }
     }
 
     private void bouncer(int startingIndex) throws InterruptedException {
