@@ -5,23 +5,44 @@ import it.polimi.ingsw.PSP11.model.Card;
 import it.polimi.ingsw.PSP11.model.Color;
 import it.polimi.ingsw.PSP11.model.Deck;
 
-public class SelectGameGodsMessage extends SimpleMessage {
+public class SelectGameGodsRequest extends SimpleMessage {
 
-    public SelectGameGodsMessage(Deck deck){
+    private int numOfPlayers;
+    private int numOfDeckCards;
+
+    public SelectGameGodsRequest(Deck deck,int numOfPlayers){
         super("");
-        String formattedMessage = "Insert the number of god to use in game:\n";
+        this.numOfPlayers = numOfPlayers;
+        this.numOfDeckCards = deck.getCards().size();
+        String formattedMessage = "\n";
 
         for(Card card : deck.getCards()){
             formattedMessage +=  card.getIdCard() + ") " + card.getName() + "\n   Description: "+ card.getDescription() + "\n";
         }
 
-        formattedMessage += ">>>";
+
         formattedMessage = formattedMessage.replaceAll("Your Move", Color.BLUE.getEscape() + "Your Move" + Color.RESET );
         formattedMessage = formattedMessage.replaceAll("Your Build", Color.BROWN.getEscape() + "Your Build" + Color.RESET );
         formattedMessage = formattedMessage.replaceAll("Win Condition", Color.GREEN.getEscape() + "Win Condition" + Color.RESET );
         formattedMessage = formattedMessage.replaceAll("Your Turn", Color.PURPLE.getEscape() + "Your Turn" + Color.RESET );
         formattedMessage = formattedMessage.replaceAll("Opponent’s Turn", Color.RED.getEscape() + "Opponent's Turn" + Color.RESET );
 
+        formattedMessage = formattedMessage.concat("\nChoose " + numOfPlayers + " gods to use in the game, in this format --> ");
+        if(numOfPlayers == 2){
+            formattedMessage = formattedMessage.concat("x,y");
+        }
+        if (numOfPlayers == 3){
+            formattedMessage = formattedMessage.concat("x,y,z");
+        }
+        formattedMessage += "\n>>>";
         setMessage(formattedMessage);
+    }
+
+    public int getNumOfPlayers() {
+        return numOfPlayers;
+    }
+
+    public int getNumOfDeckCards() {
+        return numOfDeckCards;
     }
 }
