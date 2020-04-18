@@ -59,14 +59,18 @@ public class ClientSocketConnection extends Observable<Message> implements Runna
     public void run() {
         ObjectInputStream in;
         Message message;
-        String nickname;
+        String nickname = "";
         try {
             out = new ObjectOutputStream(clientSocket.getOutputStream());
             in = new ObjectInputStream(clientSocket.getInputStream());
             send(new WelcomeMessage());
             message = (NicknameMessage) in.readObject();
             nickname = message.getMessage();
-            server.insertInWaitingList(this, nickname);
+            while (!server.insertInWaitingList(this, nickname)){
+                send(new DuplicateNicknameMessage());
+                message = (NicknameMessage) in.readObject();
+                nickname = message.getMessage();
+            }
             if(nickname.equals(server.getFirstOfWaitlingList())){
                 send(new ConnectionMessage());
                 message = (PlayerSetupMessage) in.readObject();
@@ -79,7 +83,8 @@ public class ClientSocketConnection extends Observable<Message> implements Runna
                 notify(message);
             }
         } catch (IOException | ClassNotFoundException | InterruptedException e) {
-            e.printStackTrace();
+            System.err.println(e.getMessage());
+            server.killLobby(nickname);
         }
     }
 

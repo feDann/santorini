@@ -1,10 +1,12 @@
 package it.polimi.ingsw.PSP11.server;
 
 import it.polimi.ingsw.PSP11.controller.Controller;
+import it.polimi.ingsw.PSP11.messages.ConnectionMessage;
 import it.polimi.ingsw.PSP11.messages.TooManyPeopleMessage;
 import it.polimi.ingsw.PSP11.model.Game;
 import it.polimi.ingsw.PSP11.model.Player;
 import it.polimi.ingsw.PSP11.view.VirtualView;
+import org.w3c.dom.ls.LSOutput;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -13,6 +15,7 @@ import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 public class Server {
 
@@ -39,9 +42,46 @@ public class Server {
         return waitingNameList.get(0);
     }
 
-    public synchronized void insertInWaitingList(ClientSocketConnection connection, String nickname){
+    public synchronized boolean insertInWaitingList(ClientSocketConnection connection, String nickname){
+        if (waitingNameList.contains(nickname) || playingNameList.contains(nickname)){
+            return false;
+        }
         waitingList.put(nickname,connection);
         waitingNameList.add(nickname);
+        return true;
+    }
+
+    public synchronized void killLobby(String nickname){
+        if(waitingNameList.contains(nickname)){
+            if(waitingNameList.get(0).equals(nickname)){
+                waitingList.remove(nickname);
+                waitingNameList.remove(nickname);
+               for(ClientSocketConnection c : waitingList.values()){
+                   c.closeConnection();
+               }
+               waitingList.clear();
+               waitingNameList.clear();
+               return;
+            }
+            waitingList.remove(nickname);
+            waitingNameList.remove(nickname);
+            return;
+        }
+        for (ClientSocketConnection c : playingConnections.get(playingList.get(nickname))){
+            c.closeConnection();
+            String nick = playingList.keySet().stream().filter(s -> playingList.get(s).equals(c)).collect(Collectors.toList()).get(0);
+            playingList.remove(nick);
+            playingNameList.remove(nick);
+            playingConnections.remove(c);
+        }
+        playingConnections.remove(playingList.get(nickname));
+        playingList.remove(nickname);
+        playingNameList.remove(nickname);
+
+        System.out.println("playing name list: ");
+        playingNameList.forEach(s -> System.out.print(s+ " "));
+        System.out.println("HashMap: ");
+        playingList.forEach((n,s) -> System.out.print(n + " " + s.toString() +", "));
     }
 
     private void bouncer(int startingIndex) throws InterruptedException {
