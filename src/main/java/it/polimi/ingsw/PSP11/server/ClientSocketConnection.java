@@ -71,7 +71,7 @@ public class ClientSocketConnection extends Observable<Message> implements Runna
                 message = (NicknameMessage) in.readObject();
                 nickname = message.getMessage();
             }
-            if(nickname.equals(server.getFirstOfWaitlingList())){
+            if(nickname.equals(server.getFirstOfWaitingList())){
                 send(new ConnectionMessage());
                 message = (PlayerSetupMessage) in.readObject();
                 int numOfPlayers = Integer.parseInt(message.getMessage());

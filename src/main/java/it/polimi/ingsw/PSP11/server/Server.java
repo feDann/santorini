@@ -38,7 +38,7 @@ public class Server {
         this.numOfPlayers = numOfPlayers;
     }
 
-    public synchronized String getFirstOfWaitlingList(){
+    public synchronized String getFirstOfWaitingList(){
         return waitingNameList.get(0);
     }
 
