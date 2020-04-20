@@ -194,16 +194,21 @@ public class Game extends Observable<UpdateMessage> {
         return players.get(indexOfCurrentPlayer);
     }
 
+    private void playerColorInit(){
+        for (int i = 0; i < numOfPlayer; i++){
+            players.get(i).setColor(Color.values()[i]);
+        }
+    }
+
     /**
      * Start the game
      */
-
     public void startGame(){
         board.init();
         deckInit();
         indexOfCurrentPlayer = 0;
         gameStarted = true;
-
+        playerColorInit();
     }
 
 

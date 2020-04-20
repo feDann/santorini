@@ -1,9 +1,11 @@
 package it.polimi.ingsw.PSP11.controller.state;
 
+import it.polimi.ingsw.PSP11.messages.EndTurnMessage;
 import it.polimi.ingsw.PSP11.messages.Message;
 import it.polimi.ingsw.PSP11.messages.SelectGameGodResponse;
 import it.polimi.ingsw.PSP11.messages.SelectGameGodsRequest;
 import it.polimi.ingsw.PSP11.model.Game;
+import it.polimi.ingsw.PSP11.view.VirtualView;
 
 import java.util.ArrayList;
 
@@ -85,8 +87,9 @@ public class SelectGameGodsState implements GameState{
     }
 
     @Override
-    public GameState execute(Message message) {
+    public GameState execute(Message message, VirtualView virtualView) {
         selectGameGods(((SelectGameGodResponse)message).getIdOfChosenGods());
+        virtualView.sendMessage(new EndTurnMessage());
         return new SelectPlayerGodState(game);
     }
 }

@@ -1,6 +1,7 @@
 package it.polimi.ingsw.PSP11.controller.state;
 
 import it.polimi.ingsw.PSP11.messages.Message;
+import it.polimi.ingsw.PSP11.view.VirtualView;
 
 import java.util.ArrayList;
 
@@ -32,5 +33,5 @@ public interface GameState {
 
     public Message stateMessage();
 
-    public GameState execute(Message message);
+    public GameState execute(Message message, VirtualView virtualView);
 }

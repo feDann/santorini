@@ -1,12 +1,12 @@
 package it.polimi.ingsw.PSP11.controller.state;
 
+import it.polimi.ingsw.PSP11.messages.EndTurnMessage;
 import it.polimi.ingsw.PSP11.messages.Message;
 import it.polimi.ingsw.PSP11.messages.SelectPlayerGodRequest;
 import it.polimi.ingsw.PSP11.messages.SelectPlayerGodResponse;
-import it.polimi.ingsw.PSP11.messages.SimpleMessage;
 import it.polimi.ingsw.PSP11.model.Card;
 import it.polimi.ingsw.PSP11.model.Game;
-import it.polimi.ingsw.PSP11.model.Player;
+import it.polimi.ingsw.PSP11.view.VirtualView;
 
 import java.util.ArrayList;
 
@@ -100,8 +100,9 @@ public class SelectPlayerGodState implements GameState{
     }
 
     @Override
-    public GameState execute(Message msg){
+    public GameState execute(Message msg, VirtualView virtualView){
         selectPlayerGod(((SelectPlayerGodResponse) msg).getId());
+        virtualView.sendMessage(new EndTurnMessage());
         game.nextPlayer();
         if (chosenCards.size()>0){
             return this;

@@ -13,6 +13,7 @@ public class Player {
     private Turn playerTurn;
     private Card god;
     private ArrayList<Worker> workers;
+    private Color color;
 
 
     /**
@@ -99,4 +100,11 @@ public class Player {
         return workers;
     }
 
+    public Color getColor() {
+        return color;
+    }
+
+    public void setColor(Color color) {
+        this.color = color;
+    }
 }
