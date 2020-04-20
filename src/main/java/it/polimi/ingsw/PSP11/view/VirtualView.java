@@ -39,6 +39,7 @@ public class VirtualView extends Observable<ControllerMessage> implements Observ
         connection.asyncSend(new OpponentMessage(opponent1, opponent2));
         connection.addObserver(new MessageReceiver());
         this.connection = connection;
+        this.player = player;
     }
 
     public String getPlayer() {
