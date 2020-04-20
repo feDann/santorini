@@ -187,15 +187,12 @@ public class Server {
                 playingConnections.put(connection2, new ArrayList<>(Arrays.asList(connection1, connection3)));
                 playingConnections.put(connection3, new ArrayList<>(Arrays.asList(connection1, connection2)));
 
-
                 //TODO
                 controller.start();
 
             }
             bouncer(numOfPlayers);
             numOfPlayers = -1;
-
-
         }
     }
 
@@ -211,9 +208,7 @@ public class Server {
             } catch (IOException e) {
                 System.err.println("Cannot connect the client " + e.getMessage() + "!");
             }
-
         }
     }
-
 
 }

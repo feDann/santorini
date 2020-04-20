@@ -26,8 +26,7 @@ public class SelectGameGodsState implements GameState{
     }
 
     @Override
-    public String selectPlayerGod(int index) {
-        return null;
+    public void selectPlayerGod(int index) {
     }
 
     @Override

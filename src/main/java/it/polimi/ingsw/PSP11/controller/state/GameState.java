@@ -8,7 +8,7 @@ public interface GameState {
 
     public void selectGameGods(ArrayList<Integer> ids);
 
-    public String selectPlayerGod(int index);
+    public void selectPlayerGod(int index);
 
     public void placeWorker();
 

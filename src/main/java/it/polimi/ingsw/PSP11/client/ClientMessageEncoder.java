@@ -49,6 +49,20 @@ public class ClientMessageEncoder {
             }
             return new SelectGameGodResponse(idOfChosenGods);
         }
+
+        else if (lastServerMessage instanceof SelectPlayerGodRequest){
+            inputLine = inputLine.replaceAll(" ","");
+            try {
+                int index = Integer.parseInt(inputLine);
+                if (index < 1 || index > ((SelectPlayerGodRequest) lastServerMessage).getNumOfCards()){
+                    throw new IllegalInputException("The id must be between 1 and " + ((SelectPlayerGodRequest) lastServerMessage).getNumOfCards() + "\nChoose another god");
+                }
+                return new SelectPlayerGodResponse(index-1);
+            }catch (NumberFormatException e){
+                throw new IllegalInputException("Invalid input, try again, EDDAI IMPEGNATEVI UN PO ANCHE VOI FIGA");
+            }
+        }
+
         return null;
     }
 

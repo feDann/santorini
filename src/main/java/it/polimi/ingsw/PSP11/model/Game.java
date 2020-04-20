@@ -183,7 +183,7 @@ public class Game extends Observable<UpdateMessage> {
     }
 
     public ArrayList<Card> getChosenCards() {
-        return chosenCards;
+        return new ArrayList<Card>(chosenCards);
     }
 
     public StandardTurn getSharedTurn() {
