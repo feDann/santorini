@@ -15,17 +15,16 @@ public class ClientMessageEncoder {
         }
 
         else if(lastServerMessage instanceof ConnectionMessage){
-            int i=0;
             try{
-                i = Integer.parseInt(inputLine);
+                int i = Integer.parseInt(inputLine);
                 if (i < 2 || i > 3 ){
                     throw new IllegalInputException("Invalid input, insert 2 o 3!");
                 }
+                return new PlayerSetupMessage(inputLine);
             }
             catch (NumberFormatException e){
                 throw new IllegalInputException("Invalid input, insert 2 o 3!");
             }
-            return new PlayerSetupMessage(inputLine);
         }
 
         else if(lastServerMessage instanceof SelectGameGodsRequest){
