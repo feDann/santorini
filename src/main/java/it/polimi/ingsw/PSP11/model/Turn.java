@@ -1,9 +1,10 @@
 package it.polimi.ingsw.PSP11.model;
 
 import java.awt.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public interface Turn {
+public interface Turn extends Serializable {
 
     /**
      * set the ambient variabales to the standard values

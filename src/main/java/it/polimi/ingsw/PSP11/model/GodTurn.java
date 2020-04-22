@@ -1,9 +1,10 @@
 package it.polimi.ingsw.PSP11.model;
 
 import java.awt.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public abstract class GodTurn implements Turn{
+public abstract class GodTurn implements Turn {
 
     private StandardTurn sharedTurn;
 

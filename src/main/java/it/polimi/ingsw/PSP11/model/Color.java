@@ -1,9 +1,11 @@
 package it.polimi.ingsw.PSP11.model;
 
+import java.io.Serializable;
+
 /**
  * Class for the workers' color
  */
-public enum Color {
+public enum Color implements Serializable {
     BLUE("\u001B[34m"),
     RED("\u001B[31m"),
     GREEN("\u001B[32m"),

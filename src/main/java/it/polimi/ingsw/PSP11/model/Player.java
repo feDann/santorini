@@ -1,12 +1,13 @@
 package it.polimi.ingsw.PSP11.model;
 
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Class for the players
  */
-public class Player {
+public class Player implements Serializable {
 
     private String nickname;
     private boolean eliminated;

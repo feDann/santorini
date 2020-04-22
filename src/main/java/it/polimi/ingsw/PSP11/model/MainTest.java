@@ -47,7 +47,7 @@ public class MainTest {
         board.placeWorker(player2Worker1Position , player2.chooseWorker(0));
         board.placeWorker(player2Worker2Position , player2.chooseWorker(1));
 
-        board.printBoard();
+        System.out.print(board.boardClone().printBoard());
 
         Scanner scanner = new Scanner(System.in);
 
@@ -75,7 +75,7 @@ public class MainTest {
             int y = Integer.parseInt( chosenPosition.substring(2,3));
             System.out.println("hai scelto (" + x + "," + y + ")");
             game.getCurrentPlayer().getPlayerTurn().applyMove(game.getCurrentPlayer().chooseWorker(chosenWorker), board, new Point(x,y));
-            board.printBoard();
+            System.out.print(board.boardClone().printBoard());
             ArrayList<Point> possibleBuild = game.getCurrentPlayer().getPlayerTurn().build(game.getCurrentPlayer().chooseWorker(chosenWorker),board);
             System.out.println();
             System.out.print("Possible builds:");
@@ -90,7 +90,7 @@ public class MainTest {
             System.out.println("hai scelto (" + x + "," + y +")");
             game.getCurrentPlayer().getPlayerTurn().applyBuild(game.getCurrentPlayer().chooseWorker(chosenWorker), board, new Point(x,y),false);
             System.out.println();
-            board.printBoard();
+            System.out.print(board.boardClone().printBoard());
 
             game.nextPlayer();
 

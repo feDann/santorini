@@ -1,8 +1,9 @@
 package it.polimi.ingsw.PSP11.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Deck{
+public class Deck implements Serializable {
 
     private ArrayList<Card> cards;
 

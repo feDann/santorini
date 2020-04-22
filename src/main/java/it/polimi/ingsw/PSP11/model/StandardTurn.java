@@ -1,9 +1,10 @@
 package it.polimi.ingsw.PSP11.model;
 
 import java.awt.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class StandardTurn implements Turn{
+public class StandardTurn implements Turn {
 
     private boolean movedUp;
     private boolean movedDown;

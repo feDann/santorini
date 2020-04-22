@@ -1,11 +1,12 @@
 package it.polimi.ingsw.PSP11.model;
 
 import java.awt.*;
+import java.io.Serializable;
 
 /**
  * Class for the players' workers
  */
-public class Worker {
+public class Worker implements Serializable {
 
     private Point position;
     private boolean moved;
@@ -65,4 +66,12 @@ public class Worker {
     public Color getColor() {
         return color;
     }
+
+    public Worker workerClone(){
+        Worker workerCopy = new Worker(this.color);
+        workerCopy.setPosition(new Point(this.getPosition()));
+        workerCopy.setMoved(this.isMoved());
+        return workerCopy;
+    }
+
 }

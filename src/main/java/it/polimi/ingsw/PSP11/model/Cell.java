@@ -1,6 +1,8 @@
 package it.polimi.ingsw.PSP11.model;
 
-public class Cell {
+import java.io.Serializable;
+
+public class Cell implements Serializable {
 
     private Block currentLevel;
     private boolean dome;
@@ -59,6 +61,10 @@ public class Cell {
         return this.currentLevel;
     }
 
+    private void setCurrentLevel(Block block){
+        this.currentLevel = block;
+    }
+
     public void removeWorker(){
         this.worker = false;
         currentWorker = null;
@@ -68,12 +74,24 @@ public class Cell {
      *
      * @return if there, the current worker on top, null otherwise
      */
-
     public Worker getCurrentWorker() {
         if(worker = true){
             return currentWorker;
         }
         return null;
     }
+
+    public Cell cellClone(){
+        Cell cellCopy = new Cell();
+        if (this.hasDomeOnTop()){
+            cellCopy.addDome();
+        }
+        if (this.hasWorkerOnTop()){
+            cellCopy.placeWorker(this.currentWorker.workerClone());
+        }
+        cellCopy.setCurrentLevel(this.getCurrentLevel());
+        return cellCopy;
+    }
+
 
 }

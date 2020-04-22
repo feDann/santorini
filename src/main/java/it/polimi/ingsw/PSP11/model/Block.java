@@ -1,6 +1,8 @@
 package it.polimi.ingsw.PSP11.model;
 
-public enum Block {
+import java.io.Serializable;
+
+public enum Block implements Serializable {
     GROUND,
     BASE,
     MIDDLE,

@@ -1,6 +1,8 @@
 package it.polimi.ingsw.PSP11.model;
 
-public class Card {
+import java.io.Serializable;
+
+public class Card implements Serializable {
     private GodTurn godTurnDecorator;
     private String name;
     private int idCard;

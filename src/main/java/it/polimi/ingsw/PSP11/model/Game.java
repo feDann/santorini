@@ -4,6 +4,7 @@ import it.polimi.ingsw.PSP11.messages.UpdateMessage;
 import it.polimi.ingsw.PSP11.observer.Observable;
 import it.polimi.ingsw.PSP11.utils.XMLParser;
 
+import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -110,6 +111,10 @@ public class Game extends Observable<UpdateMessage> {
         return board;
     }
 
+    public Board boardClone(){
+        return board.boardClone();
+    }
+
     /**
      *
      * @return the value of gameStarted
@@ -198,6 +203,11 @@ public class Game extends Observable<UpdateMessage> {
         for (int i = 0; i < numOfPlayer; i++){
             players.get(i).setColor(Color.values()[i]);
         }
+    }
+
+    public void placeWorker(Point point, Worker worker){
+        board.placeWorker(point, worker);
+        notify(new UpdateMessage(boardClone()));
     }
 
     /**
