@@ -78,7 +78,7 @@ public class ClientMessageEncoder {
                     throw new IllegalInputException("DONT YOU KNOW THAT WE ARE IN A BI-DIMENTIONAL SPACE YOU MORON!");
                 }
                 return new PlaceWorkerResponse(point);
-            } catch (IllegalFormatException e){
+            } catch (NumberFormatException | IndexOutOfBoundsException e){
                 throw new IllegalInputException("Invalid input");
             }
         }
