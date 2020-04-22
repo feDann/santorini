@@ -90,7 +90,11 @@ public class GameTest {
 
     @Test
     public void nextPlayerTest() {
+        Player player1 = new Player("1");
+        Player player2 = new Player("2");
         game.setNumOfPlayer(2);
+        game.addPlayer(player1);
+        game.addPlayer(player2);
         game.startGame();
         assertEquals(0, game.getIndexOfCurrentPlayer());
         game.nextPlayer();

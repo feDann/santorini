@@ -2,3 +2,5 @@
 .DS_Store
 /ing-sw-2020-fadini-ferrazzo-figini.iml
 /target/
+/out/
+/src/MANIFESTS/
