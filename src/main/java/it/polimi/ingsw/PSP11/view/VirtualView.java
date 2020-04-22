@@ -1,9 +1,6 @@
 package it.polimi.ingsw.PSP11.view;
 
-import it.polimi.ingsw.PSP11.messages.ControllerMessage;
-import it.polimi.ingsw.PSP11.messages.Message;
-import it.polimi.ingsw.PSP11.messages.OpponentMessage;
-import it.polimi.ingsw.PSP11.messages.UpdateMessage;
+import it.polimi.ingsw.PSP11.messages.*;
 import it.polimi.ingsw.PSP11.model.Player;
 import it.polimi.ingsw.PSP11.observer.Observable;
 import it.polimi.ingsw.PSP11.observer.Observer;
@@ -52,7 +49,11 @@ public class VirtualView extends Observable<ControllerMessage> implements Observ
 
     @Override
     public void update(UpdateMessage message) {
+        updateBoard(message);
+    }
 
+    private void updateBoard(UpdateMessage message) {
+        connection.asyncSend(new SimpleMessage(message.getBoard().printBoard()));
     }
 
 }
