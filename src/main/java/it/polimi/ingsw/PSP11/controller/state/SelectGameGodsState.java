@@ -7,6 +7,7 @@ import it.polimi.ingsw.PSP11.messages.SelectGameGodsRequest;
 import it.polimi.ingsw.PSP11.model.Game;
 import it.polimi.ingsw.PSP11.view.VirtualView;
 
+import java.awt.*;
 import java.util.ArrayList;
 
 public class SelectGameGodsState implements GameState{
@@ -32,7 +33,7 @@ public class SelectGameGodsState implements GameState{
     }
 
     @Override
-    public void placeWorker() {
+    public void placeWorker(Point point) {
 
     }
 

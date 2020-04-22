@@ -3,6 +3,7 @@ package it.polimi.ingsw.PSP11.controller.state;
 import it.polimi.ingsw.PSP11.messages.Message;
 import it.polimi.ingsw.PSP11.view.VirtualView;
 
+import java.awt.*;
 import java.util.ArrayList;
 
 public interface GameState {
@@ -11,7 +12,7 @@ public interface GameState {
 
     public void selectPlayerGod(int index);
 
-    public void placeWorker();
+    public void placeWorker(Point point);
 
     public void startTurn();
 

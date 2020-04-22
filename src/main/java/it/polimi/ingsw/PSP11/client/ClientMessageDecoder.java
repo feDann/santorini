@@ -11,14 +11,10 @@ public class ClientMessageDecoder {
 
         if (message instanceof SimpleMessage) {
             //actually calls view methods to show messages
-            System.out.print((message).getMessage());
+            String messaggino = message.getMessage();
+            System.out.print(messaggino);
         }
-//        else if (message instanceof SimpleMessage){
-//            System.out.print((message).getMessage());
-//        }
-//        else if (message instanceof ConnectionClosedMessage){
-//            System.out.print((message).getMessage());
-//        }
+
 
     }
 

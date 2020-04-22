@@ -68,16 +68,16 @@ public class Server {
             return;
         }
         if(playingNameList.contains(nickname)){
-        for (ClientSocketConnection c : playingConnections.get(playingList.get(nickname))){
-            c.closeConnection();
-            String nick = playingList.keySet().stream().filter(s -> playingList.get(s).equals(c)).collect(Collectors.toList()).get(0);
-            playingList.remove(nick);
-            playingNameList.remove(nick);
-            playingConnections.remove(c);
-        }
-        playingConnections.remove(playingList.get(nickname));
-        playingList.remove(nickname);
-        playingNameList.remove(nickname);
+            for (ClientSocketConnection c : playingConnections.get(playingList.get(nickname))){
+                c.closeConnection();
+                String nick = playingList.keySet().stream().filter(s -> playingList.get(s).equals(c)).collect(Collectors.toList()).get(0);
+                playingList.remove(nick);
+                playingNameList.remove(nick);
+                playingConnections.remove(c);
+            }
+            playingConnections.remove(playingList.get(nickname));
+            playingList.remove(nickname);
+            playingNameList.remove(nickname);
         }
     }
 

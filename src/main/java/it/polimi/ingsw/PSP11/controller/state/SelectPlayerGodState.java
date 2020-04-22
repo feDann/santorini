@@ -8,6 +8,7 @@ import it.polimi.ingsw.PSP11.model.Card;
 import it.polimi.ingsw.PSP11.model.Game;
 import it.polimi.ingsw.PSP11.view.VirtualView;
 
+import java.awt.*;
 import java.util.ArrayList;
 
 public class SelectPlayerGodState implements GameState{
@@ -45,7 +46,7 @@ public class SelectPlayerGodState implements GameState{
     }
 
     @Override
-    public void placeWorker() {
+    public void placeWorker(Point point) {
 
     }
 
@@ -107,6 +108,6 @@ public class SelectPlayerGodState implements GameState{
         if (chosenCards.size()>0){
             return this;
         }
-        return null;
+        return new PlaceWorkerState(game);
     }
 }

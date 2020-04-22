@@ -8,11 +8,14 @@ import java.util.ArrayList;
 public class SelectPlayerGodRequest extends SimpleMessage{
 
     private int numOfCards;
+    //TODO
+    private ArrayList<Card> chosenCardsCopy = new ArrayList<Card>();
 
     public SelectPlayerGodRequest(ArrayList<Card> chosenCards) {
         super("");
         int id = 1;
         numOfCards = chosenCards.size();
+        chosenCardsCopy = chosenCards;
         String formattedMessage = "\nAvailable Gods:\n";
 
         for (Card card : chosenCards){
@@ -32,5 +35,9 @@ public class SelectPlayerGodRequest extends SimpleMessage{
 
     public int getNumOfCards() {
         return numOfCards;
+    }
+
+    public ArrayList<Card> getChosenCardsCopy() {
+        return chosenCardsCopy;
     }
 }
