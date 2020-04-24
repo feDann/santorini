@@ -48,8 +48,8 @@ public class GameTest {
 
     @Test
     public void setNumOfPlayerTest() {
-        game.setNumOfPlayer(3);
-        assertEquals(3, game.getNumOfPlayer());
+        game.setNumOfPlayers(3);
+        assertEquals(3, game.getNumOfPlayers());
     }
 
     @Test
@@ -92,7 +92,7 @@ public class GameTest {
     public void nextPlayerTest() {
         Player player1 = new Player("1");
         Player player2 = new Player("2");
-        game.setNumOfPlayer(2);
+        game.setNumOfPlayers(2);
         game.addPlayer(player1);
         game.addPlayer(player2);
         game.startGame();

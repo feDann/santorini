@@ -1,12 +1,10 @@
 package it.polimi.ingsw.PSP11.server;
 
 import it.polimi.ingsw.PSP11.controller.Controller;
-import it.polimi.ingsw.PSP11.messages.ConnectionMessage;
 import it.polimi.ingsw.PSP11.messages.TooManyPeopleMessage;
 import it.polimi.ingsw.PSP11.model.Game;
 import it.polimi.ingsw.PSP11.model.Player;
 import it.polimi.ingsw.PSP11.view.VirtualView;
-import org.w3c.dom.ls.LSOutput;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -117,7 +115,7 @@ public class Server {
                 VirtualView vv2 = new VirtualView(connection2, nickname1, nickname2);
 
                 Game game = new Game();
-                game.setNumOfPlayer(numOfPlayers);
+                game.setNumOfPlayers(numOfPlayers);
                 game.addPlayer(player1);
                 game.addPlayer(player2);
 
@@ -162,7 +160,7 @@ public class Server {
                 VirtualView vv3 = new VirtualView(connection3, nickname1, nickname2, nickname3);
 
                 Game game = new Game();
-                game.setNumOfPlayer(numOfPlayers);
+                game.setNumOfPlayers(numOfPlayers);
                 game.addPlayer(player1);
                 game.addPlayer(player2);
                 game.addPlayer(player3);

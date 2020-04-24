@@ -19,7 +19,7 @@ public class Game extends Observable<UpdateMessage> {
     private ArrayList<Card> chosenCards;
     private Deck deck;
     private int indexOfCurrentPlayer;
-    private int numOfPlayer;
+    private int numOfPlayers;
     private int winner;
     private StandardTurn sharedTurn;
     private boolean gameStarted;
@@ -36,7 +36,7 @@ public class Game extends Observable<UpdateMessage> {
         chosenCards = new ArrayList<>();
         deck = null;
         indexOfCurrentPlayer = -1;
-        numOfPlayer = -1;
+        numOfPlayers = -1;
         winner = -1;
         sharedTurn = new StandardTurn();
         gameEnded = false;
@@ -59,8 +59,8 @@ public class Game extends Observable<UpdateMessage> {
      * @param num the number of player for the game
      */
 
-    public void setNumOfPlayer(int num){
-        numOfPlayer = num;
+    public void setNumOfPlayers(int num){
+        numOfPlayers = num;
     }
 
     /**
@@ -68,8 +68,8 @@ public class Game extends Observable<UpdateMessage> {
      * @return the number of player
      */
 
-    public int getNumOfPlayer(){
-        return numOfPlayer;
+    public int getNumOfPlayers(){
+        return numOfPlayers;
     }
 
 
@@ -155,7 +155,7 @@ public class Game extends Observable<UpdateMessage> {
      */
 
     public void nextPlayer(){
-        if(++indexOfCurrentPlayer >= numOfPlayer){
+        if(++indexOfCurrentPlayer >= numOfPlayers){
             indexOfCurrentPlayer = 0;
         }
     }
@@ -199,7 +199,7 @@ public class Game extends Observable<UpdateMessage> {
     }
 
     private void playerColorInit(){
-        for (int i = 0; i < numOfPlayer; i++){
+        for (int i = 0; i < numOfPlayers; i++){
             players.get(i).setColor(Color.values()[i]);
         }
     }

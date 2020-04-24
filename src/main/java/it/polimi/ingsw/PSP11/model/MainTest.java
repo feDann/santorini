@@ -11,7 +11,7 @@ public class MainTest {
         game.startGame();
         Player player1 = new Player("darkfado777");
         game.addPlayer(player1);
-        game.setNumOfPlayer(2);
+        game.setNumOfPlayers(2);
         Player player2 = new Player("darkfado666");
         game.addPlayer(player2);
 

@@ -84,7 +84,7 @@ public class SelectGameGodsState implements GameState{
 
     @Override
     public Message stateMessage() {
-        return new SelectGameGodsRequest(game.getDeck().deckClone(),game.getNumOfPlayer());
+        return new SelectGameGodsRequest(game.getDeck().deckClone(),game.getNumOfPlayers());
     }
 
     @Override

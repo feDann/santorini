@@ -1,7 +1,6 @@
 package it.polimi.ingsw.PSP11.controller.state;
 
 import it.polimi.ingsw.PSP11.messages.*;
-import it.polimi.ingsw.PSP11.model.Board;
 import it.polimi.ingsw.PSP11.model.Game;
 import it.polimi.ingsw.PSP11.model.Worker;
 import it.polimi.ingsw.PSP11.view.VirtualView;
@@ -113,7 +112,7 @@ public class PlaceWorkerState implements GameState{
         numOfPlayer++;
         virtualView.sendMessage(new EndTurnMessage());
         game.nextPlayer();
-        if (numOfPlayer < game.getNumOfPlayer()){
+        if (numOfPlayer < game.getNumOfPlayers()){
             return this;
         }
         //START TURN
