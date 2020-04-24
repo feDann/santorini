@@ -108,6 +108,7 @@ public class SelectPlayerGodState implements GameState{
         if (chosenCards.size()>0){
             return this;
         }
+
         return new PlaceWorkerState(game);
     }
 }

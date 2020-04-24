@@ -9,7 +9,8 @@ public class PlaceWorkerRequest extends SimpleMessage{
     public PlaceWorkerRequest(Board board) {
         super("");
         clonedBoard = board;
-        String formattedMessage = clonedBoard.printBoard();
+        //String formattedMessage = clonedBoard.printBoard();
+        String formattedMessage = "";
         formattedMessage = formattedMessage.concat("\nPlace your worker (x,y)\n>>>");
         setMessage(formattedMessage);
     }

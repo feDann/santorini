@@ -54,6 +54,8 @@ public class VirtualView extends Observable<ControllerMessage> implements Observ
 
     private void updateBoard(UpdateMessage message) {
         connection.asyncSend(new SimpleMessage(message.getBoard().printBoard()));
+        if (!player.equals(message.getPlayerName())) {
+            connection.asyncSend(message.getUpdateMessage());
+        }
     }
-
 }

@@ -14,12 +14,14 @@ public class PlaceWorkerState implements GameState{
     private boolean invalidPoint;
     private int numOfWorker;
     private int numOfPlayer;
+    private boolean isNew;
 
     public PlaceWorkerState(Game game) {
         this.game = game;
         this.invalidPoint =false;
         this.numOfWorker = 0;
         this.numOfPlayer = 0;
+        this.isNew = true;
     }
 
     @Override
@@ -93,6 +95,11 @@ public class PlaceWorkerState implements GameState{
 
     @Override
     public Message stateMessage() {
+        if (isNew) {
+            this.isNew = false;
+            game.notifyBoard();
+        }
+
         if (invalidPoint){
             return new InvalidWorkerPosition();
         }

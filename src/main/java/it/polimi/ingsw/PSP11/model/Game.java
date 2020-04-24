@@ -1,6 +1,8 @@
 package it.polimi.ingsw.PSP11.model;
 
+import it.polimi.ingsw.PSP11.messages.SimpleMessage;
 import it.polimi.ingsw.PSP11.messages.UpdateMessage;
+import it.polimi.ingsw.PSP11.messages.WorkerUpdateMessage;
 import it.polimi.ingsw.PSP11.observer.Observable;
 import it.polimi.ingsw.PSP11.utils.XMLParser;
 
@@ -206,8 +208,13 @@ public class Game extends Observable<UpdateMessage> {
 
     public void placeWorker(Point point, Worker worker){
         board.placeWorker(point, worker);
-        notify(new UpdateMessage(boardClone()));
+        notify(new UpdateMessage(boardClone(), getCurrentPlayer().getNickname(), new WorkerUpdateMessage(getCurrentPlayer().getNickname(), point)));
     }
+
+    public void notifyBoard() {
+        notify(new UpdateMessage(boardClone(), getCurrentPlayer().getNickname(), new SimpleMessage("\nLET THE GAME BEGIN!\n")));
+    }
+
 
     /**
      * Start the game
