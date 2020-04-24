@@ -200,7 +200,7 @@ public class Game extends Observable<UpdateMessage> {
         return players.get(indexOfCurrentPlayer);
     }
 
-    private void playerColorInit(){
+    public void playerColorInit(){
         for (int i = 0; i < numOfPlayers; i++){
             players.get(i).setColor(Color.values()[i]);
         }
@@ -208,11 +208,11 @@ public class Game extends Observable<UpdateMessage> {
 
     public void placeWorker(Point point, Worker worker){
         board.placeWorker(point, worker);
-        notify(new UpdateMessage(boardClone(), getCurrentPlayer().getNickname(), new WorkerUpdateMessage(getCurrentPlayer().getNickname(), point)));
+        notify(new UpdateMessage(boardClone(), getCurrentPlayer().playerClone(), new WorkerUpdateMessage(getCurrentPlayer().playerClone(), point)));
     }
 
     public void notifyBoard() {
-        notify(new UpdateMessage(boardClone(), getCurrentPlayer().getNickname(), new SimpleMessage("\nLET THE GAME BEGIN!\n")));
+        notify(new UpdateMessage(boardClone(), getCurrentPlayer().playerClone(), new SimpleMessage("\nLET THE GAME BEGIN!\n")));
     }
 
 
@@ -224,7 +224,6 @@ public class Game extends Observable<UpdateMessage> {
         deckInit();
         indexOfCurrentPlayer = 0;
         gameStarted = true;
-        playerColorInit();
     }
 
 

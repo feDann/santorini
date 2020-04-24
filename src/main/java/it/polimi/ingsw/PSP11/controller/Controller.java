@@ -29,7 +29,7 @@ public class Controller implements Observer<ControllerMessage> {
 
     public synchronized void readMessage(ControllerMessage message){
         requestingView = message.getVirtualView();
-        requestingPlayer = requestingView.getPlayer();
+        requestingPlayer = requestingView.getPlayer().getName();
         if (requestingPlayer.equals(game.getCurrentPlayer().getNickname())){
             gameState = gameState.execute(message.getMessage(),requestingView);
             currentPlayers.get(game.getCurrentPlayer().getNickname()).asyncSend(gameState.stateMessage());

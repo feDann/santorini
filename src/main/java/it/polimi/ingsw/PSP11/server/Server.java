@@ -111,13 +111,14 @@ public class Server {
                 Player player1 = new Player(nickname1);
                 Player player2 = new Player(nickname2);
 
-                VirtualView vv1 = new VirtualView(connection1, nickname2, nickname1);
-                VirtualView vv2 = new VirtualView(connection2, nickname1, nickname2);
-
                 Game game = new Game();
                 game.setNumOfPlayers(numOfPlayers);
                 game.addPlayer(player1);
                 game.addPlayer(player2);
+                game.playerColorInit();
+
+                VirtualView vv1 = new VirtualView(connection1, nickname2, player1.playerClone());
+                VirtualView vv2 = new VirtualView(connection2, nickname1, player2.playerClone());
 
                 Map <String,ClientSocketConnection> currentPlayers = new HashMap<>();
                 currentPlayers.put(nickname1,connection1);
@@ -155,15 +156,16 @@ public class Server {
                 Player player2 = new Player(nickname2);
                 Player player3 = new Player(nickname3);
 
-                VirtualView vv1 = new VirtualView(connection1, nickname2, nickname3, nickname1);
-                VirtualView vv2 = new VirtualView(connection2, nickname1, nickname3, nickname2);
-                VirtualView vv3 = new VirtualView(connection3, nickname1, nickname2, nickname3);
-
                 Game game = new Game();
                 game.setNumOfPlayers(numOfPlayers);
                 game.addPlayer(player1);
                 game.addPlayer(player2);
                 game.addPlayer(player3);
+                game.playerColorInit();
+
+                VirtualView vv1 = new VirtualView(connection1, nickname2, nickname3, player1.playerClone());
+                VirtualView vv2 = new VirtualView(connection2, nickname1, nickname3, player2.playerClone());
+                VirtualView vv3 = new VirtualView(connection3, nickname1, nickname2, player3.playerClone());
 
                 Map <String,ClientSocketConnection> currentPlayers = new HashMap<>();
                 currentPlayers.put(nickname1,connection1);
@@ -181,8 +183,7 @@ public class Server {
                 playingConnections.put(connection1, new ArrayList<>(Arrays.asList(connection2, connection3)));
                 playingConnections.put(connection2, new ArrayList<>(Arrays.asList(connection1, connection3)));
                 playingConnections.put(connection3, new ArrayList<>(Arrays.asList(connection1, connection2)));
-
-                //TODO
+                
                 controller.start();
 
             }

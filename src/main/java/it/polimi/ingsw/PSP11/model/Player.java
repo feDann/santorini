@@ -1,6 +1,8 @@
 package it.polimi.ingsw.PSP11.model;
 
 
+import it.polimi.ingsw.PSP11.utils.PlayerInfo;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -108,4 +110,9 @@ public class Player implements Serializable {
     public void setColor(Color color) {
         this.color = color;
     }
+
+    public PlayerInfo playerClone() {
+        return new PlayerInfo(nickname, color);
+    }
+
 }
