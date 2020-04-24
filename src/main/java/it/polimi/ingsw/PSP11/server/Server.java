@@ -183,7 +183,7 @@ public class Server {
                 playingConnections.put(connection1, new ArrayList<>(Arrays.asList(connection2, connection3)));
                 playingConnections.put(connection2, new ArrayList<>(Arrays.asList(connection1, connection3)));
                 playingConnections.put(connection3, new ArrayList<>(Arrays.asList(connection1, connection2)));
-                
+
                 controller.start();
 
             }

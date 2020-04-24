@@ -12,6 +12,7 @@ public class StandardTurn implements Turn {
     private boolean buildAgain;
     private boolean cantMoveUp = false;
     private boolean canBuildDomeAnyLevel = false;
+    private boolean canBuildBeforeMove;
 
     public boolean isCanBuildDomeAnyLevel() {
         return canBuildDomeAnyLevel;
@@ -61,6 +62,14 @@ public class StandardTurn implements Turn {
         this.buildAgain = buildAgain;
     }
 
+    public boolean isCanBuildBeforeMove() {
+        return canBuildBeforeMove;
+    }
+
+    public void setCanBuildBeforeMove(boolean canBuildBeforeMove) {
+        this.canBuildBeforeMove = canBuildBeforeMove;
+    }
+
     /**
      * method to get the legal position for a build or a move
      * @param worker that wants to build or move
@@ -106,6 +115,7 @@ public class StandardTurn implements Turn {
         moveAgain = false;
         buildAgain = false;
         canBuildDomeAnyLevel= false;
+        canBuildBeforeMove = false;
     }
 
     /**
