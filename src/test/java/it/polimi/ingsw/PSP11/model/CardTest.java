@@ -13,7 +13,8 @@ public class CardTest {
     StandardTurn turn;
     @Before
     public void setUp() throws Exception {
-        deck = XMLParser.deserializeDeckFromXML("src/main/resources/GodCards.xml");
+        deck = XMLParser.deserializeDeckFromXML("xml/GodCards.xml");
+        if(deck == null) System.out.println("null");
         card = deck.pickGod(0);
         turn = new StandardTurn();
     }

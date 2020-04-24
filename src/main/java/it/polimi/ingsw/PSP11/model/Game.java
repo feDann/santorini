@@ -24,8 +24,7 @@ public class Game extends Observable<UpdateMessage> {
     private StandardTurn sharedTurn;
     private boolean gameStarted;
     private boolean gameEnded;
-    private final String godCardsXMLPath = "src/main/resources/GodCards.xml";
-
+    private final String godCardsXMLPath = "xml/GodCards.xml";
 
     /**
      * Class constructor
@@ -51,7 +50,7 @@ public class Game extends Observable<UpdateMessage> {
         try {
             deck = XMLParser.deserializeDeckFromXML(godCardsXMLPath);
         } catch (IOException e) {
-            e.printStackTrace();
+            System.err.println("Impossible to deserialize Deck! Error: " +e.getMessage());
         }
     }
 
