@@ -13,7 +13,7 @@ public class Player implements Serializable {
 
     private String nickname;
     private boolean eliminated;
-    private Turn playerTurn;
+    private GodTurn playerTurn;
     private Card god;
     private ArrayList<Worker> workers;
     private Color color;
@@ -91,7 +91,7 @@ public class Player implements Serializable {
         return nickname;
     }
 
-    public Turn getPlayerTurn() {
+    public GodTurn getPlayerTurn() {
         return playerTurn;
     }
 

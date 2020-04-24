@@ -122,7 +122,7 @@ public class PlaceWorkerState implements GameState{
         if (numOfPlayer < game.getNumOfPlayers()){
             return this;
         }
-        //START TURN
-        return null;
+
+        return new StartTurnState(game);
     }
 }
