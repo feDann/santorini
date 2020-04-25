@@ -14,10 +14,11 @@ public class StartTurnState implements GameState{
     private boolean canBuildBeforeMove;
     private boolean isNew;
     private int chosenWorker;
+    private ArrayList<Worker> movableWorkers = new ArrayList<>();
 
     public StartTurnState(Game theGame) {
         this.game = theGame;
-        game.getCurrentPlayer().getPlayerTurn().startTurn();
+        game.startTurn();
         this.canBuildBeforeMove = game.getCurrentPlayer().getPlayerTurn().getSharedTurn().isCanBuildBeforeMove();
         this.isNew = true;
         this.chosenWorker = -1;
@@ -55,11 +56,15 @@ public class StartTurnState implements GameState{
 
     @Override
     public void checkLose() {
-
+        for (Worker worker : game.getCurrentPlayer().getWorkers()){
+            if(! game.move(worker).isEmpty()) {
+                movableWorkers.add(worker.workerClone());
+            }
+        }
     }
 
     @Override
-    public void applyMove() {
+    public void applyMove(Point point) {
 
     }
 
@@ -87,11 +92,11 @@ public class StartTurnState implements GameState{
     public Message stateMessage() {
         if (isNew) {
             isNew = false;
-            ArrayList<Worker> workers = new ArrayList<>();
-            for (Worker worker : game.getCurrentPlayer().getWorkers()){
-                workers.add(worker.workerClone());
+            checkLose();
+            if (movableWorkers.isEmpty()){
+                //return new LosingMessage();
             }
-            return new SelectWorkerRequest(workers);
+            return new SelectWorkerRequest(movableWorkers);
         }
         if (canBuildBeforeMove) {
             return new BuildBeforeMoveRequest();
@@ -101,7 +106,6 @@ public class StartTurnState implements GameState{
 
     @Override
     public GameState execute(Message message, VirtualView virtualView) {
-        //TODO
         if (message instanceof SelectWorkerResponse){
             this.chosenWorker = ((SelectWorkerResponse) message).getChosenWorker();
             if(canBuildBeforeMove){

@@ -69,7 +69,7 @@ public class PlaceWorkerState implements GameState{
     }
 
     @Override
-    public void applyMove() {
+    public void applyMove(Point point) {
 
     }
 

@@ -215,6 +215,19 @@ public class Game extends Observable<UpdateMessage> {
         notify(new UpdateMessage(boardClone(), getCurrentPlayer().playerClone(), new SimpleMessage("\nLET THE GAME BEGIN!\n")));
     }
 
+    public void startTurn(){
+        getCurrentPlayer().getPlayerTurn().startTurn();
+    }
+
+    public ArrayList<Point> move(Worker worker){
+        return getCurrentPlayer().getPlayerTurn().move(worker,board);
+    }
+
+    public void applyMove(Point point, Worker worker){
+        getCurrentPlayer().getPlayerTurn().applyMove(worker, board, point);
+        notify(new UpdateMessage(boardClone(), getCurrentPlayer().playerClone(), new WorkerUpdateMessage(getCurrentPlayer().playerClone(), point)));
+
+    }
 
     /**
      * Start the game

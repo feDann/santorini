@@ -8,6 +8,23 @@ import java.util.ArrayList;
 
 public class ClientMessageEncoder {
 
+    private static Point checkLegalInput(String[] position) throws IllegalInputException{
+        try {
+            int x = Integer.parseInt(position[0]) - 1;
+            int y = Integer.parseInt(position[1]) - 1;
+            if (x < 0 || x > 4 || y < 0 || y > 4){
+                throw new IllegalInputException("Stay between 1 and 5 pls");
+            }
+            Point point = new Point(x,y);
+            if (position.length != 2){
+                throw new IllegalInputException("DONT YOU KNOW THAT WE ARE IN A BI-DIMENTIONAL SPACE YOU MORON!");
+            }
+            return point;
+        } catch (NumberFormatException | IndexOutOfBoundsException e){
+            throw new IllegalInputException("Invalid input");
+        }
+    }
+
     public static Message encodeMessage(Message lastServerMessage, String inputLine) throws IllegalInputException{
 
         if(lastServerMessage instanceof WelcomeMessage || lastServerMessage instanceof DuplicateNicknameMessage){
@@ -65,20 +82,8 @@ public class ClientMessageEncoder {
         else if (lastServerMessage instanceof PlaceWorkerRequest || lastServerMessage instanceof InvalidWorkerPosition){
             inputLine = inputLine.replaceAll(" ","");
             String[] workerPosition = inputLine.split(",");
-            try {
-                int x = Integer.parseInt(workerPosition[0]) - 1;
-                int y = Integer.parseInt(workerPosition[1]) - 1;
-                if (x < 0 || x > 4 || y < 0 || y > 4){
-                    throw new IllegalInputException("Stay between 1 and 5 pls");
-                }
-                Point point = new Point(x,y);
-                if (workerPosition.length != 2){
-                    throw new IllegalInputException("DONT YOU KNOW THAT WE ARE IN A BI-DIMENTIONAL SPACE YOU MORON!");
-                }
-                return new PlaceWorkerResponse(point);
-            } catch (NumberFormatException | IndexOutOfBoundsException e){
-                throw new IllegalInputException("Invalid input");
-            }
+            Point checkedPoint = checkLegalInput(workerPosition);
+            return new PlaceWorkerResponse(checkedPoint);
         }
 
         else if (lastServerMessage instanceof SelectWorkerRequest){
@@ -108,6 +113,16 @@ public class ClientMessageEncoder {
                 throw new IllegalInputException("invalid input, please insert y or n");
             }
 
+        }
+
+        else if (lastServerMessage instanceof MoveRequest){
+            inputLine = inputLine.replaceAll(" ","");
+            String[] movePosition = inputLine.split(",");
+            Point checkedPoint = checkLegalInput(movePosition);
+            if (! ((MoveRequest) lastServerMessage).getPossibleMoves().contains(checkedPoint)){
+                throw new IllegalInputException("You cannot move to this point, please choose one from the list above!");
+            }
+            return new MoveResponse(checkedPoint);
         }
 
         return null;

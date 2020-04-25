@@ -33,8 +33,8 @@ public class Controller implements Observer<ControllerMessage> {
         if (requestingPlayer.equals(game.getCurrentPlayer().getNickname())){
             gameState = gameState.execute(message.getMessage(),requestingView);
             currentPlayers.get(game.getCurrentPlayer().getNickname()).asyncSend(gameState.stateMessage());
-            //chiama execute
-            //chiama la remote view e non insulta il giocatore
+            //TODO
+            //controllo sulla lose condition
         }
         else{
             requestingView.sendMessage(new NotYourTurnMessage(game.getCurrentPlayer().getNickname()));

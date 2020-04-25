@@ -71,7 +71,7 @@ public class SelectPlayerGodState implements GameState{
     }
 
     @Override
-    public void applyMove() {
+    public void applyMove(Point point) {
 
     }
 

@@ -22,7 +22,7 @@ public interface GameState {
 
     public void checkLose();
 
-    public void applyMove();
+    public void applyMove(Point point);
 
     public void checkWin();
 
