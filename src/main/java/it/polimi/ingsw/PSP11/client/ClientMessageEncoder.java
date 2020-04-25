@@ -5,8 +5,6 @@ import it.polimi.ingsw.PSP11.messages.*;
 
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.IllegalFormatException;
-import java.util.Scanner;
 
 public class ClientMessageEncoder {
 
@@ -81,6 +79,35 @@ public class ClientMessageEncoder {
             } catch (NumberFormatException | IndexOutOfBoundsException e){
                 throw new IllegalInputException("Invalid input");
             }
+        }
+
+        else if (lastServerMessage instanceof SelectWorkerRequest){
+            inputLine = inputLine.replaceAll(" ","");
+            try {
+                int chosenWorker = Integer.parseInt(inputLine);
+                if (chosenWorker < 1 || chosenWorker > 2){
+                    throw new IllegalInputException("Please insert 1 or 2");
+                }
+                return new SelectWorkerResponse((chosenWorker-1));
+            }catch (NumberFormatException e){
+                throw new IllegalInputException("Invalid input, please insert 1 or 2");
+            }
+        }
+
+
+        else if (lastServerMessage instanceof BuildBeforeMoveRequest){
+            inputLine = inputLine.replaceAll(" ","");
+            String response = inputLine.toLowerCase();
+            if (response.equals("y") || response.equals("yes")){
+                return new BuildBeforeMoveResponse(true);
+            }
+            else if (response.equals("n") || response.equals("no")){
+                return new BuildBeforeMoveResponse(false);
+            }
+            else{
+                throw new IllegalInputException("invalid input, please insert y or n");
+            }
+
         }
 
         return null;

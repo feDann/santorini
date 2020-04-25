@@ -1,9 +1,8 @@
 package it.polimi.ingsw.PSP11.controller.state;
 
-import it.polimi.ingsw.PSP11.messages.BuildBeforeMoveRequest;
-import it.polimi.ingsw.PSP11.messages.Message;
-import it.polimi.ingsw.PSP11.messages.SelectWorkerRequest;
+import it.polimi.ingsw.PSP11.messages.*;
 import it.polimi.ingsw.PSP11.model.Game;
+import it.polimi.ingsw.PSP11.model.Worker;
 import it.polimi.ingsw.PSP11.view.VirtualView;
 
 import java.awt.*;
@@ -14,12 +13,14 @@ public class StartTurnState implements GameState{
     private Game game;
     private boolean canBuildBeforeMove;
     private boolean isNew;
+    private int chosenWorker;
 
     public StartTurnState(Game theGame) {
         this.game = theGame;
         game.getCurrentPlayer().getPlayerTurn().startTurn();
         this.canBuildBeforeMove = game.getCurrentPlayer().getPlayerTurn().getSharedTurn().isCanBuildBeforeMove();
         this.isNew = true;
+        this.chosenWorker = -1;
     }
 
     @Override
@@ -86,26 +87,36 @@ public class StartTurnState implements GameState{
     public Message stateMessage() {
         if (isNew) {
             isNew = false;
-            //TODO
-            //clone the workers
-            return new SelectWorkerRequest(game.getCurrentPlayer().getWorkers());
+            ArrayList<Worker> workers = new ArrayList<>();
+            for (Worker worker : game.getCurrentPlayer().getWorkers()){
+                workers.add(worker.workerClone());
+            }
+            return new SelectWorkerRequest(workers);
         }
-
         if (canBuildBeforeMove) {
-            //TODO
-            //message if he wants to move
+            return new BuildBeforeMoveRequest();
         }
-
-        //nothing
         return null;
     }
 
     @Override
     public GameState execute(Message message, VirtualView virtualView) {
         //TODO
-        //save worker chosen
+        if (message instanceof SelectWorkerResponse){
+            this.chosenWorker = ((SelectWorkerResponse) message).getChosenWorker();
+            if(canBuildBeforeMove){
+                return this;
+            }
+            return new MoveState(game, chosenWorker);
+        }
+        else{
+            if (((BuildBeforeMoveResponse) message).isCanBuildBefore()){
+                return new BuildState(game, chosenWorker);
+            }
+            else{
+                return new MoveState(game, chosenWorker);
+            }
+        }
 
-        //MoveState or BuildState
-        return null;
     }
 }

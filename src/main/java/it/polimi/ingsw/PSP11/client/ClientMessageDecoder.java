@@ -1,8 +1,7 @@
 package it.polimi.ingsw.PSP11.client;
 
-import it.polimi.ingsw.PSP11.messages.*;
-
-import java.util.Scanner;
+import it.polimi.ingsw.PSP11.messages.Message;
+import it.polimi.ingsw.PSP11.messages.SimpleMessage;
 
 public class ClientMessageDecoder {
 
@@ -15,8 +14,6 @@ public class ClientMessageDecoder {
             System.out.print(messaggino);
         }
 
-
     }
-
 
 }
