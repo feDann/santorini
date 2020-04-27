@@ -1,13 +1,14 @@
 package it.polimi.ingsw.PSP11.server;
 
 import it.polimi.ingsw.PSP11.messages.*;
-import it.polimi.ingsw.PSP11.model.Color;
 import it.polimi.ingsw.PSP11.observer.Observable;
-import it.polimi.ingsw.PSP11.server.Server;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.util.Scanner;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class ClientSocketConnection extends Observable<Message> implements Runnable{
 
@@ -15,6 +16,7 @@ public class ClientSocketConnection extends Observable<Message> implements Runna
     private Server server;
     private ObjectOutputStream out;
     private boolean active = true;
+    private ExecutorService executor = Executors.newSingleThreadExecutor();
 
     public ClientSocketConnection(Socket socket, Server server){
         this.clientSocket = socket;
@@ -26,12 +28,14 @@ public class ClientSocketConnection extends Observable<Message> implements Runna
     }
 
     public void asyncSend(final Object message){
-        new Thread(new Runnable() {
+        Thread thread;
+        thread = new Thread(new Runnable() {
             @Override
             public void run() {
                 send(message);
             }
-        }).start();
+        });
+        executor.submit(thread);
     }
 
     private synchronized void send(Object message) {

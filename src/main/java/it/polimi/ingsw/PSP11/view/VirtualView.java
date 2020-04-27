@@ -6,8 +6,6 @@ import it.polimi.ingsw.PSP11.observer.Observer;
 import it.polimi.ingsw.PSP11.server.ClientSocketConnection;
 import it.polimi.ingsw.PSP11.utils.PlayerInfo;
 
-import java.util.concurrent.TimeUnit;
-
 public class VirtualView extends Observable<ControllerMessage> implements Observer<UpdateMessage> {
 
     private ClientSocketConnection connection;
@@ -60,8 +58,6 @@ public class VirtualView extends Observable<ControllerMessage> implements Observ
 
     private void updateBoard(UpdateMessage message) throws InterruptedException {
         connection.asyncSend(new SimpleMessage(message.getBoard().printBoard()));
-        //TODO
-        TimeUnit.MILLISECONDS.sleep(100);
         if (!player.getName().equals(message.getPlayer().getName())) {
             connection.asyncSend(message.getUpdateMessage());
         }

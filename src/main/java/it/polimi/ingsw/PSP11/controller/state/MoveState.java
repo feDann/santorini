@@ -92,6 +92,8 @@ public class MoveState implements GameState {
     @Override
     public GameState execute(Message message, VirtualView virtualView) {
         applyMove(((MoveResponse) message).getPoint());
+        //TODO
+        //controllo se ti puoi muovere due volte
         return new BuildState(game, chosenWorkerId);
     }
 }

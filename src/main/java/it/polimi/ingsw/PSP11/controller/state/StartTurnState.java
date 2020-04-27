@@ -94,6 +94,7 @@ public class StartTurnState implements GameState{
             isNew = false;
             checkLose();
             if (movableWorkers.isEmpty()){
+                //todo
                 //return new LosingMessage();
             }
             return new SelectWorkerRequest(movableWorkers);

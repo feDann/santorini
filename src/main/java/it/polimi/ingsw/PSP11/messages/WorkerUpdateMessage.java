@@ -8,7 +8,7 @@ import java.awt.*;
 public class WorkerUpdateMessage extends SimpleMessage{
 
     public WorkerUpdateMessage(PlayerInfo player, Point point) {
-        super( player.getColor().getEscape() + player.getName()  + Color.RESET + " has placed his worker in (" + (point.x + 1) + "," + (point.y + 1) + ")\n");
+        super( player.getColor().getEscape() + player.getName()  + Color.RESET + " has placed his worker in (" + (point.x + 1) + "," + (point.y + 1) + ")\n\n");
     }
 
 }

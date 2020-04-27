@@ -133,7 +133,6 @@ public class Server {
                 playingConnections.put(connection1, new ArrayList<>(Collections.singletonList(connection2)));
                 playingConnections.put(connection2, new ArrayList<>(Collections.singletonList(connection1)));
 
-                //TODO
                 controller.start();
 
             }
