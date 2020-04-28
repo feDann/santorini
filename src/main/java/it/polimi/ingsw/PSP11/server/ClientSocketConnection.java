@@ -70,18 +70,23 @@ public class ClientSocketConnection extends Observable<Message> implements Runna
             send(new WelcomeMessage());
             message = (NicknameMessage) in.readObject();
             nickname = message.getMessage();
+            //control for different nicknames
             while (!server.insertInWaitingList(this, nickname)){
                 send(new DuplicateNicknameMessage());
                 message = (NicknameMessage) in.readObject();
                 nickname = message.getMessage();
             }
-            if(nickname.equals(server.getFirstOfWaitingList())){
-                send(new ConnectionMessage());
-                message = (PlayerSetupMessage) in.readObject();
-                int numOfPlayers = Integer.parseInt(message.getMessage());
-                server.setNumOfPlayers(numOfPlayers);
+            //set the num of player for matchmaking
+            send(new ConnectionMessage());
+            message = (PlayerSetupMessage) in.readObject();
+            int numOfPlayers = Integer.parseInt(message.getMessage());
+            //choose the correct method
+            if(numOfPlayers == 2){
+                server.lobbyForTwoPlayer(nickname, this);
+            }else{//in this case numofplayer ==3
+                server.lobbyForThreePlayer(nickname, this);
             }
-            server.lobby();
+
             while (isActive()){
                 message = (Message) in.readObject();
                 notify(message);

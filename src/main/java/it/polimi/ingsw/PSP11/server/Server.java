@@ -1,6 +1,7 @@
 package it.polimi.ingsw.PSP11.server;
 
 import it.polimi.ingsw.PSP11.controller.Controller;
+import it.polimi.ingsw.PSP11.messages.SimpleMessage;
 import it.polimi.ingsw.PSP11.messages.TooManyPeopleMessage;
 import it.polimi.ingsw.PSP11.model.Game;
 import it.polimi.ingsw.PSP11.model.Player;
@@ -21,47 +22,30 @@ public class Server {
     private ServerSocket serverSocket;
 
     private ExecutorService executor = Executors.newFixedThreadPool(64);
-    private Map<String,ClientSocketConnection> waitingList = new HashMap<>();
+    private Map<String,ClientSocketConnection> waitingListForTwo = new HashMap<>();
+    private Map<String,ClientSocketConnection> waitingListForThree = new HashMap<>();
     private Map<String,ClientSocketConnection> playingList = new HashMap<>();
     private List<String> waitingNameList = new ArrayList<>();
     private List<String> playingNameList = new ArrayList<>();
     private Map<ClientSocketConnection, ArrayList<ClientSocketConnection>> playingConnections = new HashMap<>();
-    int numOfPlayers = -1;
+
 
     public Server () throws IOException {
         serverSocket = new ServerSocket(serverPort);
-    }
-
-    public synchronized void setNumOfPlayers (int numOfPlayers){
-        this.numOfPlayers = numOfPlayers;
-    }
-
-    public synchronized String getFirstOfWaitingList(){
-        return waitingNameList.get(0);
     }
 
     public synchronized boolean insertInWaitingList(ClientSocketConnection connection, String nickname){
         if (waitingNameList.contains(nickname) || playingNameList.contains(nickname)){
             return false;
         }
-        waitingList.put(nickname,connection);
         waitingNameList.add(nickname);
         return true;
     }
 
     public synchronized void killLobby(String nickname){
         if(waitingNameList.contains(nickname)){
-            if(waitingNameList.get(0).equals(nickname)){
-                waitingList.remove(nickname);
-                waitingNameList.remove(nickname);
-               for(ClientSocketConnection c : waitingList.values()){
-                   c.closeConnection();
-               }
-               waitingList.clear();
-               waitingNameList.clear();
-               return;
-            }
-            waitingList.remove(nickname);
+            waitingListForTwo.remove(nickname);
+            waitingListForThree.remove(nickname);
             waitingNameList.remove(nickname);
             return;
         }
@@ -79,29 +63,14 @@ public class Server {
         }
     }
 
-    private void bouncer(int startingIndex) throws InterruptedException {
-        if(waitingNameList.size() == startingIndex){
-            waitingNameList.clear();
-            waitingList.clear();
-            return;
-        }
-        for (int i = startingIndex; i < waitingList.size(); i++){
-            ClientSocketConnection clientToDisconnect = waitingList.get(waitingNameList.get(i));
-            clientToDisconnect.asyncSend(new TooManyPeopleMessage());
-            TimeUnit.SECONDS.sleep(1);
-            clientToDisconnect.closeConnection();
-        }
-        waitingList.clear();
-        waitingNameList.clear();
-    }
-
-    public synchronized void lobby() throws InterruptedException {
-        if (waitingList.size() >= numOfPlayers && numOfPlayers != -1) {
-            if (numOfPlayers == 2) {
-                String nickname1 = waitingNameList.get(0);
-                String nickname2 = waitingNameList.get(1);
-                ClientSocketConnection connection1 = waitingList.get(nickname1);
-                ClientSocketConnection connection2 = waitingList.get(nickname2);
+    public synchronized void lobbyForTwoPlayer(String nickname,ClientSocketConnection connection) throws InterruptedException {
+        waitingListForTwo.put(nickname, connection);
+            if (waitingListForTwo.size() == 2) {
+                ArrayList<String> nameList = new ArrayList<>(waitingListForTwo.keySet());
+                String nickname1 = nameList.get(0);
+                String nickname2 = nameList.get(1);
+                ClientSocketConnection connection1 = waitingListForTwo.get(nickname1);
+                ClientSocketConnection connection2 = waitingListForTwo.get(nickname2);
 
                 playingNameList.add(nickname1);
                 playingNameList.add(nickname2);
@@ -112,7 +81,7 @@ public class Server {
                 Player player2 = new Player(nickname2);
 
                 Game game = new Game();
-                game.setNumOfPlayers(numOfPlayers);
+                game.setNumOfPlayers(2);
                 game.addPlayer(player1);
                 game.addPlayer(player2);
                 game.playerColorInit();
@@ -134,60 +103,71 @@ public class Server {
                 playingConnections.put(connection2, new ArrayList<>(Collections.singletonList(connection1)));
 
                 controller.start();
-
+                waitingNameList.remove(nickname1);
+                waitingNameList.remove(nickname2);
+                waitingListForTwo.clear();
+            }else{
+                connection.asyncSend(new SimpleMessage("Wait for other player...\n"));
             }
-            if (numOfPlayers == 3) {
-                String nickname1 = waitingNameList.get(0);
-                String nickname2 = waitingNameList.get(1);
-                String nickname3 = waitingNameList.get(2);
-                ClientSocketConnection connection1 = waitingList.get(nickname1);
-                ClientSocketConnection connection2 = waitingList.get(nickname2);
-                ClientSocketConnection connection3 = waitingList.get(nickname3);
+    }
 
-                playingNameList.add(nickname1);
-                playingNameList.add(nickname2);
-                playingNameList.add(nickname3);
-                playingList.put(nickname1, connection1);
-                playingList.put(nickname2, connection2);
-                playingList.put(nickname3, connection3);
+    public synchronized void lobbyForThreePlayer(String nickname,ClientSocketConnection connection){
+        waitingListForThree.put(nickname, connection);
+        if(waitingListForThree.size()==3) {
+            ArrayList<String> nameList = new ArrayList<>(waitingListForThree.keySet());
+            String nickname1 = nameList.get(0);
+            String nickname2 = nameList.get(1);
+            String nickname3 = nameList.get(2);
+            ClientSocketConnection connection1 = waitingListForThree.get(nickname1);
+            ClientSocketConnection connection2 = waitingListForThree.get(nickname2);
+            ClientSocketConnection connection3 = waitingListForThree.get(nickname3);
 
-                Player player1 = new Player(nickname1);
-                Player player2 = new Player(nickname2);
-                Player player3 = new Player(nickname3);
+            playingNameList.add(nickname1);
+            playingNameList.add(nickname2);
+            playingNameList.add(nickname3);
+            playingList.put(nickname1, connection1);
+            playingList.put(nickname2, connection2);
+            playingList.put(nickname3, connection3);
 
-                Game game = new Game();
-                game.setNumOfPlayers(numOfPlayers);
-                game.addPlayer(player1);
-                game.addPlayer(player2);
-                game.addPlayer(player3);
-                game.playerColorInit();
+            Player player1 = new Player(nickname1);
+            Player player2 = new Player(nickname2);
+            Player player3 = new Player(nickname3);
 
-                VirtualView vv1 = new VirtualView(connection1, nickname2, nickname3, player1.playerClone());
-                VirtualView vv2 = new VirtualView(connection2, nickname1, nickname3, player2.playerClone());
-                VirtualView vv3 = new VirtualView(connection3, nickname1, nickname2, player3.playerClone());
+            Game game = new Game();
+            game.setNumOfPlayers(3);
+            game.addPlayer(player1);
+            game.addPlayer(player2);
+            game.addPlayer(player3);
+            game.playerColorInit();
 
-                Map <String,ClientSocketConnection> currentPlayers = new HashMap<>();
-                currentPlayers.put(nickname1,connection1);
-                currentPlayers.put(nickname2,connection2);
-                currentPlayers.put(nickname3,connection3);
+            VirtualView vv1 = new VirtualView(connection1, nickname2, nickname3, player1.playerClone());
+            VirtualView vv2 = new VirtualView(connection2, nickname1, nickname3, player2.playerClone());
+            VirtualView vv3 = new VirtualView(connection3, nickname1, nickname2, player3.playerClone());
 
-                Controller controller = new Controller(game, currentPlayers);
-                game.addObserver(vv1);
-                game.addObserver(vv2);
-                game.addObserver(vv3);
-                vv1.addObserver(controller);
-                vv2.addObserver(controller);
-                vv3.addObserver(controller);
+            Map<String, ClientSocketConnection> currentPlayers = new HashMap<>();
+            currentPlayers.put(nickname1, connection1);
+            currentPlayers.put(nickname2, connection2);
+            currentPlayers.put(nickname3, connection3);
 
-                playingConnections.put(connection1, new ArrayList<>(Arrays.asList(connection2, connection3)));
-                playingConnections.put(connection2, new ArrayList<>(Arrays.asList(connection1, connection3)));
-                playingConnections.put(connection3, new ArrayList<>(Arrays.asList(connection1, connection2)));
+            Controller controller = new Controller(game, currentPlayers);
+            game.addObserver(vv1);
+            game.addObserver(vv2);
+            game.addObserver(vv3);
+            vv1.addObserver(controller);
+            vv2.addObserver(controller);
+            vv3.addObserver(controller);
 
-                controller.start();
+            playingConnections.put(connection1, new ArrayList<>(Arrays.asList(connection2, connection3)));
+            playingConnections.put(connection2, new ArrayList<>(Arrays.asList(connection1, connection3)));
+            playingConnections.put(connection3, new ArrayList<>(Arrays.asList(connection1, connection2)));
 
-            }
-            bouncer(numOfPlayers);
-            numOfPlayers = -1;
+            controller.start();
+            waitingNameList.remove(nickname1);
+            waitingNameList.remove(nickname2);
+            waitingNameList.remove(nickname3);
+            waitingListForThree.clear();
+        }else{
+            connection.asyncSend(new SimpleMessage("Wait for other player...\n"));
         }
     }
 
