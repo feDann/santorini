@@ -125,6 +125,16 @@ public class ClientMessageEncoder {
             return new MoveResponse(checkedPoint);
         }
 
+        else if (lastServerMessage instanceof BuildRequest){
+            inputLine = inputLine.replaceAll(" ","");
+            String[] buildPosition = inputLine.split(",");
+            Point checkedPoint = checkLegalInput(buildPosition);
+            if (! ((BuildRequest) lastServerMessage).getPossibleBuilds().contains(checkedPoint)){
+                throw new IllegalInputException("You cannot build in this point, please choose one from the list above!");
+            }
+            return new BuildResponse(checkedPoint);
+        }
+
         return null;
     }
 

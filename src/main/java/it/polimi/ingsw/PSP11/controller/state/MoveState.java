@@ -1,5 +1,6 @@
 package it.polimi.ingsw.PSP11.controller.state;
 
+import it.polimi.ingsw.PSP11.messages.LoseMessage;
 import it.polimi.ingsw.PSP11.messages.Message;
 import it.polimi.ingsw.PSP11.messages.MoveRequest;
 import it.polimi.ingsw.PSP11.messages.MoveResponse;
@@ -54,8 +55,12 @@ public class MoveState implements GameState {
     }
 
     @Override
-    public void checkLose() {
-
+    public boolean checkLose() {
+        if (possibleMoves.isEmpty()){
+            game.setThereIsALooser(true);
+            return true;
+        }
+        return false;
     }
 
     @Override
@@ -74,7 +79,7 @@ public class MoveState implements GameState {
     }
 
     @Override
-    public void applyBuild() {
+    public void applyBuild(Point point) {
 
     }
 
@@ -86,6 +91,9 @@ public class MoveState implements GameState {
     @Override
     public Message stateMessage() {
         moveWorker();
+        if (checkLose()){
+            return new LoseMessage();
+        }
         return new MoveRequest(possibleMoves);
     }
 

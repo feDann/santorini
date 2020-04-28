@@ -53,8 +53,8 @@ public class SelectGameGodsState implements GameState{
     }
 
     @Override
-    public void checkLose() {
-
+    public boolean checkLose() {
+        return false;
     }
 
     @Override
@@ -73,7 +73,7 @@ public class SelectGameGodsState implements GameState{
     }
 
     @Override
-    public void applyBuild() {
+    public void applyBuild(Point point) {
 
     }
 

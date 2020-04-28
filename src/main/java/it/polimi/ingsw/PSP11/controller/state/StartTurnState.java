@@ -55,12 +55,17 @@ public class StartTurnState implements GameState{
     }
 
     @Override
-    public void checkLose() {
+    public boolean checkLose() {
         for (Worker worker : game.getCurrentPlayer().getWorkers()){
             if(! game.move(worker).isEmpty()) {
                 movableWorkers.add(worker.workerClone());
             }
         }
+        if(movableWorkers.isEmpty()){
+            game.setThereIsALooser(true);
+            return true;
+        }
+        return false;
     }
 
     @Override
@@ -79,7 +84,7 @@ public class StartTurnState implements GameState{
     }
 
     @Override
-    public void applyBuild() {
+    public void applyBuild(Point point) {
 
     }
 
@@ -92,10 +97,8 @@ public class StartTurnState implements GameState{
     public Message stateMessage() {
         if (isNew) {
             isNew = false;
-            checkLose();
-            if (movableWorkers.isEmpty()){
-                //todo
-                //return new LosingMessage();
+            if (checkLose()){
+                return new LoseMessage();
             }
             return new SelectWorkerRequest(movableWorkers);
         }

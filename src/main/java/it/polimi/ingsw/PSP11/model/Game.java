@@ -1,5 +1,6 @@
 package it.polimi.ingsw.PSP11.model;
 
+import it.polimi.ingsw.PSP11.messages.BuildUpdateMessage;
 import it.polimi.ingsw.PSP11.messages.SimpleMessage;
 import it.polimi.ingsw.PSP11.messages.UpdateMessage;
 import it.polimi.ingsw.PSP11.messages.WorkerUpdateMessage;
@@ -27,6 +28,7 @@ public class Game extends Observable<UpdateMessage> {
     private boolean gameStarted;
     private boolean gameEnded;
     private final String godCardsXMLPath = "xml/GodCards.xml";
+    private boolean thereIsALooser;
 
     /**
      * Class constructor
@@ -43,6 +45,7 @@ public class Game extends Observable<UpdateMessage> {
         sharedTurn = new StandardTurn();
         gameEnded = false;
         gameStarted = false;
+        thereIsALooser = false;
     }
 
     /**
@@ -226,7 +229,23 @@ public class Game extends Observable<UpdateMessage> {
     public void applyMove(Point point, Worker worker){
         getCurrentPlayer().getPlayerTurn().applyMove(worker, board, point);
         notify(new UpdateMessage(boardClone(), getCurrentPlayer().playerClone(), new WorkerUpdateMessage(getCurrentPlayer().playerClone(), point)));
+    }
 
+    public ArrayList<Point> build(Worker worker){
+        return getCurrentPlayer().getPlayerTurn().build(worker,board);
+    }
+
+    public void applyBuild(Point point, Worker worker, boolean forceBuildDome){
+        getCurrentPlayer().getPlayerTurn().applyBuild(worker, board, point,forceBuildDome);
+        notify(new UpdateMessage(boardClone(), getCurrentPlayer().playerClone(), new BuildUpdateMessage(getCurrentPlayer().playerClone(), point)));
+    }
+
+    public boolean isThereIsALooser() {
+        return thereIsALooser;
+    }
+
+    public void setThereIsALooser(boolean thereIsALooser) {
+        this.thereIsALooser = thereIsALooser;
     }
 
     /**

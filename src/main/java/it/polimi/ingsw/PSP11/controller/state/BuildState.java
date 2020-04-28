@@ -1,8 +1,8 @@
 package it.polimi.ingsw.PSP11.controller.state;
 
-import it.polimi.ingsw.PSP11.messages.Message;
-import it.polimi.ingsw.PSP11.messages.SimpleMessage;
+import it.polimi.ingsw.PSP11.messages.*;
 import it.polimi.ingsw.PSP11.model.Game;
+import it.polimi.ingsw.PSP11.model.Worker;
 import it.polimi.ingsw.PSP11.view.VirtualView;
 
 import java.awt.*;
@@ -10,7 +10,15 @@ import java.util.ArrayList;
 
 public class BuildState implements GameState {
 
+    private Game game;
+    private Worker chosenWorker;
+    private ArrayList<Point> possibleBuilds = new ArrayList<Point>();
+    private boolean looser;
+
     public BuildState(Game game, int chosenWorker) {
+        this.game = game;
+        this.chosenWorker = game.getCurrentPlayer().getWorkers().get(chosenWorker);
+        this.looser = false;
     }
 
     @Override
@@ -44,8 +52,12 @@ public class BuildState implements GameState {
     }
 
     @Override
-    public void checkLose() {
-
+    public boolean checkLose() {
+        if (possibleBuilds.isEmpty()){
+            game.setThereIsALooser(true);
+            return true;
+        }
+        return false;
     }
 
     @Override
@@ -60,12 +72,14 @@ public class BuildState implements GameState {
 
     @Override
     public void workerBuild() {
-
+        possibleBuilds = game.build(chosenWorker);
     }
 
     @Override
-    public void applyBuild() {
-
+    public void applyBuild(Point point) {
+        //TODO
+        //bool per build dome
+        game.applyBuild(point, chosenWorker, false);
     }
 
     @Override
@@ -75,11 +89,18 @@ public class BuildState implements GameState {
 
     @Override
     public Message stateMessage() {
-        return new SimpleMessage("iniziamo a costruire!");
+        workerBuild();
+        if (checkLose()){
+            return new LoseMessage();
+        }
+        return new BuildRequest(possibleBuilds);
     }
 
     @Override
     public GameState execute(Message message, VirtualView virtualView) {
-        return null;
+        applyBuild(((BuildResponse) message).getPoint());
+        virtualView.sendMessage(new EndTurnMessage());
+        game.nextPlayer();
+        return new StartTurnState(game);
     }
 }

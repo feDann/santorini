@@ -59,6 +59,12 @@ public class ClientSocketConnection extends Observable<Message> implements Runna
         active = false;
     }
 
+    public void killGame(String nickname){
+        server.killLobby(nickname);
+        closeConnection();
+    }
+
+
     @Override
     public void run() {
         ObjectInputStream in;

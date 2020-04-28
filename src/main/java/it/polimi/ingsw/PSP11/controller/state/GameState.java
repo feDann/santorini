@@ -20,7 +20,7 @@ public interface GameState {
 
     public void moveWorker();
 
-    public void checkLose();
+    public boolean checkLose();
 
     public void applyMove(Point point);
 
@@ -28,7 +28,7 @@ public interface GameState {
 
     public void workerBuild();
 
-    public void applyBuild();
+    public void applyBuild(Point point);
 
     public void endTurn();
 
