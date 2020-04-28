@@ -13,7 +13,7 @@
 | Socket | [![YELLOW](https://placehold.it/15/ffdd00/ffdd00)](#) |
 | CLI | [![YELLOW](https://placehold.it/15/ffdd00/ffdd00)](#)|
 | GUI | [![RED](https://placehold.it/15/f03c15/f03c15)](#)|
-| Partite multiple | [![YELLOW](https://placehold.it/15/ffdd00/ffdd00)](#)|
+| Partite multiple | [![GREEN](https://placehold.it/15/ffdd00/ffdd00)](#)|
 | Persistenza | [![RED](https://placehold.it/15/f03c15/f03c15)](#)|
 | Divinità avanzate | [![RED](https://placehold.it/15/f03c15/f03c15)](#)|
 | Undo | [![RED](https://placehold.it/15/f03c15/f03c15)](#)|
