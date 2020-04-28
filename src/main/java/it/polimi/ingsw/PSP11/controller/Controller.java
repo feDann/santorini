@@ -2,7 +2,9 @@ package it.polimi.ingsw.PSP11.controller;
 
 import it.polimi.ingsw.PSP11.controller.state.GameState;
 import it.polimi.ingsw.PSP11.controller.state.SelectGameGodsState;
+import it.polimi.ingsw.PSP11.controller.state.StartTurnState;
 import it.polimi.ingsw.PSP11.messages.ControllerMessage;
+import it.polimi.ingsw.PSP11.messages.LoseMessage;
 import it.polimi.ingsw.PSP11.messages.NotYourTurnMessage;
 import it.polimi.ingsw.PSP11.messages.WinMessage;
 import it.polimi.ingsw.PSP11.model.Game;
@@ -40,8 +42,22 @@ public class Controller implements Observer<ControllerMessage> {
             endGame();
         }
         if (game.getNumOfPlayers() == 3){
-
+            String playerToKill = game.getCurrentPlayer().getNickname();
+            for (String player : currentPlayers.keySet()){
+                if (! player.equals(playerToKill)){
+                    currentPlayers.get(player).asyncSend(new LoseMessage(playerToKill));
+                }
+            }
+            game.removeCurrentPlayerWorker();
+            currentPlayers.get(playerToKill).goCommitDie(playerToKill);
+            currentPlayers.remove(playerToKill);
+            game.removeCurrentPlayer();
+            game.setNumOfPlayers(2);
+            if (game.getIndexOfCurrentPlayer() == game.getNumOfPlayers()){
+                game.nextPlayer();
+            }
         }
+        game.setThereIsALooser(false);
     }
 
 
@@ -55,6 +71,8 @@ public class Controller implements Observer<ControllerMessage> {
             //TODO
             if (game.isThereIsALooser()){
                 looseConditionHandler();
+                gameState = new StartTurnState(game);
+                currentPlayers.get(game.getCurrentPlayer().getNickname()).asyncSend(gameState.stateMessage());
             }
         }
         else{

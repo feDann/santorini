@@ -64,6 +64,11 @@ public class ClientSocketConnection extends Observable<Message> implements Runna
         closeConnection();
     }
 
+    public void goCommitDie(String playerToKill){
+        server.looserDisconnect(playerToKill);
+        closeConnection();
+    }
+
 
     @Override
     public void run() {

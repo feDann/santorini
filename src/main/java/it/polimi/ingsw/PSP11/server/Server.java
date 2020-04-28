@@ -2,7 +2,6 @@ package it.polimi.ingsw.PSP11.server;
 
 import it.polimi.ingsw.PSP11.controller.Controller;
 import it.polimi.ingsw.PSP11.messages.SimpleMessage;
-import it.polimi.ingsw.PSP11.messages.TooManyPeopleMessage;
 import it.polimi.ingsw.PSP11.model.Game;
 import it.polimi.ingsw.PSP11.model.Player;
 import it.polimi.ingsw.PSP11.view.VirtualView;
@@ -13,7 +12,6 @@ import java.net.Socket;
 import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 public class Server {
@@ -40,6 +38,16 @@ public class Server {
         }
         waitingNameList.add(nickname);
         return true;
+    }
+
+    public synchronized void looserDisconnect(String playerToKill){
+        playingNameList.remove(playerToKill);
+        ClientSocketConnection playerToKillSocket = playingList.get(playerToKill);
+        for (ClientSocketConnection c : playingConnections.get(playerToKillSocket)){
+            playingConnections.get(c).remove(playerToKillSocket);
+        }
+        playingConnections.remove(playerToKillSocket);
+        playingList.remove(playerToKill);
     }
 
     public synchronized void killLobby(String nickname){

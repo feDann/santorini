@@ -248,6 +248,16 @@ public class Game extends Observable<UpdateMessage> {
         this.thereIsALooser = thereIsALooser;
     }
 
+    public void removeCurrentPlayerWorker(){
+        for (Worker worker : this.getCurrentPlayer().getWorkers()){
+            this.getBoard().removeWorker(worker.getPosition());
+        }
+        notify(new UpdateMessage(boardClone(), getCurrentPlayer().playerClone(), new SimpleMessage(getCurrentPlayer().getNickname() + "'s workers has been removed!\n")));
+    }
+
+    public void removeCurrentPlayer(){
+        players.remove(getCurrentPlayer());
+    }
     /**
      * Start the game
      */
