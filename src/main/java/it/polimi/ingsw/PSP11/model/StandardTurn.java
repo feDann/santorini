@@ -1,7 +1,6 @@
 package it.polimi.ingsw.PSP11.model;
 
 import java.awt.*;
-import java.io.Serializable;
 import java.util.ArrayList;
 
 public class StandardTurn implements Turn {
@@ -114,7 +113,7 @@ public class StandardTurn implements Turn {
         movedUp = false;
         moveAgain = false;
         buildAgain = false;
-        canBuildDomeAnyLevel= false;
+        canBuildDomeAnyLevel = false;
         canBuildBeforeMove = false;
     }
 

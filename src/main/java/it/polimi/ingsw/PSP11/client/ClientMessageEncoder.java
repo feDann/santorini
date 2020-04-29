@@ -100,14 +100,14 @@ public class ClientMessageEncoder {
         }
 
 
-        else if (lastServerMessage instanceof BuildBeforeMoveRequest){
+        else if (lastServerMessage instanceof BuildBeforeMoveRequest || lastServerMessage instanceof MoveAgainRequest){
             inputLine = inputLine.replaceAll(" ","");
             String response = inputLine.toLowerCase();
             if (response.equals("y") || response.equals("yes")){
-                return new BuildBeforeMoveResponse(true);
+                return new BooleanResponse(true);
             }
             else if (response.equals("n") || response.equals("no")){
-                return new BuildBeforeMoveResponse(false);
+                return new BooleanResponse(false);
             }
             else{
                 throw new IllegalInputException("invalid input, please insert y or n");
@@ -134,6 +134,7 @@ public class ClientMessageEncoder {
             }
             return new BuildResponse(checkedPoint);
         }
+
 
         return null;
     }

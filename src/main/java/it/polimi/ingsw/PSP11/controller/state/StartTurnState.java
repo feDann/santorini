@@ -119,7 +119,7 @@ public class StartTurnState implements GameState{
             return new MoveState(game,this.chosenWorkerId);
         }
         else{
-            if (((BuildBeforeMoveResponse) message).isCanBuildBefore()){
+            if (((BooleanResponse) message).isResponse()){
                 return new BuildState(game, this.chosenWorkerId);
             }
             else{

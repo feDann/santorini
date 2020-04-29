@@ -16,6 +16,7 @@ public class DemeterPowerTurnDecorator extends GodTurn {
     public void startTurn() {
         getSharedTurn().startTurn();
         getSharedTurn().setBuildAgain(true);
+        numberOfTimesAlreadyBuilt = 0;
     }
 
     @Override

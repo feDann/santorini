@@ -264,7 +264,7 @@ public class Game extends Observable<UpdateMessage> {
      * Start the game
      */
     public void startGame(){
-        board.boardForWin();
+        board.init();
         deckInit();
         indexOfCurrentPlayer = 0;
         gameStarted = true;

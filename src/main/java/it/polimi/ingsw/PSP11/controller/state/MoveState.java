@@ -1,9 +1,6 @@
 package it.polimi.ingsw.PSP11.controller.state;
 
-import it.polimi.ingsw.PSP11.messages.LoseMessage;
-import it.polimi.ingsw.PSP11.messages.Message;
-import it.polimi.ingsw.PSP11.messages.MoveRequest;
-import it.polimi.ingsw.PSP11.messages.MoveResponse;
+import it.polimi.ingsw.PSP11.messages.*;
 import it.polimi.ingsw.PSP11.model.Game;
 import it.polimi.ingsw.PSP11.view.VirtualView;
 
@@ -15,10 +12,12 @@ public class MoveState implements GameState {
     private Game game;
     private int chosenWorkerID;
     private ArrayList<Point> possibleMoves = new ArrayList<Point>();
+    boolean askToMoveAgain;
 
     public MoveState(Game game, int chosenWorker) {
         this.game = game;
         this.chosenWorkerID = chosenWorker;
+        this.askToMoveAgain = false;
     }
 
     @Override
@@ -87,6 +86,10 @@ public class MoveState implements GameState {
 
     @Override
     public Message stateMessage() {
+        if (askToMoveAgain){
+            askToMoveAgain = false;
+            return new MoveAgainRequest();
+        }
         moveWorker();
         if (checkLose()){
             return new LoseMessage();
@@ -96,9 +99,19 @@ public class MoveState implements GameState {
 
     @Override
     public GameState execute(Message message, VirtualView virtualView) {
-        applyMove(((MoveResponse) message).getPoint());
-        //TODO
-        //controllo se ti puoi muovere due volte
+        if (message instanceof MoveResponse){
+            applyMove(((MoveResponse) message).getPoint());
+            System.out.println("\n\n\nBULIAN =" + game.getCurrentPlayer().getPlayerTurn().getSharedTurn().isMoveAgain());
+            if (game.getCurrentPlayer().getPlayerTurn().getSharedTurn().isMoveAgain()){
+                askToMoveAgain = true;
+                return this;
+            }
+        }
+        if (message instanceof BooleanResponse){
+            if (((BooleanResponse) message).isResponse()){
+                return this;
+            }
+        }
         return new BuildState(game, chosenWorkerID);
     }
 }

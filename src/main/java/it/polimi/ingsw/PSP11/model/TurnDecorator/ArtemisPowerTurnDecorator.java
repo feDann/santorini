@@ -21,6 +21,7 @@ public class ArtemisPowerTurnDecorator extends GodTurn {
     public void startTurn() {
         getSharedTurn().startTurn();
         getSharedTurn().setMoveAgain(true);
+        numberOfTimesAlredyMoved = 0;
     }
 
 
