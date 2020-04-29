@@ -15,13 +15,11 @@ public class MoveState implements GameState {
 
     private Game game;
     private Worker chosenWorker;
-    private int chosenWorkerId;
     private ArrayList<Point> possibleMoves = new ArrayList<Point>();
 
-    public MoveState(Game game, int chosenWorker) {
+    public MoveState(Game game, Worker chosenWorker) {
         this.game = game;
-        this.chosenWorkerId = chosenWorker;
-        this.chosenWorker = game.getCurrentPlayer().getWorkers().get(chosenWorker);
+        this.chosenWorker = chosenWorker;
     }
 
     @Override
@@ -102,6 +100,6 @@ public class MoveState implements GameState {
         applyMove(((MoveResponse) message).getPoint());
         //TODO
         //controllo se ti puoi muovere due volte
-        return new BuildState(game, chosenWorkerId);
+        return new BuildState(game, chosenWorker);
     }
 }

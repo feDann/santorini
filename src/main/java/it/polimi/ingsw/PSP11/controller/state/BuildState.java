@@ -15,9 +15,9 @@ public class BuildState implements GameState {
     private ArrayList<Point> possibleBuilds = new ArrayList<Point>();
     private boolean looser;
 
-    public BuildState(Game game, int chosenWorker) {
+    public BuildState(Game game, Worker chosenWorker) {
         this.game = game;
-        this.chosenWorker = game.getCurrentPlayer().getWorkers().get(chosenWorker);
+        this.chosenWorker = chosenWorker;
         this.looser = false;
     }
 

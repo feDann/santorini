@@ -13,7 +13,8 @@ public class StartTurnState implements GameState{
     private Game game;
     private boolean canBuildBeforeMove;
     private boolean isNew;
-    private int chosenWorker;
+    private int chosenWorkerId;
+    private Worker chosenWorker;
     private ArrayList<Worker> movableWorkers = new ArrayList<>();
 
     public StartTurnState(Game theGame) {
@@ -21,8 +22,9 @@ public class StartTurnState implements GameState{
         game.startTurn();
         this.canBuildBeforeMove = game.getCurrentPlayer().getPlayerTurn().getSharedTurn().isCanBuildBeforeMove();
         this.isNew = true;
-        this.chosenWorker = -1;
+        this.chosenWorkerId = -1;
     }
+
 
     @Override
     public void selectGameGods(ArrayList<Integer> ids) {
@@ -111,18 +113,23 @@ public class StartTurnState implements GameState{
     @Override
     public GameState execute(Message message, VirtualView virtualView) {
         if (message instanceof SelectWorkerResponse){
-            this.chosenWorker = ((SelectWorkerResponse) message).getChosenWorker();
+            this.chosenWorkerId = ((SelectWorkerResponse) message).getChosenWorker();
+            for(Worker worker : game.getCurrentPlayer().getWorkers()){
+                if(worker.getPosition().equals(movableWorkers.get(chosenWorkerId).getPosition())){
+                    chosenWorker = worker;
+                }
+            }
             if(canBuildBeforeMove){
                 return this;
             }
-            return new MoveState(game, chosenWorker);
+            return new MoveState(game,chosenWorker);
         }
         else{
             if (((BuildBeforeMoveResponse) message).isCanBuildBefore()){
                 return new BuildState(game, chosenWorker);
             }
             else{
-                return new MoveState(game, chosenWorker);
+                return new MoveState(game,chosenWorker);
             }
         }
 
