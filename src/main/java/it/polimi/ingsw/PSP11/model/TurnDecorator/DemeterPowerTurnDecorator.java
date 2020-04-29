@@ -34,7 +34,6 @@ public class DemeterPowerTurnDecorator extends GodTurn {
 
         //the first build invokes the standard build method
         if (numberOfTimesAlreadyBuilt == 0) {
-            numberOfTimesAlreadyBuilt++;
             return getSharedTurn().build(worker, board);
         }
         else {
@@ -42,7 +41,6 @@ public class DemeterPowerTurnDecorator extends GodTurn {
             ArrayList<Point> possibleBuildPoints = getSharedTurn().build(worker, board);
             possibleBuildPoints.remove(oldBuildPosition);
             getSharedTurn().setBuildAgain(false);
-            numberOfTimesAlreadyBuilt++;
             return possibleBuildPoints;
         }
     }
@@ -50,6 +48,7 @@ public class DemeterPowerTurnDecorator extends GodTurn {
     @Override
     public void applyBuild(Worker worker, Board board, Point buildPosition, boolean forceBuildDome) {
         oldBuildPosition = buildPosition;
+        numberOfTimesAlreadyBuilt++;
         getSharedTurn().applyBuild(worker, board, buildPosition, false);
     }
 

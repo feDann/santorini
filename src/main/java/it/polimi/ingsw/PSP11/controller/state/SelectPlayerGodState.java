@@ -41,6 +41,7 @@ public class SelectPlayerGodState implements GameState{
         game.getCurrentPlayer().setGod(game.selectPlayerGod(id));
         game.getCurrentPlayer().setPlayerTurn(game.getSharedTurn());
         System.out.println("Dio scelto: " + game.getCurrentPlayer().getGod().getName());
+        System.out.println("Turn cose: " + game.getCurrentPlayer().getPlayerTurn().getSharedTurn());
         chosenCards.remove(index);
 
     }

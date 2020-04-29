@@ -101,8 +101,7 @@ public class MoveState implements GameState {
     public GameState execute(Message message, VirtualView virtualView) {
         if (message instanceof MoveResponse){
             applyMove(((MoveResponse) message).getPoint());
-            System.out.println("\n\n\nBULIAN =" + game.getCurrentPlayer().getPlayerTurn().getSharedTurn().isMoveAgain());
-            if (game.getCurrentPlayer().getPlayerTurn().getSharedTurn().isMoveAgain()){
+            if (game.getSharedTurn().isMoveAgain()){
                 askToMoveAgain = true;
                 return this;
             }

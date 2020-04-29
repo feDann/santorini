@@ -226,8 +226,10 @@ public class DemeterPowerTurnDecoratorTest {
         worker.setPosition(new Point(1,1));
         board.placeWorker(new Point(1,1), worker);
         demeter.build(worker, board);
+        demeter.applyBuild(worker,board,new Point(2,2), false);
         assertEquals(1, demeter.getNumberOfTimesAlreadyBuilt());
         demeter.build(worker, board);
+        demeter.applyBuild(worker,board,new Point(2,3), false);
         assertEquals(2, demeter.getNumberOfTimesAlreadyBuilt());
         demeter.endTurn();
         assertEquals(0, demeter.getNumberOfTimesAlreadyBuilt());
