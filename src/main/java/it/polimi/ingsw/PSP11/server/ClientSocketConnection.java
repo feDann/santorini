@@ -7,8 +7,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+
 
 public class ClientSocketConnection extends Observable<Message> implements Runnable{
 
@@ -16,7 +15,7 @@ public class ClientSocketConnection extends Observable<Message> implements Runna
     private Server server;
     private ObjectOutputStream out;
     private boolean active = true;
-    private ExecutorService executor = Executors.newSingleThreadExecutor();
+    //private ExecutorService executor = Executors.newSingleThreadExecutor();
 
     public ClientSocketConnection(Socket socket, Server server){
         this.clientSocket = socket;
@@ -27,18 +26,18 @@ public class ClientSocketConnection extends Observable<Message> implements Runna
         return active;
     }
 
-    public void asyncSend(final Object message){
-        Thread thread;
-        thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                send(message);
-            }
-        });
-        executor.submit(thread);
-    }
+//    public void asyncSend(final Object message){
+//        Thread thread;
+//        thread = new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                send(message);
+//            }
+//        });
+//        executor.submit(thread);
+//    }
 
-    private synchronized void send(Object message) {
+    public synchronized void send(Object message) {
         try {
             out.reset();
             out.writeObject(message);
@@ -102,7 +101,7 @@ public class ClientSocketConnection extends Observable<Message> implements Runna
                 message = (Message) in.readObject();
                 notify(message);
             }
-        } catch (IOException | ClassNotFoundException | InterruptedException e) {
+        } catch (IOException | ClassNotFoundException e ) {
             System.err.println(e.getMessage());
             server.killLobby(nickname);
         }

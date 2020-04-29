@@ -23,7 +23,7 @@ public class Game extends Observable<UpdateMessage> {
     private Deck deck;
     private int indexOfCurrentPlayer;
     private int numOfPlayers;
-    private int winner;
+    private boolean thereIsAWinner;
     private StandardTurn sharedTurn;
     private boolean gameStarted;
     private boolean gameEnded;
@@ -41,11 +41,11 @@ public class Game extends Observable<UpdateMessage> {
         deck = null;
         indexOfCurrentPlayer = -1;
         numOfPlayers = -1;
-        winner = -1;
         sharedTurn = new StandardTurn();
         gameEnded = false;
         gameStarted = false;
         thereIsALooser = false;
+        thereIsAWinner = false;
     }
 
     /**
@@ -76,7 +76,6 @@ public class Game extends Observable<UpdateMessage> {
     public int getNumOfPlayers(){
         return numOfPlayers;
     }
-
 
     /**
      * Add new player in game
@@ -165,22 +164,12 @@ public class Game extends Observable<UpdateMessage> {
         }
     }
 
-    /**
-     *
-     * @return if there is a winner, the index of the winner, -1 otherwise
-     */
-
-    public int getWinner(){
-        return winner;
+    public boolean isThereIsAWinner() {
+        return thereIsAWinner;
     }
 
-    /**
-     * Set the index of the winner to the winner attribute
-     * @param indexOfWinner the index of the winner
-     */
-
-    public void setWinner(int indexOfWinner){
-        winner = indexOfWinner;
+    public void setThereIsAWinner(boolean thereIsAWinner) {
+        this.thereIsAWinner = thereIsAWinner;
     }
 
     public Deck getDeck() {
@@ -244,7 +233,6 @@ public class Game extends Observable<UpdateMessage> {
         notify(new UpdateMessage(boardClone(), getCurrentPlayer().playerClone(), new BuildUpdateMessage(getCurrentPlayer().playerClone(), point)));
     }
 
-
     public boolean isThereIsALooser() {
         return thereIsALooser;
     }
@@ -263,15 +251,22 @@ public class Game extends Observable<UpdateMessage> {
     public void removeCurrentPlayer(){
         players.remove(getCurrentPlayer());
     }
+
+    public boolean checkWinner(int workerID){
+        Worker worker = getCurrentPlayer().getWorkers().get(workerID);
+        if (getCurrentPlayer().getPlayerTurn().winCondition(worker, board)) {
+            thereIsAWinner = true;
+            return true;
+        }
+        return false;
+    }
     /**
      * Start the game
      */
     public void startGame(){
-        board.init();
+        board.boardForWin();
         deckInit();
         indexOfCurrentPlayer = 0;
         gameStarted = true;
     }
-
-
 }

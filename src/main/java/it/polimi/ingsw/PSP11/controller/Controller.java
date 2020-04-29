@@ -38,14 +38,14 @@ public class Controller implements Observer<ControllerMessage> {
     private void looseConditionHandler() {
         if (game.getNumOfPlayers() == 2){
             game.nextPlayer();
-            currentPlayers.get(game.getCurrentPlayer().getNickname()).asyncSend(new WinMessage());
+            currentPlayers.get(game.getCurrentPlayer().getNickname()).send(new WinMessage());
             endGame();
         }
         if (game.getNumOfPlayers() == 3){
             String playerToKill = game.getCurrentPlayer().getNickname();
             for (String player : currentPlayers.keySet()){
                 if (! player.equals(playerToKill)){
-                    currentPlayers.get(player).asyncSend(new LoseMessage(playerToKill));
+                    currentPlayers.get(player).send(new LoseMessage(playerToKill));
                 }
             }
             game.removeCurrentPlayerWorker();
@@ -60,6 +60,15 @@ public class Controller implements Observer<ControllerMessage> {
         game.setThereIsALooser(false);
     }
 
+    private void winConditionHandler(){
+        String winner = game.getCurrentPlayer().getNickname();
+        for (String player : currentPlayers.keySet()){
+            if (! player.equals(winner)){
+                currentPlayers.get(player).send(new WinMessage(winner));
+            }
+        }
+        endGame();
+    }
 
 
     public synchronized void readMessage(ControllerMessage message){
@@ -67,12 +76,15 @@ public class Controller implements Observer<ControllerMessage> {
         requestingPlayer = requestingView.getPlayer().getName();
         if (requestingPlayer.equals(game.getCurrentPlayer().getNickname())){
             gameState = gameState.execute(message.getMessage(),requestingView);
-            currentPlayers.get(game.getCurrentPlayer().getNickname()).asyncSend(gameState.stateMessage());
+            currentPlayers.get(game.getCurrentPlayer().getNickname()).send(gameState.stateMessage());
             //TODO
             if (game.isThereIsALooser()){
                 looseConditionHandler();
                 gameState = new StartTurnState(game);
-                currentPlayers.get(game.getCurrentPlayer().getNickname()).asyncSend(gameState.stateMessage());
+                currentPlayers.get(game.getCurrentPlayer().getNickname()).send(gameState.stateMessage());
+            }
+            if (game.isThereIsAWinner()){
+                winConditionHandler();
             }
         }
         else{
@@ -86,7 +98,7 @@ public class Controller implements Observer<ControllerMessage> {
         game.startGame();
         this.gameState = new SelectGameGodsState(game, gameState);
         firstPlayerConnection = currentPlayers.get(game.getCurrentPlayer().getNickname());
-        firstPlayerConnection.asyncSend(gameState.stateMessage());
+        firstPlayerConnection.send(gameState.stateMessage());
     }
 
     @Override

@@ -5,7 +5,6 @@ import it.polimi.ingsw.PSP11.messages.Message;
 import it.polimi.ingsw.PSP11.messages.MoveRequest;
 import it.polimi.ingsw.PSP11.messages.MoveResponse;
 import it.polimi.ingsw.PSP11.model.Game;
-import it.polimi.ingsw.PSP11.model.Worker;
 import it.polimi.ingsw.PSP11.view.VirtualView;
 
 import java.awt.*;
@@ -67,8 +66,8 @@ public class MoveState implements GameState {
     }
 
     @Override
-    public void checkWin() {
-
+    public boolean checkWin() {
+        return false;
     }
 
     @Override

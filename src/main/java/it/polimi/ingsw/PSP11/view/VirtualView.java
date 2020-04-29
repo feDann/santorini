@@ -25,7 +25,7 @@ public class VirtualView extends Observable<ControllerMessage> implements Observ
 
     //due giocatori
     public VirtualView(ClientSocketConnection connection, String opponent, PlayerInfo player) {
-        connection.asyncSend(new OpponentMessage(opponent, player.getColor()));
+        connection.send(new OpponentMessage(opponent, player.getColor()));
         connection.addObserver(new MessageReceiver());
         this.connection = connection;
         this.player = player;
@@ -33,7 +33,7 @@ public class VirtualView extends Observable<ControllerMessage> implements Observ
 
     //tres jugadores
     public VirtualView(ClientSocketConnection connection, String opponent1, String opponent2, PlayerInfo player){
-        connection.asyncSend(new OpponentMessage(opponent1, opponent2, player.getColor()));
+        connection.send(new OpponentMessage(opponent1, opponent2, player.getColor()));
         connection.addObserver(new MessageReceiver());
         this.connection = connection;
         this.player = player;
@@ -44,7 +44,7 @@ public class VirtualView extends Observable<ControllerMessage> implements Observ
     }
 
     public void sendMessage(Message message){
-        connection.asyncSend(message);
+        connection.send(message);
     }
 
     @Override
@@ -57,9 +57,9 @@ public class VirtualView extends Observable<ControllerMessage> implements Observ
     }
 
     private void updateBoard(UpdateMessage message) throws InterruptedException {
-        connection.asyncSend(new SimpleMessage(message.getBoard().printBoard()));
+        connection.send(new SimpleMessage(message.getBoard().printBoard()));
         if (!player.getName().equals(message.getPlayer().getName())) {
-            connection.asyncSend(message.getUpdateMessage());
+            connection.send(message.getUpdateMessage());
         }
     }
 }

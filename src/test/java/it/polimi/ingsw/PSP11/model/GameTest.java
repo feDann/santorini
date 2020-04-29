@@ -104,17 +104,6 @@ public class GameTest {
     }
 
     @Test
-    public void getWinnerTest() {
-        assertEquals(-1, game.getWinner());
-    }
-
-    @Test
-    public void setWinnerTest() {
-        game.setWinner(1);
-        assertEquals(1, game.getWinner());
-    }
-
-    @Test
     public void startGameTest() {
         game.startGame();
         assertEquals(0, game.getIndexOfCurrentPlayer());

@@ -71,7 +71,7 @@ public class Server {
         }
     }
 
-    public synchronized void lobbyForTwoPlayer(String nickname,ClientSocketConnection connection) throws InterruptedException {
+    public synchronized void lobbyForTwoPlayer(String nickname,ClientSocketConnection connection) {
         waitingListForTwo.put(nickname, connection);
             if (waitingListForTwo.size() == 2) {
                 ArrayList<String> nameList = new ArrayList<>(waitingListForTwo.keySet());
@@ -115,7 +115,7 @@ public class Server {
                 waitingNameList.remove(nickname2);
                 waitingListForTwo.clear();
             }else{
-                connection.asyncSend(new SimpleMessage("Wait for other player...\n"));
+                connection.send(new SimpleMessage("Wait for other player...\n"));
             }
     }
 
@@ -175,7 +175,7 @@ public class Server {
             waitingNameList.remove(nickname3);
             waitingListForThree.clear();
         }else{
-            connection.asyncSend(new SimpleMessage("Wait for other player...\n"));
+            connection.send(new SimpleMessage("Wait for other player...\n"));
         }
     }
 

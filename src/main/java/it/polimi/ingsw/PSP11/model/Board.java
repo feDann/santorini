@@ -20,6 +20,18 @@ public class Board implements Serializable {
         }
     }
 
+    public void boardForWin(){
+        init();
+        Point point1 = new Point(1,1);
+        Point point2 = new Point(1,2);
+        addBlock(point1);
+        addBlock(point1);
+        addBlock(point2);
+        addBlock(point2);
+        addBlock(point2);
+
+    }
+
     /**
      * @param point indicates the spot in witch we want to know if there is a player on top
      * @return true if the cell indicated by the point has a worker on top

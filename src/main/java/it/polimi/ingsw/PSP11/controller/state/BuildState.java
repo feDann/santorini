@@ -2,7 +2,6 @@ package it.polimi.ingsw.PSP11.controller.state;
 
 import it.polimi.ingsw.PSP11.messages.*;
 import it.polimi.ingsw.PSP11.model.Game;
-import it.polimi.ingsw.PSP11.model.Worker;
 import it.polimi.ingsw.PSP11.view.VirtualView;
 
 import java.awt.*;
@@ -66,8 +65,8 @@ public class BuildState implements GameState {
     }
 
     @Override
-    public void checkWin() {
-
+    public boolean checkWin() {
+        return game.checkWinner(chosenWorkerID);
     }
 
     @Override
@@ -89,6 +88,9 @@ public class BuildState implements GameState {
 
     @Override
     public Message stateMessage() {
+        if (checkWin()){
+            return new WinMessage();
+        }
         workerBuild();
         if (checkLose()){
             return new LoseMessage();

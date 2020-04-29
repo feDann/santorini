@@ -24,7 +24,7 @@ public interface GameState {
 
     public void applyMove(Point point);
 
-    public void checkWin();
+    public boolean checkWin();
 
     public void workerBuild();
 

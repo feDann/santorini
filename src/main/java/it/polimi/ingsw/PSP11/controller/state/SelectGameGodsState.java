@@ -63,8 +63,8 @@ public class SelectGameGodsState implements GameState{
     }
 
     @Override
-    public void checkWin() {
-
+    public boolean checkWin() {
+        return false;
     }
 
     @Override
