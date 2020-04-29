@@ -11,6 +11,7 @@ public class Worker implements Serializable {
     private Point position;
     private boolean moved;
     private Color color;
+    private int id;
 
 
     /**
@@ -67,10 +68,19 @@ public class Worker implements Serializable {
         return color;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public Worker workerClone(){
         Worker workerCopy = new Worker(this.color);
         workerCopy.setPosition(new Point(this.getPosition()));
         workerCopy.setMoved(this.isMoved());
+        workerCopy.setId(this.id);
         return workerCopy;
     }
 

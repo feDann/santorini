@@ -14,7 +14,6 @@ public class StartTurnState implements GameState{
     private boolean canBuildBeforeMove;
     private boolean isNew;
     private int chosenWorkerId;
-    private Worker chosenWorker;
     private ArrayList<Worker> movableWorkers = new ArrayList<>();
 
     public StartTurnState(Game theGame) {
@@ -59,7 +58,7 @@ public class StartTurnState implements GameState{
     @Override
     public boolean checkLose() {
         for (Worker worker : game.getCurrentPlayer().getWorkers()){
-            if(! game.move(worker).isEmpty()) {
+            if(! game.move(worker.getId()).isEmpty()) {
                 movableWorkers.add(worker.workerClone());
             }
         }
@@ -114,22 +113,17 @@ public class StartTurnState implements GameState{
     public GameState execute(Message message, VirtualView virtualView) {
         if (message instanceof SelectWorkerResponse){
             this.chosenWorkerId = ((SelectWorkerResponse) message).getChosenWorker();
-            for(Worker worker : game.getCurrentPlayer().getWorkers()){
-                if(worker.getPosition().equals(movableWorkers.get(chosenWorkerId).getPosition())){
-                    chosenWorker = worker;
-                }
-            }
             if(canBuildBeforeMove){
                 return this;
             }
-            return new MoveState(game,chosenWorker);
+            return new MoveState(game,this.chosenWorkerId);
         }
         else{
             if (((BuildBeforeMoveResponse) message).isCanBuildBefore()){
-                return new BuildState(game, chosenWorker);
+                return new BuildState(game, this.chosenWorkerId);
             }
             else{
-                return new MoveState(game,chosenWorker);
+                return new MoveState(game,this.chosenWorkerId);
             }
         }
 

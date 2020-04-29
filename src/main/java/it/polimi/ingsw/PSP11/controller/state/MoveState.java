@@ -14,12 +14,12 @@ import java.util.ArrayList;
 public class MoveState implements GameState {
 
     private Game game;
-    private Worker chosenWorker;
+    private int chosenWorkerID;
     private ArrayList<Point> possibleMoves = new ArrayList<Point>();
 
-    public MoveState(Game game, Worker chosenWorker) {
+    public MoveState(Game game, int chosenWorker) {
         this.game = game;
-        this.chosenWorker = chosenWorker;
+        this.chosenWorkerID = chosenWorker;
     }
 
     @Override
@@ -49,7 +49,7 @@ public class MoveState implements GameState {
 
     @Override
     public void moveWorker() {
-        possibleMoves = game.move(chosenWorker);
+        possibleMoves = game.move(chosenWorkerID);
     }
 
     @Override
@@ -63,7 +63,7 @@ public class MoveState implements GameState {
 
     @Override
     public void applyMove(Point point) {
-        game.applyMove(point, chosenWorker);
+        game.applyMove(point, chosenWorkerID);
     }
 
     @Override
@@ -100,6 +100,6 @@ public class MoveState implements GameState {
         applyMove(((MoveResponse) message).getPoint());
         //TODO
         //controllo se ti puoi muovere due volte
-        return new BuildState(game, chosenWorker);
+        return new BuildState(game, chosenWorkerID);
     }
 }

@@ -11,13 +11,13 @@ import java.util.ArrayList;
 public class BuildState implements GameState {
 
     private Game game;
-    private Worker chosenWorker;
+    private int chosenWorkerID;
     private ArrayList<Point> possibleBuilds = new ArrayList<Point>();
     private boolean looser;
 
-    public BuildState(Game game, Worker chosenWorker) {
+    public BuildState(Game game, int chosenWorker) {
         this.game = game;
-        this.chosenWorker = chosenWorker;
+        this.chosenWorkerID = chosenWorker;
         this.looser = false;
     }
 
@@ -72,14 +72,14 @@ public class BuildState implements GameState {
 
     @Override
     public void workerBuild() {
-        possibleBuilds = game.build(chosenWorker);
+        possibleBuilds = game.build(chosenWorkerID);
     }
 
     @Override
     public void applyBuild(Point point) {
         //TODO
         //bool per build dome
-        game.applyBuild(point, chosenWorker, false);
+        game.applyBuild(point, chosenWorkerID, false);
     }
 
     @Override

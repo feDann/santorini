@@ -41,6 +41,7 @@ public class PlaceWorkerState implements GameState{
             return;
         }
         Worker worker = new Worker(game.getCurrentPlayer().getColor());
+        worker.setId(numOfWorker);
         worker.setPosition(point);
         game.getCurrentPlayer().addWorker(worker);
         game.placeWorker(point, worker);

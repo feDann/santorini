@@ -222,23 +222,28 @@ public class Game extends Observable<UpdateMessage> {
         getCurrentPlayer().getPlayerTurn().startTurn();
     }
 
-    public ArrayList<Point> move(Worker worker){
+    public ArrayList<Point> move(int workerID){
+        Worker worker = getCurrentPlayer().getWorkers().get(workerID);
         return getCurrentPlayer().getPlayerTurn().move(worker,board);
     }
 
-    public void applyMove(Point point, Worker worker){
+    public void applyMove(Point point, int workerID){
+        Worker worker = getCurrentPlayer().getWorkers().get(workerID);
         getCurrentPlayer().getPlayerTurn().applyMove(worker, board, point);
         notify(new UpdateMessage(boardClone(), getCurrentPlayer().playerClone(), new WorkerUpdateMessage(getCurrentPlayer().playerClone(), point)));
     }
 
-    public ArrayList<Point> build(Worker worker){
+    public ArrayList<Point> build(int workerID){
+        Worker worker = getCurrentPlayer().getWorkers().get(workerID);
         return getCurrentPlayer().getPlayerTurn().build(worker,board);
     }
 
-    public void applyBuild(Point point, Worker worker, boolean forceBuildDome){
+    public void applyBuild(Point point, int workerID, boolean forceBuildDome){
+        Worker worker = getCurrentPlayer().getWorkers().get(workerID);
         getCurrentPlayer().getPlayerTurn().applyBuild(worker, board, point,forceBuildDome);
         notify(new UpdateMessage(boardClone(), getCurrentPlayer().playerClone(), new BuildUpdateMessage(getCurrentPlayer().playerClone(), point)));
     }
+
 
     public boolean isThereIsALooser() {
         return thereIsALooser;
