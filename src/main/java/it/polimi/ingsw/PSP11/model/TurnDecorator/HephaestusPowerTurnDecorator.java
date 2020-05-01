@@ -14,7 +14,7 @@ public class HephaestusPowerTurnDecorator extends GodTurn {
     @Override
     public void startTurn() {
         getSharedTurn().startTurn();
-        getSharedTurn().setBuildAgain(true);
+        numberOfTimesAlreadyBuilt = 0;
     }
 
     @Override
@@ -36,9 +36,7 @@ public class HephaestusPowerTurnDecorator extends GodTurn {
         else{
             ArrayList<Point> oldPositionAsArray = new ArrayList<>();
             getSharedTurn().setBuildAgain(false);
-            if(!(board.hasWorkerOnTop(oldBuildPosition) && board.hasDomeOnTop(oldBuildPosition)) && board.getCurrentLevel(oldBuildPosition).ordinal()<3){
-                oldPositionAsArray.add(oldBuildPosition);
-            }
+            oldPositionAsArray.add(oldBuildPosition);
             return oldPositionAsArray;
         }
     }
@@ -47,8 +45,11 @@ public class HephaestusPowerTurnDecorator extends GodTurn {
     @Override
     public void applyBuild(Worker worker, Board board, Point buildPosition, boolean forceBuildDome) {
         oldBuildPosition = buildPosition;
-        numberOfTimesAlreadyBuilt++;
         getSharedTurn().applyBuild(worker, board, buildPosition, forceBuildDome);
+        if(board.getCurrentLevel(oldBuildPosition).ordinal()<3 && numberOfTimesAlreadyBuilt == 0){
+            getSharedTurn().setBuildAgain(true);
+            numberOfTimesAlreadyBuilt++;
+        }
     }
 
     @Override
