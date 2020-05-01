@@ -11,7 +11,7 @@
 | Regole semplificate | [![GREEN](https://placehold.it/15/44bb44/44bb44)](#) |
 | Regole complete | [![YELLOW](https://placehold.it/15/ffdd00/ffdd00)](#)|
 | Socket | [![YELLOW](https://placehold.it/15/ffdd00/ffdd00)](#) |
-| CLI | [[![GREEN](https://placehold.it/15/44bb44/44bb44)](#)|
+| CLI | [![GREEN](https://placehold.it/15/44bb44/44bb44)](#)|
 | GUI | [![RED](https://placehold.it/15/f03c15/f03c15)](#)|
 | Partite multiple | [![GREEN](https://placehold.it/15/44bb44/44bb44)](#)|
 | Persistenza | [![RED](https://placehold.it/15/f03c15/f03c15)](#)|
