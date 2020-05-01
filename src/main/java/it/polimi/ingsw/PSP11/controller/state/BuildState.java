@@ -12,12 +12,15 @@ public class BuildState implements GameState {
     private Game game;
     private int chosenWorkerID;
     private ArrayList<Point> possibleBuilds = new ArrayList<Point>();
-    private boolean looser;
+    private boolean askToBuildAgain;
+    private boolean askToBuildDome;
+    private Point buildPosition;
 
     public BuildState(Game game, int chosenWorker) {
         this.game = game;
         this.chosenWorkerID = chosenWorker;
-        this.looser = false;
+        this.askToBuildAgain = false;
+        this.askToBuildDome = false;
     }
 
     @Override
@@ -75,10 +78,8 @@ public class BuildState implements GameState {
     }
 
     @Override
-    public void applyBuild(Point point) {
-        //TODO
-        //bool per build dome
-        game.applyBuild(point, chosenWorkerID, false);
+    public void applyBuild(Point point, boolean forceBuildDome) {
+        game.applyBuild(point, chosenWorkerID, forceBuildDome);
     }
 
     @Override
@@ -91,6 +92,14 @@ public class BuildState implements GameState {
         if (checkWin()){
             return new WinMessage();
         }
+        if (askToBuildDome){
+            askToBuildDome = false;
+            return new BuildDomeRequest();
+        }
+        if (askToBuildAgain){
+            askToBuildAgain = false;
+            return new BuildAgainRequest();
+        }
         workerBuild();
         if (checkLose()){
             return new LoseMessage();
@@ -100,7 +109,29 @@ public class BuildState implements GameState {
 
     @Override
     public GameState execute(Message message, VirtualView virtualView) {
-        applyBuild(((BuildResponse) message).getPoint());
+        if (message instanceof BuildResponse){
+            buildPosition = ((BuildResponse) message).getPoint();
+            if (game.getSharedTurn().isCanBuildDomeAnyLevel() && game.getBoard().getCurrentLevel(buildPosition).ordinal() != 3){
+                askToBuildDome = true;
+                return this;
+            }
+            applyBuild(buildPosition,false);
+            if (game.getSharedTurn().isBuildAgain()){
+                askToBuildAgain = true;
+                return this;
+            }
+            if (game.getSharedTurn().isCanBuildBeforeMove()){
+                return new MoveState(game, chosenWorkerID);
+            }
+        }
+        if (message instanceof BooleanResponse){
+            if (game.getSharedTurn().isCanBuildDomeAnyLevel()){
+                applyBuild(buildPosition,((BooleanResponse) message).isResponse());
+            }
+            else if (((BooleanResponse) message).isResponse()){
+                return this;
+            }
+        }
         virtualView.sendMessage(new EndTurnMessage());
         game.nextPlayer();
         return new StartTurnState(game);

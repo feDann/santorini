@@ -66,7 +66,7 @@ public class MoveState implements GameState {
 
     @Override
     public boolean checkWin() {
-        return false;
+        return game.checkWinner(chosenWorkerID);
     }
 
     @Override
@@ -75,7 +75,7 @@ public class MoveState implements GameState {
     }
 
     @Override
-    public void applyBuild(Point point) {
+    public void applyBuild(Point point, boolean forceBuildDome) {
 
     }
 
@@ -86,6 +86,9 @@ public class MoveState implements GameState {
 
     @Override
     public Message stateMessage() {
+        if (checkWin()){
+            return new WinMessage();
+        }
         if (askToMoveAgain){
             askToMoveAgain = false;
             return new MoveAgainRequest();
@@ -101,8 +104,7 @@ public class MoveState implements GameState {
     public GameState execute(Message message, VirtualView virtualView) {
         if (message instanceof MoveResponse){
             applyMove(((MoveResponse) message).getPoint());
-            System.out.println("\n\n\nBULIAN =" + game.getCurrentPlayer().getPlayerTurn().getSharedTurn().isMoveAgain());
-            if (game.getCurrentPlayer().getPlayerTurn().getSharedTurn().isMoveAgain()){
+            if (game.getSharedTurn().isMoveAgain()){
                 askToMoveAgain = true;
                 return this;
             }

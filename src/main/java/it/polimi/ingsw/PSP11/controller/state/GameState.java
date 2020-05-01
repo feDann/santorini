@@ -28,7 +28,7 @@ public interface GameState {
 
     public void workerBuild();
 
-    public void applyBuild(Point point);
+    public void applyBuild(Point point, boolean forceBuildDome);
 
     public void endTurn();
 

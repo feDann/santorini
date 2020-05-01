@@ -28,13 +28,13 @@ public class PrometheusPowerTurnDecorator extends GodTurn {
         } else {
             possibleposition = getSharedTurn().move(worker, board);
         }
-        getSharedTurn().setCanBuildBeforeMove(false);
         return possibleposition;
     }
 
     @Override
     public void applyMove(Worker worker, Board board, Point newPosition) {
         getSharedTurn().applyMove(worker, board, newPosition);
+        getSharedTurn().setCanBuildBeforeMove(false);
     }
 
     @Override

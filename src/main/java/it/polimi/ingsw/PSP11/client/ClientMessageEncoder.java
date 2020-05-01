@@ -100,7 +100,7 @@ public class ClientMessageEncoder {
         }
 
 
-        else if (lastServerMessage instanceof BuildBeforeMoveRequest || lastServerMessage instanceof MoveAgainRequest){
+        else if (lastServerMessage instanceof BuildBeforeMoveRequest || lastServerMessage instanceof MoveAgainRequest || lastServerMessage instanceof BuildAgainRequest || lastServerMessage instanceof BuildDomeRequest){
             inputLine = inputLine.replaceAll(" ","");
             String response = inputLine.toLowerCase();
             if (response.equals("y") || response.equals("yes")){

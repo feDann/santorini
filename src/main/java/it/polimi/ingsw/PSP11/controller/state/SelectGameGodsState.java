@@ -73,7 +73,7 @@ public class SelectGameGodsState implements GameState{
     }
 
     @Override
-    public void applyBuild(Point point) {
+    public void applyBuild(Point point, boolean forceBuildDome) {
 
     }
 
