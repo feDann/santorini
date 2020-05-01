@@ -194,9 +194,11 @@ public class ArtemisPowerTurnDecoratorTest {
         worker.setPosition(new Point(2,3));
 
         artemisTurn.move(worker,board);
+        artemisTurn.applyMove(worker,board, new Point(3,3));
         assertEquals(1,artemisTurn.getNumberOfTimesAlredyMoved());
 
         artemisTurn.move(worker,board);
+        artemisTurn.applyMove(worker,board, new Point(3,4));
         assertEquals(2,artemisTurn.getNumberOfTimesAlredyMoved());
 
         artemisTurn.endTurn();

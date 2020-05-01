@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 public class StartTurnState implements GameState{
 
-    private Game game;
+    private final Game game;
     private boolean canBuildBeforeMove;
     private boolean isNew;
     private int chosenWorkerId;
@@ -18,8 +18,6 @@ public class StartTurnState implements GameState{
 
     public StartTurnState(Game theGame) {
         this.game = theGame;
-        game.startTurn();
-        this.canBuildBeforeMove = game.getCurrentPlayer().getPlayerTurn().getSharedTurn().isCanBuildBeforeMove();
         this.isNew = true;
         this.chosenWorkerId = -1;
     }
@@ -42,7 +40,8 @@ public class StartTurnState implements GameState{
 
     @Override
     public void startTurn() {
-
+        game.startTurn();
+        this.canBuildBeforeMove = game.getSharedTurn().isCanBuildBeforeMove();
     }
 
     @Override
@@ -97,6 +96,7 @@ public class StartTurnState implements GameState{
     @Override
     public Message stateMessage() {
         if (isNew) {
+            startTurn();
             isNew = false;
             if (checkLose()){
                 return new LoseMessage();
