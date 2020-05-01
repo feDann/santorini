@@ -5,6 +5,7 @@ import it.polimi.ingsw.PSP11.messages.*;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 public class ClientMessageEncoder {
 
@@ -90,8 +91,8 @@ public class ClientMessageEncoder {
             inputLine = inputLine.replaceAll(" ","");
             try {
                 int chosenWorker = Integer.parseInt(inputLine);
-                if (chosenWorker < 1 || chosenWorker > 2){
-                    throw new IllegalInputException("Please insert 1 or 2");
+                if ( ((SelectWorkerRequest) lastServerMessage).getAvailableWorkers().stream().noneMatch(worker -> worker.getId() == (chosenWorker-1)) ){
+                    throw new IllegalInputException("Please insert a valid worker id");
                 }
                 return new SelectWorkerResponse((chosenWorker-1));
             }catch (NumberFormatException e){
