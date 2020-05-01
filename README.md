@@ -14,10 +14,12 @@
 | CLI | [![GREEN](https://placehold.it/15/44bb44/44bb44)](#)|
 | GUI | [![RED](https://placehold.it/15/f03c15/f03c15)](#)|
 | Partite multiple | [![GREEN](https://placehold.it/15/44bb44/44bb44)](#)|
-| Persistenza | [![RED](https://placehold.it/15/f03c15/f03c15)](#)|
 | Divinità avanzate | [![RED](https://placehold.it/15/f03c15/f03c15)](#)|
-| Undo | [![RED](https://placehold.it/15/f03c15/f03c15)](#)|
 
+<!--
+| Persistenza | [![RED](https://placehold.it/15/f03c15/f03c15)](#)|
+| Undo | [![RED](https://placehold.it/15/f03c15/f03c15)](#)|
+-->
 
 <!--
 [![RED](https://placehold.it/15/f03c15/f03c15)](#)
