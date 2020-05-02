@@ -147,14 +147,15 @@ public class Board implements Serializable {
     }
 
     public String printBoard() {
-        String formattedMessage = "";
+        String formattedMessage = "\n\n\n\n\n";
+        formattedMessage = formattedMessage.concat("    1      2      3      4      5   y/x\n");
 
         for (int i = 0; i < 5; i++) {
             formattedMessage = formattedMessage.concat("------------------------------------\n");
             for (int j = 0; j < 5; j++) {
                 formattedMessage = formattedMessage.concat("|" + board[i][j].getCurrentLevel().ordinal());
                 if (board[i][j].hasWorkerOnTop()) {
-                    formattedMessage = formattedMessage.concat(board[i][j].getCurrentWorker().getColor().getEscape() + "W(" + board[i][j].getCurrentWorker().getColor().toString().charAt(0) + ") " + Color.RESET);
+                    formattedMessage = formattedMessage.concat(board[i][j].getCurrentWorker().getColor().getEscape() + "  W  " + Color.RESET);
                 } else if (board[i][j].hasDomeOnTop()) {
                     formattedMessage = formattedMessage.concat(" D   ");
                 } else {
@@ -162,6 +163,7 @@ public class Board implements Serializable {
                 }
             }
             formattedMessage = formattedMessage.concat("|");
+            formattedMessage = formattedMessage.concat(" " + (i+1));
             formattedMessage = formattedMessage.concat("\n");
         }
         formattedMessage = formattedMessage.concat("------------------------------------\n");

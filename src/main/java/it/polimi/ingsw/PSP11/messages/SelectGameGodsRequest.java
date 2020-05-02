@@ -1,6 +1,5 @@
 package it.polimi.ingsw.PSP11.messages;
 
-import it.polimi.ingsw.PSP11.controller.state.SelectPlayerGodState;
 import it.polimi.ingsw.PSP11.model.Card;
 import it.polimi.ingsw.PSP11.model.Color;
 import it.polimi.ingsw.PSP11.model.Deck;
@@ -14,12 +13,11 @@ public class SelectGameGodsRequest extends SimpleMessage {
         super("");
         this.numOfPlayers = numOfPlayers;
         this.numOfDeckCards = deck.getCards().size();
-        String formattedMessage = "\n";
+        String formattedMessage = "\n\nThe Available god are:\n\n";
 
         for(Card card : deck.getCards()){
-            formattedMessage +=  card.getIdCard() + ") " + card.getName() + "\n   Description: "+ card.getDescription() + "\n";
+            formattedMessage +=  card.getIdCard() + ") " + card.getName() + "\n   Description: "+ card.getDescription() + "\n\n";
         }
-
 
         formattedMessage = formattedMessage.replaceAll("Your Move", Color.BLUE.getEscape() + "Your Move" + Color.RESET );
         formattedMessage = formattedMessage.replaceAll("Your Build", Color.BROWN.getEscape() + "Your Build" + Color.RESET );
@@ -31,7 +29,7 @@ public class SelectGameGodsRequest extends SimpleMessage {
         if(numOfPlayers == 2){
             formattedMessage = formattedMessage.concat("x,y");
         }
-        if (numOfPlayers == 3){
+        else if (numOfPlayers == 3){
             formattedMessage = formattedMessage.concat("x,y,z");
         }
         formattedMessage += "\n>>>";

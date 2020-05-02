@@ -49,15 +49,13 @@ public class VirtualView extends Observable<ControllerMessage> implements Observ
 
     @Override
     public void update(UpdateMessage message) {
-        try {
-            updateBoard(message);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        updatePlayerView(message);
     }
 
-    private void updateBoard(UpdateMessage message) throws InterruptedException {
-        connection.send(new SimpleMessage(message.getBoard().printBoard()));
+    private void updatePlayerView(UpdateMessage message) {
+        if (message.getBoard() != null){
+            connection.send(new SimpleMessage(message.getBoard().printBoard()));
+        }
         if (!player.getName().equals(message.getPlayer().getName())) {
             connection.send(message.getUpdateMessage());
         }

@@ -101,7 +101,7 @@ public class StartTurnState implements GameState{
             if (checkLose()){
                 return new LoseMessage();
             }
-            return new SelectWorkerRequest(movableWorkers);
+            return new SelectWorkerRequest(movableWorkers, game.getCurrentPlayer().getGod().cardClone());
         }
         if (canBuildBeforeMove) {
             return new BuildBeforeMoveRequest();

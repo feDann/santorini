@@ -102,6 +102,7 @@ public class Game extends Observable<UpdateMessage> {
      */
 
     public Card selectPlayerGod (int indexOfChosenGod){
+        notify(new UpdateMessage(null,getCurrentPlayer().playerClone(),new SimpleMessage(getCurrentPlayer().getColor().getEscape() + getCurrentPlayer().getNickname() + Color.RESET + " has chosen " + chosenCards.get(indexOfChosenGod).getName() + "\n")));
         return chosenCards.get(indexOfChosenGod);
     }
 
@@ -259,6 +260,10 @@ public class Game extends Observable<UpdateMessage> {
             return true;
         }
         return false;
+    }
+
+    public void endTurn(){
+        notify(new UpdateMessage(null, getCurrentPlayer().playerClone(), new SimpleMessage(getCurrentPlayer().getColor().getEscape() + getCurrentPlayer().getNickname() + Color.RESET + " ended his turn\n")));
     }
     /**
      * Start the game

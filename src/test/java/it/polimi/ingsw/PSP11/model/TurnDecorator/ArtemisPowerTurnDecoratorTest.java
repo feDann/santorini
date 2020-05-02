@@ -1,7 +1,7 @@
 package it.polimi.ingsw.PSP11.model.TurnDecorator;
 
-import it.polimi.ingsw.PSP11.model.*;
 import it.polimi.ingsw.PSP11.model.Color;
+import it.polimi.ingsw.PSP11.model.*;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -44,7 +44,7 @@ public class ArtemisPowerTurnDecoratorTest {
         assertFalse(artemisTurn.getSharedTurn().isMovedUp());
         assertFalse(artemisTurn.getSharedTurn().isBuildAgain());
         assertTrue(artemisTurn.getSharedTurn().isMoveAgain());
-        assertEquals(0,artemisTurn.getNumberOfTimesAlredyMoved());
+        assertEquals(0,artemisTurn.getNumberOfTimesAlreadyMoved());
     }
 
     @Test
@@ -195,14 +195,14 @@ public class ArtemisPowerTurnDecoratorTest {
 
         artemisTurn.move(worker,board);
         artemisTurn.applyMove(worker,board, new Point(3,3));
-        assertEquals(1,artemisTurn.getNumberOfTimesAlredyMoved());
+        assertEquals(1,artemisTurn.getNumberOfTimesAlreadyMoved());
 
         artemisTurn.move(worker,board);
         artemisTurn.applyMove(worker,board, new Point(3,4));
-        assertEquals(2,artemisTurn.getNumberOfTimesAlredyMoved());
+        assertEquals(2,artemisTurn.getNumberOfTimesAlreadyMoved());
 
         artemisTurn.endTurn();
-        assertEquals(0,artemisTurn.getNumberOfTimesAlredyMoved());
+        assertEquals(0,artemisTurn.getNumberOfTimesAlreadyMoved());
 
     }
 }

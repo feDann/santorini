@@ -16,7 +16,7 @@ public class SelectPlayerGodRequest extends SimpleMessage{
         int id = 1;
         numOfCards = chosenCards.size();
         chosenCardsCopy = chosenCards;
-        String formattedMessage = "\nAvailable Gods:\n";
+        String formattedMessage = "\n\n\nAvailable Gods:\n";
 
         for (Card card : chosenCards){
             formattedMessage += id + ")" + card.getName() + "\n   Description: " + card.getDescription() + "\n";

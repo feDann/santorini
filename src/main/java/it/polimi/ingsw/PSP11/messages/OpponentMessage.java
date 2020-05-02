@@ -7,12 +7,12 @@ public class OpponentMessage extends SimpleMessage {
     private Color color;
 
     public OpponentMessage(String opponent1, Color color) {
-        super("Your opponent is: " + opponent1 + "\nYour color is " +  color.getEscape() + color.toString().toLowerCase() + Color.RESET + "\n");
+        super("\n\n\nYour opponent is: " + opponent1 + "\nYour color is " +  color.getEscape() + color.toString().toLowerCase() + Color.RESET + "\n");
         this.color = color;
     }
 
     public OpponentMessage(String opponent1, String opponent2, Color color){
-        super("Your opponents are: " + opponent1 + ", " + opponent2 + "\nYour color is " + color.getEscape() + color.toString().toLowerCase() + Color.RESET + "\n");
+        super("\n\n\nYour opponents are: " + opponent1 + ", " + opponent2 + "\nYour color is " + color.getEscape() + color.toString().toLowerCase() + Color.RESET + "\n");
         this.color = color;
     }
 

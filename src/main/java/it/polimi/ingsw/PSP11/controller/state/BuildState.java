@@ -133,6 +133,7 @@ public class BuildState implements GameState {
             }
         }
         virtualView.sendMessage(new EndTurnMessage());
+        game.endTurn();
         game.nextPlayer();
         return new StartTurnState(game);
     }

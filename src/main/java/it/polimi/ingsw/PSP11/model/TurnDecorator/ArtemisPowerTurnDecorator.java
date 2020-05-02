@@ -11,16 +11,16 @@ public class ArtemisPowerTurnDecorator extends GodTurn {
 
     public Point oldPosition;
 
-    public int getNumberOfTimesAlredyMoved() {
-        return numberOfTimesAlredyMoved;
+    public int getNumberOfTimesAlreadyMoved() {
+        return numberOfTimesAlreadyMoved;
     }
 
-    private int numberOfTimesAlredyMoved = 0;
+    private int numberOfTimesAlreadyMoved = 0;
 
     @Override
     public void startTurn() {
         getSharedTurn().startTurn();
-        numberOfTimesAlredyMoved = 0;
+        numberOfTimesAlreadyMoved = 0;
         getSharedTurn().setMoveAgain(true);
     }
 
@@ -28,7 +28,7 @@ public class ArtemisPowerTurnDecorator extends GodTurn {
     @Override
     public ArrayList<Point> move(Worker worker, Board board) {
         //the first move invokes the standard move method
-        if(numberOfTimesAlredyMoved == 0){
+        if(numberOfTimesAlreadyMoved == 0){
             return getSharedTurn().move(worker, board);
         }
         //the second move also removes the oldPosition from possibleMoves
@@ -55,7 +55,7 @@ public class ArtemisPowerTurnDecorator extends GodTurn {
     @Override
     public void applyMove(Worker worker, Board board, Point newPosition) {
         oldPosition = worker.getPosition();
-        numberOfTimesAlredyMoved++;
+        numberOfTimesAlreadyMoved++;
         getSharedTurn().applyMove(worker, board, newPosition);
     }
 
@@ -66,6 +66,6 @@ public class ArtemisPowerTurnDecorator extends GodTurn {
 
     @Override
     public void endTurn() {
-        numberOfTimesAlredyMoved = 0;
+        numberOfTimesAlreadyMoved = 0;
     }
 }

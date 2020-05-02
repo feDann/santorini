@@ -28,6 +28,10 @@ public class ClientMessageEncoder {
     public static Message encodeMessage(Message lastServerMessage, String inputLine) throws IllegalInputException{
 
         if(lastServerMessage instanceof WelcomeMessage || lastServerMessage instanceof DuplicateNicknameMessage){
+            String checkEmptyNick = inputLine.replaceAll(" ","");
+            if (checkEmptyNick.equals("")){
+                throw new IllegalInputException("Nickname cannot be empty, please choose another nickname");
+            }
             return new NicknameMessage(inputLine);
         }
 

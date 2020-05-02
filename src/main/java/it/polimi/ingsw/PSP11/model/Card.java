@@ -44,4 +44,12 @@ public class Card implements Serializable {
     public void setGodTurnDecorator(GodTurn cardTurnDecorator) {
         this.godTurnDecorator = cardTurnDecorator;
     }
+
+    public Card cardClone(){
+        Card clonedCard = new Card();
+        clonedCard.setName(this.getName());
+        clonedCard.setDescription(this.getDescription());
+        clonedCard.setIdCard(this.getIdCard());
+        return clonedCard;
+    }
 }
