@@ -20,17 +20,6 @@ public class Board implements Serializable {
         }
     }
 
-    public void boardForWin(){
-        init();
-        Point point1 = new Point(1,1);
-        Point point2 = new Point(1,2);
-        addBlock(point1);
-        addBlock(point1);
-        addBlock(point2);
-        addBlock(point2);
-        addBlock(point2);
-
-    }
 
     /**
      * @param point indicates the spot in witch we want to know if there is a player on top
@@ -56,7 +45,6 @@ public class Board implements Serializable {
 
     /**
      * place the worker in the designated point
-     *
      * @param point indicates the spot in witch the player wants to put the worker
      */
     public void placeWorker(Point point, Worker worker) {
@@ -79,7 +67,6 @@ public class Board implements Serializable {
 
     /**
      * Remove the worker on top of the cell
-     *
      * @param point the position of worker
      */
     public void removeWorker(Point point) {
@@ -92,7 +79,6 @@ public class Board implements Serializable {
 
     /**
      * place the dome in the designated point
-     *
      * @param point indicates the spot in witch the player wants to put the dome
      */
     public void addDome(Point point) {
@@ -104,7 +90,6 @@ public class Board implements Serializable {
 
     /**
      * place the block in the designated point
-     *
      * @param point indicates the spot in witch the player wants to put the block
      */
     public void addBlock(Point point) {
@@ -116,7 +101,6 @@ public class Board implements Serializable {
 
     /**
      * return the height of the building on the designated cell
-     *
      * @param point indicates the spot in witch we want to know the height of the building
      * @return the name of the block
      */
@@ -127,6 +111,11 @@ public class Board implements Serializable {
         return board[x][y].getCurrentLevel();
     }
 
+    /**
+     * find all the neighbouring point to a certain point
+     * @param position point of witch i want to know the adjacent points
+     * @return ArrayList of point witch are adjacent to the position
+     */
     public ArrayList<Point> getNeighbouringPoints(Point position) {
         ArrayList<Point> positions = new ArrayList<>();
         int x = (int) position.getX();
@@ -146,6 +135,10 @@ public class Board implements Serializable {
         return positions;
     }
 
+    /**
+     * build a formatted string with the current state of the board
+     * @return a string containing the board
+     */
     public String printBoard() {
         String formattedMessage = "\n\n\n\n\n";
         formattedMessage = formattedMessage.concat("    1      2      3      4      5   y/x\n");
@@ -170,6 +163,10 @@ public class Board implements Serializable {
         return formattedMessage;
     }
 
+    /**
+     * clone the current state of the board
+     * @return a copy of the board
+     */
     public Board boardClone() {
         Board clonedBoard = new Board();
         clonedBoard.init();
@@ -181,6 +178,7 @@ public class Board implements Serializable {
         }
         return clonedBoard;
     }
+
 
     private void addCell (Cell newCell, int x, int y){
         this.board[x][y] = newCell;

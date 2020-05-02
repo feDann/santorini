@@ -53,7 +53,7 @@ public class MoveState implements GameState {
     @Override
     public boolean checkLose() {
         if (possibleMoves.isEmpty()){
-            game.setThereIsALooser(true);
+            game.setThereIsALoser(true);
             return true;
         }
         return false;

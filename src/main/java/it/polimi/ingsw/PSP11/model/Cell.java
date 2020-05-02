@@ -33,7 +33,7 @@ public class Cell implements Serializable {
     }
 
     /**
-     * set worker attributes to true
+     * place the worker on the cell
      */
     public void placeWorker(Worker worker){
         this.worker = true;
@@ -41,14 +41,14 @@ public class Cell implements Serializable {
     }
 
     /**
-     * set dome attributes to true
+     * place a dome on the cell
      */
     public void addDome(){
         this.dome = true;
     }
 
     /**
-     * increases the value of currentLevel
+     * add a block on the current cell
      */
     public void addBlock(){
         currentLevel = Block.values()[currentLevel.ordinal() + 1];
@@ -61,18 +61,24 @@ public class Cell implements Serializable {
         return this.currentLevel;
     }
 
+    /**
+     * place the desired building on the cell
+     */
     private void setCurrentLevel(Block block){
         this.currentLevel = block;
     }
 
+    /**
+     * remove the worker from the cell
+     */
     public void removeWorker(){
         this.worker = false;
         currentWorker = null;
     }
 
     /**
-     *
-     * @return if there, the current worker on top, null otherwise
+     * getter for the worker on the cell
+     * @return the worker if present, null otherwise
      */
     public Worker getCurrentWorker() {
         if(worker = true){
@@ -81,6 +87,10 @@ public class Cell implements Serializable {
         return null;
     }
 
+    /**
+     * clone the current cell
+     * @return a copy of the cell
+     */
     public Cell cellClone(){
         Cell cellCopy = new Cell();
         if (this.hasDomeOnTop()){

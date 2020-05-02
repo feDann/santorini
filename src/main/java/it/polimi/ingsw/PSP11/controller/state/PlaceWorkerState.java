@@ -16,6 +16,10 @@ public class PlaceWorkerState implements GameState{
     private int numOfPlayer;
     private boolean isNew;
 
+    /**
+     * constructor for the class
+     * @param game the state of the game
+     */
     public PlaceWorkerState(Game game) {
         this.game = game;
         this.invalidPoint =false;
@@ -94,13 +98,17 @@ public class PlaceWorkerState implements GameState{
 
     }
 
+    /**
+     * if is the first time that this method is called print a welcome message for all the players
+     * if the player insert an invalid position return a error message
+     * @return
+     */
     @Override
     public Message stateMessage() {
         if (isNew) {
             this.isNew = false;
             game.notifyBoard();
         }
-
         if (invalidPoint){
             return new InvalidWorkerPosition();
         }

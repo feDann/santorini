@@ -56,7 +56,7 @@ public class BuildState implements GameState {
     @Override
     public boolean checkLose() {
         if (possibleBuilds.isEmpty()){
-            game.setThereIsALooser(true);
+            game.setThereIsALoser(true);
             return true;
         }
         return false;
