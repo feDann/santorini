@@ -27,8 +27,9 @@ public class SelectWorkerRequest extends SimpleMessage {
                 + Color.RESET;
 
 
-        formattedMessage = formattedMessage.concat("\nYour god is: " +Color.RED.getEscape()+ playerGod.getName()+Color.RESET + "\n" +"Hero Power:\n     "+ playerGod.getDescription());
-        formattedMessage = formattedMessage.concat("\n\nSelect the worker you want to move (1 or 2):");
+        formattedMessage = formattedMessage.concat("\nYour god is: " +Color.RED.getEscape()+ playerGod.getName()+Color.RESET +
+                                                   "\nDescription:\n     "+ playerGod.getDescription());
+        formattedMessage = formattedMessage.concat("\n\n\nSelect the worker you want to move (1 or 2):");
 
 
         for(Worker worker : workers){

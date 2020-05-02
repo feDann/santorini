@@ -8,6 +8,11 @@ public class ClientMessageDecoder {
 
 
     public static void decodeMessage(Message message) {
+        if (message instanceof StartGameMessage){
+            System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+            System.out.println("\033[H");
+
+        }
         if (message instanceof SimpleMessage) {
             //actually calls view methods to show messages
             String messaggino = message.getMessage();
