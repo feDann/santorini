@@ -62,7 +62,7 @@ public class StartTurnState implements GameState{
             }
         }
         if(movableWorkers.isEmpty()){
-            game.setThereIsALooser(true);
+            game.setThereIsALoser(true);
             return true;
         }
         return false;

@@ -39,6 +39,10 @@ public class Deck implements Serializable {
         return cards.get(i);
     }
 
+    /**
+     * clone the deck
+     * @return a copy of the deck
+     */
     public Deck deckClone() {
         Deck deckCopy = new Deck();
         for(Card card : cards){

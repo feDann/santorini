@@ -6,7 +6,6 @@ public class Card implements Serializable {
     private GodTurn godTurnDecorator;
     private String name;
     private int idCard;
-    //texture??
     private String description;
 
     public String getName() {
