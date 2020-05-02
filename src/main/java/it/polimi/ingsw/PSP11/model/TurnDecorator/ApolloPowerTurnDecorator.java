@@ -15,6 +15,9 @@ public class ApolloPowerTurnDecorator extends GodTurn {
         getSharedTurn().startTurn();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public ArrayList<Point> move(Worker worker, Board board) {
 
@@ -37,6 +40,9 @@ public class ApolloPowerTurnDecorator extends GodTurn {
         return possiblePosition;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void applyMove(Worker worker, Board board, Point newPosition) {
         Point oldPosition = worker.getPosition();
@@ -62,16 +68,25 @@ public class ApolloPowerTurnDecorator extends GodTurn {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public ArrayList<Point> build(Worker worker, Board board) {
         return getSharedTurn().build(worker , board);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void applyBuild(Worker worker, Board board, Point buildPosition, boolean forceBuildDome) {
         getSharedTurn().applyBuild(worker, board, buildPosition, false);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean winCondition(Worker worker, Board board) {
         return getSharedTurn().winCondition(worker, board);
