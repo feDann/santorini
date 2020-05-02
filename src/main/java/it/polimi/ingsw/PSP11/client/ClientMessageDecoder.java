@@ -9,6 +9,7 @@ public class ClientMessageDecoder {
 
     public static void decodeMessage(Message message) {
         if (message instanceof StartGameMessage){
+            //reset the screen without making the clear
             System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
             System.out.println("\033[H");
 
