@@ -59,5 +59,7 @@ public class PrometheusPowerTurnDecorator extends GodTurn {
         this.hasBuilt = false;
     }
 
-
+    public boolean isHasBuilt() {
+        return hasBuilt;
+    }
 }

@@ -57,7 +57,7 @@ public class Controller implements Observer<ControllerMessage> {
                 game.nextPlayer();
             }
         }
-        game.setThereIsALooser(false);
+        game.setThereIsALoser(false);
     }
 
     private void winConditionHandler(){
@@ -78,7 +78,7 @@ public class Controller implements Observer<ControllerMessage> {
             gameState = gameState.execute(message.getMessage(),requestingView);
             currentPlayers.get(game.getCurrentPlayer().getNickname()).send(gameState.stateMessage());
             //TODO
-            if (game.isThereIsALooser()){
+            if (game.isThereIsALoser()){
                 looseConditionHandler();
                 gameState = new StartTurnState(game);
                 currentPlayers.get(game.getCurrentPlayer().getNickname()).send(gameState.stateMessage());

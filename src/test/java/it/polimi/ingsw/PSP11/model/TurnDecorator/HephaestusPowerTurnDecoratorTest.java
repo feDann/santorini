@@ -44,7 +44,7 @@ public class HephaestusPowerTurnDecoratorTest {
         assertFalse(hephaestusTurn.getSharedTurn().isMovedUp());
         assertFalse(hephaestusTurn.getSharedTurn().isMovedDown());
         assertFalse(hephaestusTurn.getSharedTurn().isMoveAgain());
-        assertTrue(hephaestusTurn.getSharedTurn().isBuildAgain());
+        assertFalse(hephaestusTurn.getSharedTurn().isBuildAgain());
     }
 
     @Test
@@ -113,6 +113,7 @@ public class HephaestusPowerTurnDecoratorTest {
         worker.setPosition(workerPosition);
         board.placeWorker(workerPosition, worker);
         hephaestusTurn.applyBuild(worker,board, buildPosition, false);
+        assertTrue(hephaestusTurn.getSharedTurn().isBuildAgain());
         actualPosition = hephaestusTurn.build(worker,board);
         assertTrue(expectedPosition.containsAll(actualPosition));
         assertTrue(actualPosition.containsAll(expectedPosition));
@@ -121,9 +122,7 @@ public class HephaestusPowerTurnDecoratorTest {
     }
 
     @Test
-    public void hephaestus_SecondBuild_Cant_Build_Test(){
-        ArrayList<Point> actualPosition;
-        ArrayList<Point> expectedPosition = new ArrayList<>();
+    public void hephaestus_Second_Build_Cant_Build_Test(){
         Point workerPosition = new Point(1,1);
         Point buildPosition = new Point(2,2);
         worker.setPosition(workerPosition);
@@ -131,30 +130,7 @@ public class HephaestusPowerTurnDecoratorTest {
         board.addBlock(buildPosition);
         board.addBlock(buildPosition);
         hephaestusTurn.applyBuild(worker,board, buildPosition, false);
-        actualPosition = hephaestusTurn.build(worker,board);
-        assertTrue(expectedPosition.containsAll(actualPosition));
-        assertTrue(actualPosition.containsAll(expectedPosition));
         assertFalse(hephaestusTurn.getSharedTurn().isBuildAgain());
-
-    }
-
-    @Test
-    public void hephaestus_First_Build_Dome_SecondBuild__Cant_Build_Test(){
-        ArrayList<Point> actualPosition;
-        ArrayList<Point> expectedPosition = new ArrayList<>();
-        Point workerPosition = new Point(1,1);
-        Point buildPosition = new Point(2,2);
-        worker.setPosition(workerPosition);
-        board.placeWorker(workerPosition, worker);
-        board.addBlock(buildPosition);
-        board.addBlock(buildPosition);
-        board.addBlock(buildPosition);
-        hephaestusTurn.applyBuild(worker,board, buildPosition, false);
-        actualPosition = hephaestusTurn.build(worker,board);
-        assertTrue(expectedPosition.containsAll(actualPosition));
-        assertTrue(actualPosition.containsAll(expectedPosition));
-        assertFalse(hephaestusTurn.getSharedTurn().isBuildAgain());
-
     }
 
     @Test

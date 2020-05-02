@@ -25,10 +25,10 @@ public class Game extends Observable<UpdateMessage> {
     private boolean gameStarted;
     private boolean gameEnded;
     private final String godCardsXMLPath = "xml/GodCards.xml";
-    private boolean thereIsALooser;
+    private boolean thereIsALoser;
 
     /**
-     * Class constructor
+     * Constructor
      */
 
     public Game (){
@@ -41,12 +41,12 @@ public class Game extends Observable<UpdateMessage> {
         sharedTurn = new StandardTurn();
         gameEnded = false;
         gameStarted = false;
-        thereIsALooser = false;
+        thereIsALoser = false;
         thereIsAWinner = false;
     }
 
     /**
-     * inizialize the deck
+     * initialize the deck
      */
     public void deckInit(){
         try {
@@ -112,12 +112,16 @@ public class Game extends Observable<UpdateMessage> {
         return board;
     }
 
+    /**
+     * clone method for the game board
+     * @return a cloned Board
+     */
+
     public Board boardClone(){
         return board.boardClone();
     }
 
     /**
-     *
      * @return the value of gameStarted
      */
 
@@ -126,7 +130,6 @@ public class Game extends Observable<UpdateMessage> {
     }
 
     /**
-     *
      * @return the value of gameEnded
      */
 
@@ -144,7 +147,6 @@ public class Game extends Observable<UpdateMessage> {
     }
 
     /**
-     *
      * @return the index of the current player
      */
 
@@ -190,55 +192,95 @@ public class Game extends Observable<UpdateMessage> {
         return players.get(indexOfCurrentPlayer);
     }
 
+    /**
+     * set the player's color at the start of the game
+     */
+
     public void playerColorInit(){
         for (int i = 0; i < numOfPlayers; i++){
             players.get(i).setColor(Color.values()[i]);
         }
     }
 
+    /**
+     * place the Worker on the board
+     * doesn't check if the point is a valid position
+     * @param point where the worker will be placed
+     * @param worker worker that will be placed on the board
+     */
     public void placeWorker(Point point, Worker worker){
         board.placeWorker(point, worker);
         notify(new UpdateMessage(boardClone(), getCurrentPlayer().playerClone(), new WorkerUpdateMessage(getCurrentPlayer().playerClone(), point)));
     }
 
+    /**
+     * print the board for all the player
+     */
     public void notifyBoard() {
         notify(new UpdateMessage(boardClone(), getCurrentPlayer().playerClone(), new StartGameMessage()));
     }
 
+    /**
+     *  call the function startTurn() of the current player
+     */
     public void startTurn(){
         getCurrentPlayer().getPlayerTurn().startTurn();
     }
 
+    /**
+     * get all the legal move position for a worker
+     * @param workerID is the worker that the player wants to move
+     * @return an ArrayList of points containing the legal move position
+     */
     public ArrayList<Point> move(int workerID){
         Worker worker = getCurrentPlayer().getWorkers().get(workerID);
         return getCurrentPlayer().getPlayerTurn().move(worker,board);
     }
 
+    /**
+     * move the worker in the desired point, then print the board for all the player
+     * @param point in which the worker will be moved
+     * @param workerID worker to move
+     */
     public void applyMove(Point point, int workerID){
         Worker worker = getCurrentPlayer().getWorkers().get(workerID);
         getCurrentPlayer().getPlayerTurn().applyMove(worker, board, point);
         notify(new UpdateMessage(boardClone(), getCurrentPlayer().playerClone(), new WorkerUpdateMessage(getCurrentPlayer().playerClone(), point)));
     }
 
+    /**
+     * get all the legal build position for a worker
+     * @param workerID is the worker with which the player wants to build
+     * @return an ArrayList of points containing the legal build position
+     */
     public ArrayList<Point> build(int workerID){
         Worker worker = getCurrentPlayer().getWorkers().get(workerID);
         return getCurrentPlayer().getPlayerTurn().build(worker,board);
     }
 
+    /**
+     * build the block or dome in the required point, then print the board for all the player
+     * @param point in which the worker will build
+     * @param workerID is the worker which will build the block or dome
+     * @param forceBuildDome true if Atlas power is activated, allow the player to build a dome at any level
+     */
     public void applyBuild(Point point, int workerID, boolean forceBuildDome){
         Worker worker = getCurrentPlayer().getWorkers().get(workerID);
         getCurrentPlayer().getPlayerTurn().applyBuild(worker, board, point,forceBuildDome);
         notify(new UpdateMessage(boardClone(), getCurrentPlayer().playerClone(), new BuildUpdateMessage(getCurrentPlayer().playerClone(), point)));
     }
 
-    public boolean isThereIsALooser() {
-        return thereIsALooser;
+    public boolean isThereIsALoser() {
+        return thereIsALoser;
     }
 
-    public void setThereIsALooser(boolean thereIsALooser) {
-        this.thereIsALooser = thereIsALooser;
+    public void setThereIsALoser(boolean thereIsALoser) {
+        this.thereIsALoser = thereIsALoser;
     }
 
+    /**
+     * remove all the worker of the current player
+     */
     public void removeCurrentPlayerWorker(){
         for (Worker worker : this.getCurrentPlayer().getWorkers()){
             this.getBoard().removeWorker(worker.getPosition());
@@ -246,10 +288,18 @@ public class Game extends Observable<UpdateMessage> {
         notify(new UpdateMessage(boardClone(), getCurrentPlayer().playerClone(), new SimpleMessage(getCurrentPlayer().getNickname() + "'s workers has been removed!\n")));
     }
 
+    /**
+     * remove the current player form the game
+     */
     public void removeCurrentPlayer(){
         players.remove(getCurrentPlayer());
     }
 
+    /**
+     * check if the current player won the game
+     * @param workerID of the worker that the player used during this turn
+     * @return true if the current player has won the game
+     */
     public boolean checkWinner(int workerID){
         Worker worker = getCurrentPlayer().getWorkers().get(workerID);
         if (getCurrentPlayer().getPlayerTurn().winCondition(worker, board)) {
@@ -259,9 +309,13 @@ public class Game extends Observable<UpdateMessage> {
         return false;
     }
 
+    /**
+     * notify all the player that the current player ended his turn
+     */
     public void endTurn(){
         notify(new UpdateMessage(null, getCurrentPlayer().playerClone(), new SimpleMessage("\n\n"+getCurrentPlayer().getColor().getEscape() + getCurrentPlayer().getNickname() + Color.RESET + " ended his turn\n")));
     }
+
     /**
      * Start the game
      */

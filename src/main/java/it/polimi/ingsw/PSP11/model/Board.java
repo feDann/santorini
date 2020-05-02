@@ -135,8 +135,9 @@ public class Board implements Serializable {
 
         return positions;
     }
+
     public String printBoard() {
-        String formattedMessage = "\n\n\n\n";
+        String formattedMessage = "\n\n\n\n\n";
         formattedMessage = formattedMessage.concat("    1      2      3      4      5   y/x\n");
 
         for (int i = 0; i < 5; i++) {
