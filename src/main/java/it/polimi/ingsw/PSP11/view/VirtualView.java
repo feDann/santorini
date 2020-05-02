@@ -1,6 +1,7 @@
 package it.polimi.ingsw.PSP11.view;
 
 import it.polimi.ingsw.PSP11.messages.*;
+import it.polimi.ingsw.PSP11.model.Color;
 import it.polimi.ingsw.PSP11.observer.Observable;
 import it.polimi.ingsw.PSP11.observer.Observer;
 import it.polimi.ingsw.PSP11.server.ClientSocketConnection;
@@ -24,7 +25,7 @@ public class VirtualView extends Observable<ControllerMessage> implements Observ
     }
 
     //due giocatori
-    public VirtualView(ClientSocketConnection connection, String opponent, PlayerInfo player) {
+    public VirtualView(ClientSocketConnection connection, PlayerInfo opponent, PlayerInfo player) {
         connection.send(new OpponentMessage(opponent, player.getColor()));
         connection.addObserver(new MessageReceiver());
         this.connection = connection;
@@ -32,7 +33,7 @@ public class VirtualView extends Observable<ControllerMessage> implements Observ
     }
 
     //tres jugadores
-    public VirtualView(ClientSocketConnection connection, String opponent1, String opponent2, PlayerInfo player){
+    public VirtualView(ClientSocketConnection connection, PlayerInfo opponent1, PlayerInfo opponent2, PlayerInfo player){
         connection.send(new OpponentMessage(opponent1, opponent2, player.getColor()));
         connection.addObserver(new MessageReceiver());
         this.connection = connection;
@@ -49,7 +50,23 @@ public class VirtualView extends Observable<ControllerMessage> implements Observ
 
     @Override
     public void update(UpdateMessage message) {
-        updatePlayerView(message);
+        //TODO trovare un metodo migliore
+        if(message.getUpdateMessage() instanceof StartGameMessage){
+            startGameUpdate(message);
+
+        }else {
+            updatePlayerView(message);
+        }
+    }
+
+    public void startGameUpdate(UpdateMessage message){
+        connection.send(message.getUpdateMessage());
+        if(player.getName().equals(message.getPlayer().getName())){
+            connection.send(new SimpleMessage(message.getBoard().printBoard()));
+        }
+        else{
+            connection.send(new SimpleMessage("\n\n\n"+message.getPlayer().getColor().getEscape() + message.getPlayer().getName() + Color.RESET + " started his turn!\n"));
+        }
     }
 
     private void updatePlayerView(UpdateMessage message) {

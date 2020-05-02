@@ -20,17 +20,7 @@ public class Board implements Serializable {
         }
     }
 
-    public void boardForWin(){
-        init();
-        Point point1 = new Point(1,1);
-        Point point2 = new Point(1,2);
-        addBlock(point1);
-        addBlock(point1);
-        addBlock(point2);
-        addBlock(point2);
-        addBlock(point2);
 
-    }
 
     /**
      * @param point indicates the spot in witch we want to know if there is a player on top
@@ -145,9 +135,8 @@ public class Board implements Serializable {
 
         return positions;
     }
-
     public String printBoard() {
-        String formattedMessage = "\n\n\n\n\n";
+        String formattedMessage = "\n\n\n\n";
         formattedMessage = formattedMessage.concat("    1      2      3      4      5   y/x\n");
 
         for (int i = 0; i < 5; i++) {

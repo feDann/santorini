@@ -48,9 +48,9 @@ public class Controller implements Observer<ControllerMessage> {
                     currentPlayers.get(player).send(new LoseMessage(playerToKill));
                 }
             }
-            game.removeCurrentPlayerWorker();
             currentPlayers.get(playerToKill).goCommitDie(playerToKill);
             currentPlayers.remove(playerToKill);
+            game.removeCurrentPlayerWorker();
             game.removeCurrentPlayer();
             game.setNumOfPlayers(2);
             if (game.getIndexOfCurrentPlayer() == game.getNumOfPlayers()){

@@ -78,7 +78,7 @@ public class Client {
 
     public void start() throws IOException {
         Socket clientSocket = new Socket(ip,port);
-        System.out.println("connection established");
+        //System.out.println("connection established");
         ObjectInputStream socketIn = new ObjectInputStream(clientSocket.getInputStream());
         ObjectOutputStream socketOut = new ObjectOutputStream(clientSocket.getOutputStream());
         Scanner stdin = new Scanner(System.in);

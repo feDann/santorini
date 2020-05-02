@@ -16,10 +16,10 @@ public class SelectPlayerGodRequest extends SimpleMessage{
         int id = 1;
         numOfCards = chosenCards.size();
         chosenCardsCopy = chosenCards;
-        String formattedMessage = "\n\n\nAvailable Gods:\n";
+        String formattedMessage = "\n\n\nAvailable Gods:\n\n";
 
         for (Card card : chosenCards){
-            formattedMessage += id + ")" + card.getName() + "\n   Description: " + card.getDescription() + "\n";
+            formattedMessage += id + ")" + card.getName() + "\n   Description: " + card.getDescription() + "\n\n";
             id++;
         }
         formattedMessage = formattedMessage.replaceAll("Your Move", Color.BLUE.getEscape() + "Your Move" + Color.RESET );

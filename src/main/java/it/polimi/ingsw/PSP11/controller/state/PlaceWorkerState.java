@@ -111,7 +111,6 @@ public class PlaceWorkerState implements GameState{
     public GameState execute(Message message, VirtualView virtualView) {
         invalidPoint = false;
         Point point = ((PlaceWorkerResponse) message).getPoint();
-        System.out.println(point.toString());
         placeWorker(((PlaceWorkerResponse) message).getPoint());
         if (numOfWorker < 2){
             return this;

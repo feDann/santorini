@@ -1,10 +1,22 @@
 package it.polimi.ingsw.PSP11.messages;
 
 
+import it.polimi.ingsw.PSP11.model.Color;
+
 public class LoseMessage extends SimpleMessage{
 
     public LoseMessage() {
-        super("ha! hai perso, git gud!\n");
+        super(Color.RED.getEscape() +
+                "\n\n▓██   ██▓ ▒█████   █    ██     ██▓     ▒█████    ██████ ▄▄▄█████▓\n" +
+                " ▒██  ██▒▒██▒  ██▒ ██  ▓██▒   ▓██▒    ▒██▒  ██▒▒██    ▒ ▓  ██▒ ▓▒\n" +
+                "  ▒██ ██░▒██░  ██▒▓██  ▒██░   ▒██░    ▒██░  ██▒░ ▓██▄   ▒ ▓██░ ▒░\n" +
+                "  ░ ▐██▓░▒██   ██░▓▓█  ░██░   ▒██░    ▒██   ██░  ▒   ██▒░ ▓██▓ ░ \n" +
+                "  ░ ██▒▓░░ ████▓▒░▒▒█████▓    ░██████▒░ ████▓▒░▒██████▒▒  ▒██▒ ░ \n" +
+                "   ██▒▒▒ ░ ▒░▒░▒░ ░▒▓▒ ▒ ▒    ░ ▒░▓  ░░ ▒░▒░▒░ ▒ ▒▓▒ ▒ ░  ▒ ░░   \n" +
+                " ▓██ ░▒░   ░ ▒ ▒░ ░░▒░ ░ ░    ░ ░ ▒  ░  ░ ▒ ▒░ ░ ░▒  ░ ░    ░    \n" +
+                " ▒ ▒ ░░  ░ ░ ░ ▒   ░░░ ░ ░      ░ ░   ░ ░ ░ ▒  ░  ░  ░    ░      \n" +
+                " ░ ░         ░ ░     ░            ░  ░    ░ ░        ░           \n" +
+                " ░ ░                                                             \n"+ Color.RESET);
     }
 
     public LoseMessage(String player){

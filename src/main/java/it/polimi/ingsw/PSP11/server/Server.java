@@ -94,8 +94,8 @@ public class Server {
                 game.addPlayer(player2);
                 game.playerColorInit();
 
-                VirtualView vv1 = new VirtualView(connection1, nickname2, player1.playerClone());
-                VirtualView vv2 = new VirtualView(connection2, nickname1, player2.playerClone());
+                VirtualView vv1 = new VirtualView(connection1, player2.playerClone(), player1.playerClone());
+                VirtualView vv2 = new VirtualView(connection2, player1.playerClone(), player2.playerClone());
 
                 Map <String,ClientSocketConnection> currentPlayers = new HashMap<>();
                 currentPlayers.put(nickname1,connection1);
@@ -148,9 +148,9 @@ public class Server {
             game.addPlayer(player3);
             game.playerColorInit();
 
-            VirtualView vv1 = new VirtualView(connection1, nickname2, nickname3, player1.playerClone());
-            VirtualView vv2 = new VirtualView(connection2, nickname1, nickname3, player2.playerClone());
-            VirtualView vv3 = new VirtualView(connection3, nickname1, nickname2, player3.playerClone());
+            VirtualView vv1 = new VirtualView(connection1, player2.playerClone(), player3.playerClone(), player1.playerClone());
+            VirtualView vv2 = new VirtualView(connection2, player1.playerClone(), player3.playerClone(), player2.playerClone());
+            VirtualView vv3 = new VirtualView(connection3, player1.playerClone(),  player2.playerClone(), player3.playerClone());
 
             Map<String, ClientSocketConnection> currentPlayers = new HashMap<>();
             currentPlayers.put(nickname1, connection1);

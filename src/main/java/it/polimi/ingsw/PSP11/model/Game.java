@@ -1,9 +1,6 @@
 package it.polimi.ingsw.PSP11.model;
 
-import it.polimi.ingsw.PSP11.messages.BuildUpdateMessage;
-import it.polimi.ingsw.PSP11.messages.SimpleMessage;
-import it.polimi.ingsw.PSP11.messages.UpdateMessage;
-import it.polimi.ingsw.PSP11.messages.WorkerUpdateMessage;
+import it.polimi.ingsw.PSP11.messages.*;
 import it.polimi.ingsw.PSP11.observer.Observable;
 import it.polimi.ingsw.PSP11.utils.XMLParser;
 
@@ -102,7 +99,7 @@ public class Game extends Observable<UpdateMessage> {
      */
 
     public Card selectPlayerGod (int indexOfChosenGod){
-        notify(new UpdateMessage(null,getCurrentPlayer().playerClone(),new SimpleMessage(getCurrentPlayer().getColor().getEscape() + getCurrentPlayer().getNickname() + Color.RESET + " has chosen " + chosenCards.get(indexOfChosenGod).getName() + "\n")));
+        notify(new UpdateMessage(null,getCurrentPlayer().playerClone(),new SimpleMessage("\n\n"+getCurrentPlayer().getColor().getEscape() + getCurrentPlayer().getNickname() + Color.RESET + " has chosen " + chosenCards.get(indexOfChosenGod).getName() + "\n")));
         return chosenCards.get(indexOfChosenGod);
     }
 
@@ -205,7 +202,7 @@ public class Game extends Observable<UpdateMessage> {
     }
 
     public void notifyBoard() {
-        notify(new UpdateMessage(boardClone(), getCurrentPlayer().playerClone(), new SimpleMessage("\nLET THE GAME BEGIN!\n")));
+        notify(new UpdateMessage(boardClone(), getCurrentPlayer().playerClone(), new StartGameMessage()));
     }
 
     public void startTurn(){
@@ -263,7 +260,7 @@ public class Game extends Observable<UpdateMessage> {
     }
 
     public void endTurn(){
-        notify(new UpdateMessage(null, getCurrentPlayer().playerClone(), new SimpleMessage(getCurrentPlayer().getColor().getEscape() + getCurrentPlayer().getNickname() + Color.RESET + " ended his turn\n")));
+        notify(new UpdateMessage(null, getCurrentPlayer().playerClone(), new SimpleMessage("\n\n"+getCurrentPlayer().getColor().getEscape() + getCurrentPlayer().getNickname() + Color.RESET + " ended his turn\n")));
     }
     /**
      * Start the game
