@@ -75,6 +75,10 @@ public class GameTest {
     @Test
     public void selectPlayerGodTest() {
         game.deckInit();
+        Player player = new Player("bob");
+        player.setColor(Color.RED);
+        game.addPlayer(player);
+        game.nextPlayer();
         game.selectGod(3);
         assertEquals(game.getChosenCards().get(0), game.selectPlayerGod(0));
     }
