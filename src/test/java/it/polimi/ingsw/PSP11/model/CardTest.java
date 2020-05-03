@@ -20,7 +20,7 @@ public class CardTest {
     }
 
     @After
-    public void tearDown() throws Exception {
+    public void tearDown() {
         deck = null;
         card = null;
         turn = null;
@@ -32,4 +32,14 @@ public class CardTest {
         //assertTrue( card.getGodTurnDecorator() instanceof ApolloPowerTurnDecorator);
         assertEquals(turn, card.getGodTurnDecorator().getSharedTurn());
     }
+
+    @Test
+    public void cardClone_Test() {
+        int indexOfCardToClone = 4;
+        Card clonedCard = deck.pickGod(indexOfCardToClone).cardClone();
+        assertEquals(deck.pickGod(indexOfCardToClone).getName(), clonedCard.getName());
+        assertEquals(deck.pickGod(indexOfCardToClone).getIdCard(), clonedCard.getIdCard());
+        assertEquals(deck.pickGod(indexOfCardToClone).getDescription(), clonedCard.getDescription());
+    }
+
 }
