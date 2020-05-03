@@ -152,7 +152,7 @@ public class GameTest {
         Player p1 = new Player("bob");
         p1.setColor(Color.RED);
         Worker w = new Worker(Color.RED);
-        w.setId(1);
+        w.setId(0);
         game.addPlayer(p1);
         game.startGame();
         w.setPosition(p);
@@ -170,7 +170,7 @@ public class GameTest {
         Point point = new Point(0,0);
         player.setColor(Color.RED);
         player.addWorker(worker);
-        worker.setId(1);
+        worker.setId(0);
         worker.setPosition(point);
         game.addPlayer(player);
         game.startGame();
@@ -191,7 +191,7 @@ public class GameTest {
         Point movePosition = new Point(3,2);
         player.setColor(Color.RED);
         player.addWorker(worker);
-        worker.setId(1);
+        worker.setId(0);
         worker.setPosition(startPosition);
         game.addPlayer(player);
         game.startGame();
@@ -214,7 +214,7 @@ public class GameTest {
         Point point = new Point(0,0);
         player.setColor(Color.RED);
         player.addWorker(worker);
-        worker.setId(1);
+        worker.setId(0);
         worker.setPosition(point);
         game.addPlayer(player);
         game.startGame();
@@ -235,7 +235,7 @@ public class GameTest {
         Point buildPosition = new Point(3,2);
         player.setColor(Color.RED);
         player.addWorker(worker);
-        worker.setId(1);
+        worker.setId(0);
         worker.setPosition(workerPosition);
         game.addPlayer(player);
         game.startGame();
@@ -245,6 +245,76 @@ public class GameTest {
         game.placeWorker(workerPosition,worker);
         game.applyBuild(buildPosition,0, false);
         assertEquals(Block.BASE, game.getBoard().getCurrentLevel(buildPosition));
+    }
+
+    @Test
+    public void removeCurrentPlayerWorker() {
+        Player player = new Player("bob");
+        Worker worker1 = new Worker(Color.RED);
+        Worker worker2 = new Worker(Color.RED);
+        Point p1 = new Point(2,3);
+        Point p2 = new Point(1,0);
+        player.setColor(Color.RED);
+        worker1.setId(0);
+        worker2.setId(1);
+        worker1.setPosition(p1);
+        worker2.setPosition(p2);
+        player.addWorker(worker1);
+        player.addWorker(worker2);
+        game.addPlayer(player);
+        game.startGame();
+        game.placeWorker(p1,worker1);
+        game.placeWorker(p2,worker2);
+        game.removeCurrentPlayerWorker();
+        assertFalse(game.getBoard().hasWorkerOnTop(p1));
+        assertFalse(game.getBoard().hasWorkerOnTop(p2));
+    }
+
+    @Test
+    public void checkWinner_False_Test() {
+        Player player = new Player("bob");
+        Worker worker = new Worker(Color.RED);
+        Point startPosition = new Point(3,1);
+        Point movePosition = new Point(3,2);
+        player.setColor(Color.RED);
+        player.addWorker(worker);
+        worker.setId(0);
+        worker.setPosition(startPosition);
+        game.addPlayer(player);
+        game.startGame();
+        game.selectGod(3);
+        player.setGod(game.selectPlayerGod(0));
+        player.setPlayerTurn(game.getSharedTurn());
+        game.placeWorker(startPosition,worker);
+        game.applyMove(movePosition,0);
+        assertFalse(game.checkWinner(0));
+        assertFalse(game.isThereIsAWinner());
+    }
+
+    @Test
+    public  void checkWinner_True_Test() {
+        Player player = new Player("bob");
+        Worker worker = new Worker(Color.RED);
+        Point startPosition = new Point(3,1);
+        Point movePosition = new Point(3,2);
+        player.setColor(Color.RED);
+        player.addWorker(worker);
+        worker.setId(0);
+        worker.setPosition(startPosition);
+        game.addPlayer(player);
+        game.startGame();
+        game.selectGod(3);
+        player.setGod(game.selectPlayerGod(0));
+        player.setPlayerTurn(game.getSharedTurn());
+        game.getBoard().addBlock(startPosition);
+        game.getBoard().addBlock(startPosition);
+        game.placeWorker(startPosition,worker);
+        game.getBoard().addBlock(movePosition);
+        game.getBoard().addBlock(movePosition);
+        game.getBoard().addBlock(movePosition);
+        game.applyMove(movePosition,0);
+        assertTrue(game.checkWinner(0));
+        assertTrue(game.isThereIsAWinner());
     }
 
 }
