@@ -4,6 +4,10 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import static org.junit.Assert.*;
 
 public class GameTest {
@@ -114,4 +118,133 @@ public class GameTest {
         deckInitTest();
         assertTrue(game.isGameStarted());
     }
+
+    @Test
+    public void two_Players_playerColorInit_Test() {
+        Player p1 = new Player("bob");
+        Player p2 = new Player("alice");
+        game.setNumOfPlayers(2);
+        game.addPlayer(p1);
+        game.addPlayer(p2);
+        game.playerColorInit();
+        assertEquals(Color.BLUE, p1.getColor());
+        assertEquals(Color.RED, p2.getColor());
+    }
+
+    @Test
+    public void three_Players_playerColorInit_Test() {
+        Player p1 = new Player("bob");
+        Player p2 = new Player("alice");
+        Player p3 = new Player("pippo");
+        game.setNumOfPlayers(3);
+        game.addPlayer(p1);
+        game.addPlayer(p2);
+        game.addPlayer(p3);
+        game.playerColorInit();
+        assertEquals(Color.BLUE, p1.getColor());
+        assertEquals(Color.RED, p2.getColor());
+        assertEquals(Color.GREEN, p3.getColor());
+    }
+
+    @Test
+    public void placeWorkerTest() {
+        Point p = new Point(2,3);
+        Player p1 = new Player("bob");
+        p1.setColor(Color.RED);
+        Worker w = new Worker(Color.RED);
+        w.setId(1);
+        game.addPlayer(p1);
+        game.startGame();
+        w.setPosition(p);
+        game.placeWorker(p,w);
+        assertTrue(game.getBoard().hasWorkerOnTop(p));
+        assertEquals(w, game.getBoard().getWorker(p));
+    }
+
+    @Test
+    public void moveTest() {
+        ArrayList<Point> actualPositions;
+        ArrayList<Point> expectedPositions = new ArrayList<>(Arrays.asList(new Point(0,1),new Point(1,1),new Point(1,0)));
+        Player player = new Player("bob");
+        Worker worker = new Worker(Color.RED);
+        Point point = new Point(0,0);
+        player.setColor(Color.RED);
+        player.addWorker(worker);
+        worker.setId(1);
+        worker.setPosition(point);
+        game.addPlayer(player);
+        game.startGame();
+        game.selectGod(3);
+        player.setGod(game.selectPlayerGod(0));
+        player.setPlayerTurn(game.getSharedTurn());
+        game.placeWorker(point,worker);
+        actualPositions = game.move(0);
+        assertTrue(expectedPositions.containsAll(actualPositions));
+        assertTrue(actualPositions.containsAll(expectedPositions));
+    }
+
+    @Test
+    public void applyMoveTest() {
+        Player player = new Player("bob");
+        Worker worker = new Worker(Color.RED);
+        Point startPosition = new Point(3,1);
+        Point movePosition = new Point(3,2);
+        player.setColor(Color.RED);
+        player.addWorker(worker);
+        worker.setId(1);
+        worker.setPosition(startPosition);
+        game.addPlayer(player);
+        game.startGame();
+        game.selectGod(3);
+        player.setGod(game.selectPlayerGod(0));
+        player.setPlayerTurn(game.getSharedTurn());
+        game.placeWorker(startPosition,worker);
+        game.applyMove(movePosition,0);
+        assertTrue(game.getBoard().hasWorkerOnTop(movePosition));
+        assertEquals(Color.RED, game.getBoard().getWorker(movePosition).getColor());
+        assertFalse(game.getBoard().hasWorkerOnTop(startPosition));
+    }
+
+    @Test
+    public void buildTest() {
+        ArrayList<Point> actualPositions;
+        ArrayList<Point> expectedPositions = new ArrayList<>(Arrays.asList(new Point(0,1),new Point(1,1),new Point(1,0)));
+        Player player = new Player("bob");
+        Worker worker = new Worker(Color.RED);
+        Point point = new Point(0,0);
+        player.setColor(Color.RED);
+        player.addWorker(worker);
+        worker.setId(1);
+        worker.setPosition(point);
+        game.addPlayer(player);
+        game.startGame();
+        game.selectGod(3);
+        player.setGod(game.selectPlayerGod(0));
+        player.setPlayerTurn(game.getSharedTurn());
+        game.placeWorker(point,worker);
+        actualPositions = game.build(0);
+        assertTrue(expectedPositions.containsAll(actualPositions));
+        assertTrue(actualPositions.containsAll(expectedPositions));
+    }
+
+    @Test
+    public void applyBuildTest() {
+        Player player = new Player("bob");
+        Worker worker = new Worker(Color.RED);
+        Point workerPosition = new Point(3,1);
+        Point buildPosition = new Point(3,2);
+        player.setColor(Color.RED);
+        player.addWorker(worker);
+        worker.setId(1);
+        worker.setPosition(workerPosition);
+        game.addPlayer(player);
+        game.startGame();
+        game.selectGod(3);
+        player.setGod(game.selectPlayerGod(0));
+        player.setPlayerTurn(game.getSharedTurn());
+        game.placeWorker(workerPosition,worker);
+        game.applyBuild(buildPosition,0, false);
+        assertEquals(Block.BASE, game.getBoard().getCurrentLevel(buildPosition));
+    }
+
 }
