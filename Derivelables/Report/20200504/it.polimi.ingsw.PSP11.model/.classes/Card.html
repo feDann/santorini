@@ -1,0 +1,137 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: Card</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">it.polimi.ingsw.PSP11.model</a> ]
+</div>
+
+<h1>Coverage Summary for Class: Card (it.polimi.ingsw.PSP11.model)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Card</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (11/ 11)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (20/ 20)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package it.polimi.ingsw.PSP11.model;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import java.io.Serializable;
+<i>4</i>&nbsp;
+<b class="fc"><i>5</i>&nbsp;public class Card implements Serializable {</b>
+<i>6</i>&nbsp;    private GodTurn godTurnDecorator;
+<i>7</i>&nbsp;    private String name;
+<i>8</i>&nbsp;    private int idCard;
+<i>9</i>&nbsp;    private String description;
+<i>10</i>&nbsp;
+<i>11</i>&nbsp;    public String getName() {
+<b class="fc"><i>12</i>&nbsp;        return name;</b>
+<i>13</i>&nbsp;    }
+<i>14</i>&nbsp;
+<i>15</i>&nbsp;    public void setName(String name) {
+<b class="fc"><i>16</i>&nbsp;        this.name = name;</b>
+<b class="fc"><i>17</i>&nbsp;    }</b>
+<i>18</i>&nbsp;
+<i>19</i>&nbsp;    public int getIdCard() {
+<b class="fc"><i>20</i>&nbsp;        return idCard;</b>
+<i>21</i>&nbsp;    }
+<i>22</i>&nbsp;
+<i>23</i>&nbsp;    public String getDescription() {
+<b class="fc"><i>24</i>&nbsp;        return description;</b>
+<i>25</i>&nbsp;    }
+<i>26</i>&nbsp;
+<i>27</i>&nbsp;    public void setDescription(String description) {
+<b class="fc"><i>28</i>&nbsp;        this.description = description;</b>
+<b class="fc"><i>29</i>&nbsp;    }</b>
+<i>30</i>&nbsp;
+<i>31</i>&nbsp;    public void setIdCard(int idCard) {
+<b class="fc"><i>32</i>&nbsp;        this.idCard = idCard;</b>
+<b class="fc"><i>33</i>&nbsp;    }</b>
+<i>34</i>&nbsp;
+<i>35</i>&nbsp;    public void setTurn(StandardTurn sharedTurn) {
+<b class="fc"><i>36</i>&nbsp;        godTurnDecorator.setSharedTurn(sharedTurn);</b>
+<b class="fc"><i>37</i>&nbsp;    }</b>
+<i>38</i>&nbsp;
+<i>39</i>&nbsp;    public GodTurn getGodTurnDecorator() {
+<b class="fc"><i>40</i>&nbsp;        return godTurnDecorator;</b>
+<i>41</i>&nbsp;    }
+<i>42</i>&nbsp;
+<i>43</i>&nbsp;    public void setGodTurnDecorator(GodTurn cardTurnDecorator) {
+<b class="fc"><i>44</i>&nbsp;        this.godTurnDecorator = cardTurnDecorator;</b>
+<b class="fc"><i>45</i>&nbsp;    }</b>
+<i>46</i>&nbsp;
+<i>47</i>&nbsp;    public Card cardClone(){
+<b class="fc"><i>48</i>&nbsp;        Card clonedCard = new Card();</b>
+<b class="fc"><i>49</i>&nbsp;        clonedCard.setName(this.getName());</b>
+<b class="fc"><i>50</i>&nbsp;        clonedCard.setDescription(this.getDescription());</b>
+<b class="fc"><i>51</i>&nbsp;        clonedCard.setIdCard(this.getIdCard());</b>
+<b class="fc"><i>52</i>&nbsp;        return clonedCard;</b>
+<i>53</i>&nbsp;    }
+<i>54</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2020-05-04 17:48</div>
+</div>
+</body>
+</html>

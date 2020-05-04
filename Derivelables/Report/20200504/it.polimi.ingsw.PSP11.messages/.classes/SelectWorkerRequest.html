@@ -1,0 +1,133 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: SelectWorkerRequest</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">it.polimi.ingsw.PSP11.messages</a> ]
+</div>
+
+<h1>Coverage Summary for Class: SelectWorkerRequest (it.polimi.ingsw.PSP11.messages)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">SelectWorkerRequest</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 14)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package it.polimi.ingsw.PSP11.messages;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import it.polimi.ingsw.PSP11.model.Card;
+<i>4</i>&nbsp;import it.polimi.ingsw.PSP11.model.Color;
+<i>5</i>&nbsp;import it.polimi.ingsw.PSP11.model.Worker;
+<i>6</i>&nbsp;
+<i>7</i>&nbsp;import java.awt.*;
+<i>8</i>&nbsp;import java.util.ArrayList;
+<i>9</i>&nbsp;
+<i>10</i>&nbsp;public class SelectWorkerRequest extends SimpleMessage {
+<i>11</i>&nbsp;
+<b class="nc"><i>12</i>&nbsp;    private ArrayList&lt;Worker&gt; availableWorkers = new ArrayList&lt;&gt;();</b>
+<i>13</i>&nbsp;
+<i>14</i>&nbsp;    public SelectWorkerRequest(ArrayList&lt;Worker&gt; workers, Card playerGod) {
+<b class="nc"><i>15</i>&nbsp;        super(&quot;&quot;);</b>
+<b class="nc"><i>16</i>&nbsp;        String formattedMessage = &quot;\n\n&quot; + Color.GREEN.getEscape()+</b>
+<i>17</i>&nbsp;
+<i>18</i>&nbsp;
+<i>19</i>&nbsp;                &quot;████████╗██╗   ██╗██████╗ ███╗   ██╗    ███████╗████████╗ █████╗ ██████╗ ████████╗███████╗██████╗ ██╗\n&quot; +
+<i>20</i>&nbsp;                &quot;╚══██╔══╝██║   ██║██╔══██╗████╗  ██║    ██╔════╝╚══██╔══╝██╔══██╗██╔══██╗╚══██╔══╝██╔════╝██╔══██╗██║\n&quot; +
+<i>21</i>&nbsp;                &quot;   ██║   ██║   ██║██████╔╝██╔██╗ ██║    ███████╗   ██║   ███████║██████╔╝   ██║   █████╗  ██║  ██║██║\n&quot; +
+<i>22</i>&nbsp;                &quot;   ██║   ██║   ██║██╔══██╗██║╚██╗██║    ╚════██║   ██║   ██╔══██║██╔══██╗   ██║   ██╔══╝  ██║  ██║╚═╝\n&quot; +
+<i>23</i>&nbsp;                &quot;   ██║   ╚██████╔╝██║  ██║██║ ╚████║    ███████║   ██║   ██║  ██║██║  ██║   ██║   ███████╗██████╔╝██╗\n&quot; +
+<i>24</i>&nbsp;                &quot;   ╚═╝    ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═══╝    ╚══════╝   ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝   ╚══════╝╚═════╝ ╚═╝\n&quot; +
+<i>25</i>&nbsp;                &quot;                                                                                                     \n\n&quot;
+<i>26</i>&nbsp;
+<i>27</i>&nbsp;                + Color.RESET;
+<i>28</i>&nbsp;
+<i>29</i>&nbsp;
+<b class="nc"><i>30</i>&nbsp;        formattedMessage = formattedMessage.concat(&quot;\nYour god is: &quot; +Color.RED.getEscape()+ playerGod.getName()+Color.RESET +</b>
+<b class="nc"><i>31</i>&nbsp;                                                   &quot;\nDescription:\n     &quot;+ playerGod.getDescription());</b>
+<b class="nc"><i>32</i>&nbsp;        formattedMessage = formattedMessage.concat(&quot;\n\n\nSelect the worker you want to move (1 or 2):&quot;);</b>
+<i>33</i>&nbsp;
+<i>34</i>&nbsp;
+<b class="nc"><i>35</i>&nbsp;        for(Worker worker : workers){</b>
+<b class="nc"><i>36</i>&nbsp;            availableWorkers.add(worker);</b>
+<b class="nc"><i>37</i>&nbsp;            Point position = worker.getPosition();</b>
+<b class="nc"><i>38</i>&nbsp;            formattedMessage += &quot;\nWorker &quot; + (worker.getId()+1) + &quot; : &quot; + &quot;(&quot; + (position.x + 1) + &quot;,&quot; + (position.y + 1) + &quot;)&quot;;</b>
+<b class="nc"><i>39</i>&nbsp;        }</b>
+<i>40</i>&nbsp;
+<i>41</i>&nbsp;
+<i>42</i>&nbsp;
+<b class="nc"><i>43</i>&nbsp;        formattedMessage += &quot;\n&gt;&gt;&gt;&quot;;</b>
+<b class="nc"><i>44</i>&nbsp;        setMessage(formattedMessage);</b>
+<i>45</i>&nbsp;    }
+<i>46</i>&nbsp;
+<i>47</i>&nbsp;    public ArrayList&lt;Worker&gt; getAvailableWorkers() {
+<b class="nc"><i>48</i>&nbsp;        return availableWorkers;</b>
+<i>49</i>&nbsp;    }
+<i>50</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2020-05-04 17:48</div>
+</div>
+</body>
+</html>
