@@ -1,7 +1,6 @@
 package it.polimi.ingsw.PSP11.messages;
 
 import java.awt.*;
-import java.util.ArrayList;
 
 public class PlaceWorkerResponse extends Message{
 

@@ -3,11 +3,8 @@ package it.polimi.ingsw.PSP11.utils;
 import it.polimi.ingsw.PSP11.model.Deck;
 
 import java.beans.XMLDecoder;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Objects;
 
 public class XMLParser {
 

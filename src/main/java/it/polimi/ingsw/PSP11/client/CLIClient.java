@@ -2,7 +2,6 @@ package it.polimi.ingsw.PSP11.client;
 
 
 import it.polimi.ingsw.PSP11.exception.IllegalInputException;
-import it.polimi.ingsw.PSP11.messages.ConnectionClosedMessage;
 import it.polimi.ingsw.PSP11.messages.Message;
 
 import java.io.IOException;
@@ -12,7 +11,7 @@ import java.net.Socket;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
-public class Client {
+public class CLIClient {
 
     private String ip;
     private int port;
@@ -27,7 +26,7 @@ public class Client {
         this.active = active;
     }
 
-    public Client(String ip, int port) {
+    public CLIClient(String ip, int port) {
         this.ip = ip;
         this.port = port;
     }
