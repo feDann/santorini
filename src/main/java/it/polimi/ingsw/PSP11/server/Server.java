@@ -2,6 +2,7 @@ package it.polimi.ingsw.PSP11.server;
 
 import it.polimi.ingsw.PSP11.controller.Controller;
 import it.polimi.ingsw.PSP11.messages.SimpleMessage;
+import it.polimi.ingsw.PSP11.messages.WaitMessage;
 import it.polimi.ingsw.PSP11.model.Game;
 import it.polimi.ingsw.PSP11.model.Player;
 import it.polimi.ingsw.PSP11.view.VirtualView;
@@ -115,7 +116,7 @@ public class Server {
                 waitingNameList.remove(nickname2);
                 waitingListForTwo.clear();
             }else{
-                connection.send(new SimpleMessage("Wait for other player...\n"));
+                connection.send(new WaitMessage());
             }
     }
 
@@ -175,7 +176,7 @@ public class Server {
             waitingNameList.remove(nickname3);
             waitingListForThree.clear();
         }else{
-            connection.send(new SimpleMessage("Wait for other player...\n"));
+            connection.send(new WaitMessage());
         }
     }
 

@@ -6,11 +6,11 @@ import it.polimi.ingsw.PSP11.messages.Message;
 public abstract class GUIController {
     private GUIClient client;
 
-    public abstract void changeScene();
+    public abstract void changeStage();
     public abstract void handleMessage(Message message);
 
     public void send(Message message){
-        client.asyncSend(message);
+        client.asyncWrite(message);
     }
 
     public GUIClient getClient() {
