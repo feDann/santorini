@@ -5,6 +5,7 @@ import java.io.Serializable;
 public class Card implements Serializable {
     private GodTurn godTurnDecorator;
     private String name;
+    private String texture;
     private int idCard;
     private String description;
 
@@ -44,11 +45,21 @@ public class Card implements Serializable {
         this.godTurnDecorator = cardTurnDecorator;
     }
 
+    public String getTexture() {
+        return texture;
+    }
+
+    public void setTexture(String texture) {
+        this.texture = texture;
+    }
+
+
     public Card cardClone(){
         Card clonedCard = new Card();
         clonedCard.setName(this.getName());
         clonedCard.setDescription(this.getDescription());
         clonedCard.setIdCard(this.getIdCard());
+        clonedCard.setTexture(this.getTexture());
         return clonedCard;
     }
 }

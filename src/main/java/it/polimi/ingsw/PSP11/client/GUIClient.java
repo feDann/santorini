@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.concurrent.TimeUnit;
 
 public class GUIClient {
     private String ip;
@@ -38,26 +39,24 @@ public class GUIClient {
     }
 
     public void asyncRead(){
-        new Thread(){
+        Thread t = new Thread(){
             @Override
             public void run() {
                 try{
                     while(isActive()){
                         Message msg = (Message) socketIn.readObject();
-                        //System.out.println(msg.getMessage());
+                        TimeUnit.MILLISECONDS.sleep(300);
                         guiController.handleMessage(msg);
                     }
                 }catch (Exception e){
-                    e.printStackTrace();
                     System.err.println("Error: " + e.getMessage());
                 }
             }
-        }.start();
+        };
+        t.setDaemon(true);
+        t.start();
     }
 
-    public GUIController getGuiController() {
-        return guiController;
-    }
 
     public void asyncWrite(Message message) {
         new Thread(){
@@ -73,6 +72,9 @@ public class GUIClient {
         }.start();
     }
 
+    public GUIController getGuiController() {
+        return guiController;
+    }
 
     public void close() throws IOException {
         setActive(false);

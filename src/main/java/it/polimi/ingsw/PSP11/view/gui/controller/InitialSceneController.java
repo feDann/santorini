@@ -85,7 +85,9 @@ public class InitialSceneController extends GUIController{
         Platform.runLater(()->{
             errorText2.setVisible(false);
             if(numOfPlayers.getSelectedToggle() != null) {
-                getClient().asyncWrite(new NicknameMessage(nickname.getText()));
+                String nick = nickname.getText();
+                getClient().asyncWrite(new NicknameMessage(nick));
+                setNickname(nick);
             }
             else{
                 errorText2.setVisible(true);
@@ -139,13 +141,12 @@ public class InitialSceneController extends GUIController{
     public void changeStage() {
         Platform.runLater(() -> {
             try{
-                System.out.println("here");
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/selectGods.fxml"));
+                System.out.println("load");
                 Parent root = loader.load();
                 GUIController newController = loader.getController();
-                GUIClient client = getClient();
-                client.setController(newController);
-                newController.setClient(client);
+                getClient().setController(newController);
+                newController.setClient(getClient());
                 Scene scene = new Scene(root);
                 Stage newStage = (Stage) initialPane.getScene().getWindow();
                 newStage.setScene(scene);
@@ -178,6 +179,8 @@ public class InitialSceneController extends GUIController{
             waitOpponentScene();
         }
         if(message instanceof OpponentMessage){
+            setOpponents(((OpponentMessage)message).getOpponents());
+            setColor(((OpponentMessage) message).getColor());
             changeStage();
         }
 

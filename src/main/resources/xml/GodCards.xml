@@ -12,6 +12,9 @@
                     <void property="name">
                         <string>Apollo</string>
                     </void>
+                    <void property="texture">
+                        <string>/images/gods/apollo_full_card.png</string>
+                    </void>
                     <void property="description">
                         <string>Your Move: Your Worker may move into an opponent Worker’s space by forcing their Worker to the space yours just vacated.</string>
                     </void>
@@ -29,6 +32,9 @@
                     </void>
                     <void property="name">
                         <string>Artemis</string>
+                    </void>
+                    <void property="texture">
+                        <string>/images/gods/artemis_full_card.png</string>
                     </void>
                     <void property="description">
                         <string>Your Move: Your Worker may move one additional time, but not back to its initial space. </string>
@@ -48,6 +54,9 @@
                     <void property="name">
                         <string>Athena</string>
                     </void>
+                    <void property="texture">
+                        <string>/images/gods/athena_full_card.png</string>
+                    </void>
                     <void property="description">
                         <string>Opponent’s Turn: If one of your Workers moved up on your last turn, opponent Workers cannot move up this turn.</string>
                     </void>
@@ -65,6 +74,9 @@
                     </void>
                     <void property="name">
                         <string>Atlas</string>
+                    </void>
+                    <void property="texture">
+                        <string>/images/gods/atlas_full_card.png</string>
                     </void>
                     <void property="description">
                         <string>Your Build: Your Worker may build a dome at any level. </string>
@@ -84,6 +96,9 @@
                     <void property="name">
                         <string>Demeter</string>
                     </void>
+                    <void property="texture">
+                        <string>/images/gods/demeter_full_card.png</string>
+                    </void>
                     <void property="description">
                         <string>Your Build: Your Worker may build one additional time, but not on the same space.</string>
                     </void>
@@ -101,6 +116,9 @@
                     </void>
                     <void property="name">
                         <string>Hephaestus</string>
+                    </void>
+                    <void property="texture">
+                        <string>/images/gods/hephaestus_full_card.png</string>
                     </void>
                     <void property="description">
                         <string>Your Build: Your Worker may build one additional block (not dome) on top of your first block</string>
@@ -120,6 +138,9 @@
                     <void property="name">
                         <string>Minotaur</string>
                     </void>
+                    <void property="texture">
+                        <string>/images/gods/minotaur_full_card.png</string>
+                    </void>
                     <void property="description">
                         <string>Your Move: Your Worker may move into an opponent Worker’s space, if their Worker can be forced one space straight backwards to an unoccupied space at any level.</string>
                     </void>
@@ -138,6 +159,9 @@
                     <void property="name">
                         <string>Pan</string>
                     </void>
+                    <void property="texture">
+                        <string>/images/gods/pan_full_card.png</string>
+                    </void>
                     <void property="description">
                         <string>Win Condition: You also win if your Worker moves down two or more levels.</string>
                     </void>
@@ -155,6 +179,9 @@
                     </void>
                     <void property="name">
                         <string>Prometheus</string>
+                    </void>
+                    <void property="texture">
+                        <string>/images/gods/prometheus_full_card.png</string>
                     </void>
                     <void property="description">
                         <string>Your Turn: If your Worker does not move up, it may build both before and after moving.</string>

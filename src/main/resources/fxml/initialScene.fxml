@@ -24,13 +24,13 @@
          </image>
       </ImageView>
       <TextField fx:id="ip" layoutX="63.0" layoutY="181.0" onAction="#sendIp" prefHeight="28.0" prefWidth="170.0" promptText="Ip address..." visible="false" />
-      <Button fx:id="connection" layoutX="60.0" layoutY="231.0" lineSpacing="1.0" mnemonicParsing="false" onAction="#sendIp" prefHeight="28.0" prefWidth="170.0" stylesheets="@../css/style.css" text="Connect" textOverrun="CLIP" visible="false" />
+      <Button fx:id="connection" layoutX="60.0" layoutY="231.0" lineSpacing="1.0" mnemonicParsing="false" onAction="#sendIp" prefHeight="28.0" prefWidth="170.0" stylesheets="@../css/initialScene.css" text="Connect" textOverrun="CLIP" visible="false" />
       <Text fx:id="errorText" fill="RED" layoutX="116.0" layoutY="299.0" strokeType="OUTSIDE" strokeWidth="0.0" visible="false">
          <font>
             <Font name="Arial" size="15.0" />
          </font>
       </Text>
-      <Button fx:id="playButton" layoutX="70.0" layoutY="264.0" lineSpacing="1.0" mnemonicParsing="false" onAction="#sendNickname" prefHeight="28.0" prefWidth="170.0" stylesheets="@../css/style.css" text="Play" textOverrun="CLIP" visible="false" />
+      <Button fx:id="playButton" layoutX="70.0" layoutY="264.0" lineSpacing="1.0" mnemonicParsing="false" onAction="#sendNickname" prefHeight="28.0" prefWidth="170.0" stylesheets="@../css/initialScene.css" text="Play" textOverrun="CLIP" visible="false" />
       <TextField fx:id="nickname" layoutX="70.0" layoutY="153.0" onMouseClicked="#resetField" prefHeight="28.0" prefWidth="170.0" promptText="Nickname" visible="false" />
       <Group fx:id="radioButtons" layoutX="116.0" layoutY="224.0" visible="false">
          <children>

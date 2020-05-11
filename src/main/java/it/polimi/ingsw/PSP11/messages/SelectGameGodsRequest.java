@@ -4,15 +4,19 @@ import it.polimi.ingsw.PSP11.model.Card;
 import it.polimi.ingsw.PSP11.model.Color;
 import it.polimi.ingsw.PSP11.model.Deck;
 
+import java.util.ArrayList;
+
 public class SelectGameGodsRequest extends SimpleMessage {
 
     private int numOfPlayers;
     private int numOfDeckCards;
+    private ArrayList<Card> gods;
 
     public SelectGameGodsRequest(Deck deck,int numOfPlayers){
         super("");
         this.numOfPlayers = numOfPlayers;
         this.numOfDeckCards = deck.getCards().size();
+        this.gods=deck.getCards();
         String formattedMessage = "\n\nThe Available god are:\n\n";
 
         for(Card card : deck.getCards()){
@@ -34,6 +38,10 @@ public class SelectGameGodsRequest extends SimpleMessage {
         }
         formattedMessage += "\n>>>";
         setMessage(formattedMessage);
+    }
+
+    public ArrayList<Card> getGods() {
+        return gods;
     }
 
     public int getNumOfPlayers() {
