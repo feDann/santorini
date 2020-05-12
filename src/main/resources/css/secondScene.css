@@ -7,7 +7,7 @@
     -fx-alignment: top-center;
 }
 .pane{
-    /*-fx-background-image: url("/images/background2.png");*/
+    -fx-background-image: url("/images/backgrounds/background.png");
     -fx-background-repeat: no-repeat;
     -fx-background-position: center;
     -fx-background-size: 100% 100%;
@@ -22,24 +22,73 @@
     -fx-cursor: hand;
     -fx-effect: dropshadow(three-pass-box, black, 10, 0, 0, 0);
 }
-.sendButton{
-    -fx-background-image: url("../images/btn_blue.png");
+.doneButton{
+    -fx-background-image: url("../images/buttons/done_button.png");
     -fx-background-color: transparent;
     -fx-background-repeat: no-repeat;
     -fx-background-position: center;
     -fx-background-size: 100% 100%;
     -fx-alignment: top-center;
 }
-.sendButton:pressed{
-    -fx-background-image: url("../images/btn_blue_pressed.png");
+.doneButton:pressed{
+    -fx-background-image: url("../images/buttons/done_button_pressed.png");
     -fx-background-color: transparent;
     -fx-background-repeat: no-repeat;
     -fx-background-position: center;
     -fx-background-size: 100% 100%;
     -fx-alignment: top-center;
 }
-.sendButton:hover{
+.doneButton:hover{
     -fx-cursor: hand;
     -fx-effect: dropshadow(three-pass-box, black, 10, 0, 0, 0);
+}
+
+.leftArrow:hover{
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(three-pass-box, black, 10, 0, 0, 0);
+}
+
+.rightArrow:hover{
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(three-pass-box, black, 10, 0, 0, 0);
+}
+
+.leftArrow{
+    -fx-background-image: url("../images/buttons/left_arrow.png");
+    -fx-background-color: transparent;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    -fx-background-size: 100% 100%;
+    -fx-alignment: top-center;
+}
+.rightArrow{
+    -fx-background-image: url("../images/buttons/right_arrow.png");
+    -fx-background-color: transparent;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    -fx-background-size: 100% 100%;
+    -fx-alignment: top-center;
+}
+
+.playerText {
+    -fx-background-color: transparent;
+}
+
+.playerText .scroll-pane {
+    -fx-background-color: transparent;
+}
+
+.playerText .scroll-pane .viewport{
+    -fx-background-color: transparent;
+}
+
+
+.playerText .scroll-pane .content{
+    -fx-background-color: transparent;
+}
+
+.playerBox{
+    -fx-background-color: #3f3f3f;
+    -fx-opacity: 60%;
 }
 

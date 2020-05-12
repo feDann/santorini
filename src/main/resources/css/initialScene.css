@@ -1,20 +1,43 @@
-.button{
-    -fx-background-image: url("../images/btn_blue.png");
+.connectButton{
+    -fx-background-image: url("../images/buttons/connect_button.png");
     -fx-background-color: transparent;
     -fx-background-repeat: no-repeat;
     -fx-background-position: center;
     -fx-background-size: 100% 100%;
     -fx-alignment: top-center;
 }
-.button:pressed{
-    -fx-background-image: url("../images/btn_blue_pressed.png");
+.playButton{
+    -fx-background-image: url("../images/buttons/play_button.png");
     -fx-background-color: transparent;
     -fx-background-repeat: no-repeat;
     -fx-background-position: center;
     -fx-background-size: 100% 100%;
     -fx-alignment: top-center;
 }
-.button:hover{
+.connectButton:pressed{
+    -fx-background-image: url("../images/buttons/connect_button_pressed.png");
+    -fx-background-color: transparent;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    -fx-background-size: 100% 100%;
+    -fx-alignment: top-center;
+}
+
+.playButton:pressed{
+    -fx-background-image: url("../images/buttons/play_button_pressed.png");
+    -fx-background-color: transparent;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    -fx-background-size: 100% 100%;
+    -fx-alignment: top-center;
+}
+
+.connectButton:hover{
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(three-pass-box, black, 10, 0, 0, 0);
+}
+
+.playButton:hover{
     -fx-cursor: hand;
     -fx-effect: dropshadow(three-pass-box, black, 10, 0, 0, 0);
 }

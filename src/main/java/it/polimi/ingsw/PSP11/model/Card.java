@@ -53,6 +53,13 @@ public class Card implements Serializable {
         this.texture = texture;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if(obj instanceof Card){
+            return ((Card) obj).getName().equals(this.getName());
+        }
+        return false;
+    }
 
     public Card cardClone(){
         Card clonedCard = new Card();
