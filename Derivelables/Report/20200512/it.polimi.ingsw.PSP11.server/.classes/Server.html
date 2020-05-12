@@ -1,0 +1,281 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: Server</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">it.polimi.ingsw.PSP11.server</a> ]
+</div>
+
+<h1>Coverage Summary for Class: Server (it.polimi.ingsw.PSP11.server)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Server</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 8)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 126)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package it.polimi.ingsw.PSP11.server;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import it.polimi.ingsw.PSP11.controller.Controller;
+<i>4</i>&nbsp;import it.polimi.ingsw.PSP11.messages.SimpleMessage;
+<i>5</i>&nbsp;import it.polimi.ingsw.PSP11.messages.WaitMessage;
+<i>6</i>&nbsp;import it.polimi.ingsw.PSP11.model.Game;
+<i>7</i>&nbsp;import it.polimi.ingsw.PSP11.model.Player;
+<i>8</i>&nbsp;import it.polimi.ingsw.PSP11.view.VirtualView;
+<i>9</i>&nbsp;
+<i>10</i>&nbsp;import java.io.IOException;
+<i>11</i>&nbsp;import java.net.ServerSocket;
+<i>12</i>&nbsp;import java.net.Socket;
+<i>13</i>&nbsp;import java.util.*;
+<i>14</i>&nbsp;import java.util.concurrent.ExecutorService;
+<i>15</i>&nbsp;import java.util.concurrent.Executors;
+<i>16</i>&nbsp;import java.util.stream.Collectors;
+<i>17</i>&nbsp;
+<i>18</i>&nbsp;public class Server {
+<i>19</i>&nbsp;
+<i>20</i>&nbsp;    private static final int serverPort = 50000;
+<i>21</i>&nbsp;    private ServerSocket serverSocket;
+<i>22</i>&nbsp;
+<b class="nc"><i>23</i>&nbsp;    private ExecutorService executor = Executors.newFixedThreadPool(64);</b>
+<b class="nc"><i>24</i>&nbsp;    private Map&lt;String,ClientSocketConnection&gt; waitingListForTwo = new HashMap&lt;&gt;();</b>
+<b class="nc"><i>25</i>&nbsp;    private Map&lt;String,ClientSocketConnection&gt; waitingListForThree = new HashMap&lt;&gt;();</b>
+<b class="nc"><i>26</i>&nbsp;    private Map&lt;String,ClientSocketConnection&gt; playingList = new HashMap&lt;&gt;();</b>
+<b class="nc"><i>27</i>&nbsp;    private List&lt;String&gt; waitingNameList = new ArrayList&lt;&gt;();</b>
+<b class="nc"><i>28</i>&nbsp;    private List&lt;String&gt; playingNameList = new ArrayList&lt;&gt;();</b>
+<b class="nc"><i>29</i>&nbsp;    private Map&lt;ClientSocketConnection, ArrayList&lt;ClientSocketConnection&gt;&gt; playingConnections = new HashMap&lt;&gt;();</b>
+<i>30</i>&nbsp;
+<i>31</i>&nbsp;
+<b class="nc"><i>32</i>&nbsp;    public Server () throws IOException {</b>
+<b class="nc"><i>33</i>&nbsp;        serverSocket = new ServerSocket(serverPort);</b>
+<i>34</i>&nbsp;    }
+<i>35</i>&nbsp;
+<i>36</i>&nbsp;    public synchronized boolean insertInWaitingList(ClientSocketConnection connection, String nickname){
+<b class="nc"><i>37</i>&nbsp;        if (waitingNameList.contains(nickname) || playingNameList.contains(nickname)){</b>
+<b class="nc"><i>38</i>&nbsp;            return false;</b>
+<i>39</i>&nbsp;        }
+<b class="nc"><i>40</i>&nbsp;        waitingNameList.add(nickname);</b>
+<b class="nc"><i>41</i>&nbsp;        return true;</b>
+<i>42</i>&nbsp;    }
+<i>43</i>&nbsp;
+<i>44</i>&nbsp;    public synchronized void looserDisconnect(String playerToKill){
+<b class="nc"><i>45</i>&nbsp;        playingNameList.remove(playerToKill);</b>
+<b class="nc"><i>46</i>&nbsp;        ClientSocketConnection playerToKillSocket = playingList.get(playerToKill);</b>
+<b class="nc"><i>47</i>&nbsp;        for (ClientSocketConnection c : playingConnections.get(playerToKillSocket)){</b>
+<b class="nc"><i>48</i>&nbsp;            playingConnections.get(c).remove(playerToKillSocket);</b>
+<b class="nc"><i>49</i>&nbsp;        }</b>
+<b class="nc"><i>50</i>&nbsp;        playingConnections.remove(playerToKillSocket);</b>
+<b class="nc"><i>51</i>&nbsp;        playingList.remove(playerToKill);</b>
+<i>52</i>&nbsp;    }
+<i>53</i>&nbsp;
+<i>54</i>&nbsp;    public synchronized void killLobby(String nickname){
+<b class="nc"><i>55</i>&nbsp;        if(waitingNameList.contains(nickname)){</b>
+<b class="nc"><i>56</i>&nbsp;            waitingListForTwo.remove(nickname);</b>
+<b class="nc"><i>57</i>&nbsp;            waitingListForThree.remove(nickname);</b>
+<b class="nc"><i>58</i>&nbsp;            waitingNameList.remove(nickname);</b>
+<i>59</i>&nbsp;            return;
+<i>60</i>&nbsp;        }
+<b class="nc"><i>61</i>&nbsp;        if(playingNameList.contains(nickname)){</b>
+<b class="nc"><i>62</i>&nbsp;            for (ClientSocketConnection c : playingConnections.get(playingList.get(nickname))){</b>
+<b class="nc"><i>63</i>&nbsp;                c.closeConnection();</b>
+<b class="nc"><i>64</i>&nbsp;                String nick = playingList.keySet().stream().filter(s -&gt; playingList.get(s).equals(c)).collect(Collectors.toList()).get(0);</b>
+<b class="nc"><i>65</i>&nbsp;                playingList.remove(nick);</b>
+<b class="nc"><i>66</i>&nbsp;                playingNameList.remove(nick);</b>
+<b class="nc"><i>67</i>&nbsp;                playingConnections.remove(c);</b>
+<b class="nc"><i>68</i>&nbsp;            }</b>
+<b class="nc"><i>69</i>&nbsp;            playingConnections.remove(playingList.get(nickname));</b>
+<b class="nc"><i>70</i>&nbsp;            playingList.remove(nickname);</b>
+<b class="nc"><i>71</i>&nbsp;            playingNameList.remove(nickname);</b>
+<i>72</i>&nbsp;        }
+<i>73</i>&nbsp;    }
+<i>74</i>&nbsp;
+<i>75</i>&nbsp;    public synchronized void lobbyForTwoPlayer(String nickname,ClientSocketConnection connection) {
+<b class="nc"><i>76</i>&nbsp;        waitingListForTwo.put(nickname, connection);</b>
+<b class="nc"><i>77</i>&nbsp;            if (waitingListForTwo.size() == 2) {</b>
+<b class="nc"><i>78</i>&nbsp;                ArrayList&lt;String&gt; nameList = new ArrayList&lt;&gt;(waitingListForTwo.keySet());</b>
+<b class="nc"><i>79</i>&nbsp;                String nickname1 = nameList.get(0);</b>
+<b class="nc"><i>80</i>&nbsp;                String nickname2 = nameList.get(1);</b>
+<b class="nc"><i>81</i>&nbsp;                ClientSocketConnection connection1 = waitingListForTwo.get(nickname1);</b>
+<b class="nc"><i>82</i>&nbsp;                ClientSocketConnection connection2 = waitingListForTwo.get(nickname2);</b>
+<i>83</i>&nbsp;
+<b class="nc"><i>84</i>&nbsp;                playingNameList.add(nickname1);</b>
+<b class="nc"><i>85</i>&nbsp;                playingNameList.add(nickname2);</b>
+<b class="nc"><i>86</i>&nbsp;                playingList.put(nickname1, connection1);</b>
+<b class="nc"><i>87</i>&nbsp;                playingList.put(nickname2, connection2);</b>
+<i>88</i>&nbsp;
+<b class="nc"><i>89</i>&nbsp;                Player player1 = new Player(nickname1);</b>
+<b class="nc"><i>90</i>&nbsp;                Player player2 = new Player(nickname2);</b>
+<i>91</i>&nbsp;
+<b class="nc"><i>92</i>&nbsp;                Game game = new Game();</b>
+<b class="nc"><i>93</i>&nbsp;                game.setNumOfPlayers(2);</b>
+<b class="nc"><i>94</i>&nbsp;                game.addPlayer(player1);</b>
+<b class="nc"><i>95</i>&nbsp;                game.addPlayer(player2);</b>
+<b class="nc"><i>96</i>&nbsp;                game.playerColorInit();</b>
+<i>97</i>&nbsp;
+<b class="nc"><i>98</i>&nbsp;                VirtualView vv1 = new VirtualView(connection1, player2.playerClone(), player1.playerClone());</b>
+<b class="nc"><i>99</i>&nbsp;                VirtualView vv2 = new VirtualView(connection2, player1.playerClone(), player2.playerClone());</b>
+<i>100</i>&nbsp;
+<b class="nc"><i>101</i>&nbsp;                Map &lt;String,ClientSocketConnection&gt; currentPlayers = new HashMap&lt;&gt;();</b>
+<b class="nc"><i>102</i>&nbsp;                currentPlayers.put(nickname1,connection1);</b>
+<b class="nc"><i>103</i>&nbsp;                currentPlayers.put(nickname2,connection2);</b>
+<i>104</i>&nbsp;
+<b class="nc"><i>105</i>&nbsp;                Controller controller = new Controller(game, currentPlayers);</b>
+<b class="nc"><i>106</i>&nbsp;                game.addObserver(vv1);</b>
+<b class="nc"><i>107</i>&nbsp;                game.addObserver(vv2);</b>
+<b class="nc"><i>108</i>&nbsp;                vv1.addObserver(controller);</b>
+<b class="nc"><i>109</i>&nbsp;                vv2.addObserver(controller);</b>
+<i>110</i>&nbsp;
+<b class="nc"><i>111</i>&nbsp;                playingConnections.put(connection1, new ArrayList&lt;&gt;(Collections.singletonList(connection2)));</b>
+<b class="nc"><i>112</i>&nbsp;                playingConnections.put(connection2, new ArrayList&lt;&gt;(Collections.singletonList(connection1)));</b>
+<i>113</i>&nbsp;
+<b class="nc"><i>114</i>&nbsp;                controller.start();</b>
+<b class="nc"><i>115</i>&nbsp;                waitingNameList.remove(nickname1);</b>
+<b class="nc"><i>116</i>&nbsp;                waitingNameList.remove(nickname2);</b>
+<b class="nc"><i>117</i>&nbsp;                waitingListForTwo.clear();</b>
+<b class="nc"><i>118</i>&nbsp;            }else{</b>
+<b class="nc"><i>119</i>&nbsp;                connection.send(new WaitMessage());</b>
+<i>120</i>&nbsp;            }
+<i>121</i>&nbsp;    }
+<i>122</i>&nbsp;
+<i>123</i>&nbsp;    public synchronized void lobbyForThreePlayer(String nickname,ClientSocketConnection connection){
+<b class="nc"><i>124</i>&nbsp;        waitingListForThree.put(nickname, connection);</b>
+<b class="nc"><i>125</i>&nbsp;        if(waitingListForThree.size()==3) {</b>
+<b class="nc"><i>126</i>&nbsp;            ArrayList&lt;String&gt; nameList = new ArrayList&lt;&gt;(waitingListForThree.keySet());</b>
+<b class="nc"><i>127</i>&nbsp;            String nickname1 = nameList.get(0);</b>
+<b class="nc"><i>128</i>&nbsp;            String nickname2 = nameList.get(1);</b>
+<b class="nc"><i>129</i>&nbsp;            String nickname3 = nameList.get(2);</b>
+<b class="nc"><i>130</i>&nbsp;            ClientSocketConnection connection1 = waitingListForThree.get(nickname1);</b>
+<b class="nc"><i>131</i>&nbsp;            ClientSocketConnection connection2 = waitingListForThree.get(nickname2);</b>
+<b class="nc"><i>132</i>&nbsp;            ClientSocketConnection connection3 = waitingListForThree.get(nickname3);</b>
+<i>133</i>&nbsp;
+<b class="nc"><i>134</i>&nbsp;            playingNameList.add(nickname1);</b>
+<b class="nc"><i>135</i>&nbsp;            playingNameList.add(nickname2);</b>
+<b class="nc"><i>136</i>&nbsp;            playingNameList.add(nickname3);</b>
+<b class="nc"><i>137</i>&nbsp;            playingList.put(nickname1, connection1);</b>
+<b class="nc"><i>138</i>&nbsp;            playingList.put(nickname2, connection2);</b>
+<b class="nc"><i>139</i>&nbsp;            playingList.put(nickname3, connection3);</b>
+<i>140</i>&nbsp;
+<b class="nc"><i>141</i>&nbsp;            Player player1 = new Player(nickname1);</b>
+<b class="nc"><i>142</i>&nbsp;            Player player2 = new Player(nickname2);</b>
+<b class="nc"><i>143</i>&nbsp;            Player player3 = new Player(nickname3);</b>
+<i>144</i>&nbsp;
+<b class="nc"><i>145</i>&nbsp;            Game game = new Game();</b>
+<b class="nc"><i>146</i>&nbsp;            game.setNumOfPlayers(3);</b>
+<b class="nc"><i>147</i>&nbsp;            game.addPlayer(player1);</b>
+<b class="nc"><i>148</i>&nbsp;            game.addPlayer(player2);</b>
+<b class="nc"><i>149</i>&nbsp;            game.addPlayer(player3);</b>
+<b class="nc"><i>150</i>&nbsp;            game.playerColorInit();</b>
+<i>151</i>&nbsp;
+<b class="nc"><i>152</i>&nbsp;            VirtualView vv1 = new VirtualView(connection1, player2.playerClone(), player3.playerClone(), player1.playerClone());</b>
+<b class="nc"><i>153</i>&nbsp;            VirtualView vv2 = new VirtualView(connection2, player1.playerClone(), player3.playerClone(), player2.playerClone());</b>
+<b class="nc"><i>154</i>&nbsp;            VirtualView vv3 = new VirtualView(connection3, player1.playerClone(),  player2.playerClone(), player3.playerClone());</b>
+<i>155</i>&nbsp;
+<b class="nc"><i>156</i>&nbsp;            Map&lt;String, ClientSocketConnection&gt; currentPlayers = new HashMap&lt;&gt;();</b>
+<b class="nc"><i>157</i>&nbsp;            currentPlayers.put(nickname1, connection1);</b>
+<b class="nc"><i>158</i>&nbsp;            currentPlayers.put(nickname2, connection2);</b>
+<b class="nc"><i>159</i>&nbsp;            currentPlayers.put(nickname3, connection3);</b>
+<i>160</i>&nbsp;
+<b class="nc"><i>161</i>&nbsp;            Controller controller = new Controller(game, currentPlayers);</b>
+<b class="nc"><i>162</i>&nbsp;            game.addObserver(vv1);</b>
+<b class="nc"><i>163</i>&nbsp;            game.addObserver(vv2);</b>
+<b class="nc"><i>164</i>&nbsp;            game.addObserver(vv3);</b>
+<b class="nc"><i>165</i>&nbsp;            vv1.addObserver(controller);</b>
+<b class="nc"><i>166</i>&nbsp;            vv2.addObserver(controller);</b>
+<b class="nc"><i>167</i>&nbsp;            vv3.addObserver(controller);</b>
+<i>168</i>&nbsp;
+<b class="nc"><i>169</i>&nbsp;            playingConnections.put(connection1, new ArrayList&lt;&gt;(Arrays.asList(connection2, connection3)));</b>
+<b class="nc"><i>170</i>&nbsp;            playingConnections.put(connection2, new ArrayList&lt;&gt;(Arrays.asList(connection1, connection3)));</b>
+<b class="nc"><i>171</i>&nbsp;            playingConnections.put(connection3, new ArrayList&lt;&gt;(Arrays.asList(connection1, connection2)));</b>
+<i>172</i>&nbsp;
+<b class="nc"><i>173</i>&nbsp;            controller.start();</b>
+<b class="nc"><i>174</i>&nbsp;            waitingNameList.remove(nickname1);</b>
+<b class="nc"><i>175</i>&nbsp;            waitingNameList.remove(nickname2);</b>
+<b class="nc"><i>176</i>&nbsp;            waitingNameList.remove(nickname3);</b>
+<b class="nc"><i>177</i>&nbsp;            waitingListForThree.clear();</b>
+<b class="nc"><i>178</i>&nbsp;        }else{</b>
+<b class="nc"><i>179</i>&nbsp;            connection.send(new WaitMessage());</b>
+<i>180</i>&nbsp;        }
+<i>181</i>&nbsp;    }
+<i>182</i>&nbsp;
+<i>183</i>&nbsp;
+<i>184</i>&nbsp;    public void start(){
+<b class="nc"><i>185</i>&nbsp;        System.out.println(&quot;The Santorini server is up and running...&quot;);</b>
+<i>186</i>&nbsp;        while (true){
+<i>187</i>&nbsp;            try {
+<b class="nc"><i>188</i>&nbsp;                Socket newClientSocket = serverSocket.accept();</b>
+<i>189</i>&nbsp;                //System.out.println(&quot;\nAccepted new client on port: &quot; + newClientSocket.getPort() + &quot;\n&quot;);
+<b class="nc"><i>190</i>&nbsp;                ClientSocketConnection socketConnection = new ClientSocketConnection(newClientSocket, this);</b>
+<b class="nc"><i>191</i>&nbsp;                executor.submit(socketConnection);</b>
+<b class="nc"><i>192</i>&nbsp;            } catch (IOException e) {</b>
+<b class="nc"><i>193</i>&nbsp;                System.err.println(&quot;Cannot connect the client &quot; + e.getMessage() + &quot;!&quot;);</b>
+<b class="nc"><i>194</i>&nbsp;            }</b>
+<i>195</i>&nbsp;        }
+<i>196</i>&nbsp;    }
+<i>197</i>&nbsp;
+<i>198</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2020-05-12 13:51</div>
+</div>
+</body>
+</html>

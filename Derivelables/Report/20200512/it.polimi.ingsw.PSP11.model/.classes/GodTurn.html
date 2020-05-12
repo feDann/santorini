@@ -1,0 +1,170 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: GodTurn</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">it.polimi.ingsw.PSP11.model</a> ]
+</div>
+
+<h1>Coverage Summary for Class: GodTurn (it.polimi.ingsw.PSP11.model)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">GodTurn</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    30%
+  </span>
+  <span class="absValue">
+    (3/ 10)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    36,4%
+  </span>
+  <span class="absValue">
+    (4/ 11)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package it.polimi.ingsw.PSP11.model;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import java.awt.*;
+<i>4</i>&nbsp;import java.util.ArrayList;
+<i>5</i>&nbsp;
+<b class="fc"><i>6</i>&nbsp;public abstract class GodTurn implements Turn {</b>
+<i>7</i>&nbsp;
+<i>8</i>&nbsp;    private StandardTurn sharedTurn;
+<i>9</i>&nbsp;
+<i>10</i>&nbsp;    /**
+<i>11</i>&nbsp;     * return all the possible moves
+<i>12</i>&nbsp;     * @param worker the selected worker
+<i>13</i>&nbsp;     * @param board the game board
+<i>14</i>&nbsp;     * @return an ArrayList of points containing all the possible moves
+<i>15</i>&nbsp;     */
+<i>16</i>&nbsp;    @Override
+<i>17</i>&nbsp;    public ArrayList&lt;Point&gt; move(Worker worker, Board board) {
+<b class="nc"><i>18</i>&nbsp;        return null;</b>
+<i>19</i>&nbsp;    }
+<i>20</i>&nbsp;
+<i>21</i>&nbsp;    /**
+<i>22</i>&nbsp;     * return all the possible build position
+<i>23</i>&nbsp;     * @param worker the selected worker
+<i>24</i>&nbsp;     * @param board the game board
+<i>25</i>&nbsp;     * @return an ArrayList of points containing all the possible build positions
+<i>26</i>&nbsp;     */
+<i>27</i>&nbsp;    @Override
+<i>28</i>&nbsp;    public ArrayList&lt;Point&gt; build(Worker worker, Board board) {
+<b class="nc"><i>29</i>&nbsp;        return null;</b>
+<i>30</i>&nbsp;    }
+<i>31</i>&nbsp;
+<i>32</i>&nbsp;    /**
+<i>33</i>&nbsp;     * check if the player has won the game
+<i>34</i>&nbsp;     * @param worker the selected worker
+<i>35</i>&nbsp;     * @param board the game board
+<i>36</i>&nbsp;     * @return true if the player has won
+<i>37</i>&nbsp;     */
+<i>38</i>&nbsp;    @Override
+<i>39</i>&nbsp;    public boolean winCondition(Worker worker, Board board) {
+<b class="nc"><i>40</i>&nbsp;        return false;</b>
+<i>41</i>&nbsp;    }
+<i>42</i>&nbsp;
+<i>43</i>&nbsp;    @Override
+<i>44</i>&nbsp;    public void endTurn() {
+<i>45</i>&nbsp;
+<b class="nc"><i>46</i>&nbsp;    }</b>
+<i>47</i>&nbsp;
+<i>48</i>&nbsp;    /**
+<i>49</i>&nbsp;     * reset some attributes
+<i>50</i>&nbsp;     */
+<i>51</i>&nbsp;    @Override
+<i>52</i>&nbsp;    public void startTurn() {
+<i>53</i>&nbsp;
+<b class="nc"><i>54</i>&nbsp;    }</b>
+<i>55</i>&nbsp;
+<i>56</i>&nbsp;    /**
+<i>57</i>&nbsp;     * move the selected worker to the desired point
+<i>58</i>&nbsp;     * @param worker the selected worker
+<i>59</i>&nbsp;     * @param board the game board
+<i>60</i>&nbsp;     * @param newPosition the new worker position
+<i>61</i>&nbsp;     */
+<i>62</i>&nbsp;    @Override
+<i>63</i>&nbsp;    public void applyMove(Worker worker, Board board, Point newPosition) {
+<i>64</i>&nbsp;
+<b class="nc"><i>65</i>&nbsp;    }</b>
+<i>66</i>&nbsp;
+<i>67</i>&nbsp;    /**
+<i>68</i>&nbsp;     * build on the desired point
+<i>69</i>&nbsp;     * @param worker the selected worker
+<i>70</i>&nbsp;     * @param board the game board
+<i>71</i>&nbsp;     * @param buildPosition the build position
+<i>72</i>&nbsp;     * @param forceBuildDome true if Atlas power is activated
+<i>73</i>&nbsp;     */
+<i>74</i>&nbsp;    @Override
+<i>75</i>&nbsp;    public void applyBuild(Worker worker, Board board, Point buildPosition,boolean forceBuildDome) {
+<i>76</i>&nbsp;
+<b class="nc"><i>77</i>&nbsp;    }</b>
+<i>78</i>&nbsp;
+<i>79</i>&nbsp;    public void setSharedTurn(StandardTurn sharedTurn) {
+<b class="fc"><i>80</i>&nbsp;        this.sharedTurn = sharedTurn;</b>
+<b class="fc"><i>81</i>&nbsp;    }</b>
+<i>82</i>&nbsp;
+<i>83</i>&nbsp;    public StandardTurn getSharedTurn() {
+<b class="fc"><i>84</i>&nbsp;        return sharedTurn;</b>
+<i>85</i>&nbsp;    }
+<i>86</i>&nbsp;
+<i>87</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2020-05-12 13:51</div>
+</div>
+</body>
+</html>

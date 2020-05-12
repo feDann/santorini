@@ -1,0 +1,189 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: VirtualView</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">it.polimi.ingsw.PSP11.view</a> ]
+</div>
+
+<h1>Coverage Summary for Class: VirtualView (it.polimi.ingsw.PSP11.view)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">VirtualView</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 8)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 24)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">VirtualView$MessageReceiver</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 10)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 26)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package it.polimi.ingsw.PSP11.view;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import it.polimi.ingsw.PSP11.messages.*;
+<i>4</i>&nbsp;import it.polimi.ingsw.PSP11.model.Color;
+<i>5</i>&nbsp;import it.polimi.ingsw.PSP11.observer.Observable;
+<i>6</i>&nbsp;import it.polimi.ingsw.PSP11.observer.Observer;
+<i>7</i>&nbsp;import it.polimi.ingsw.PSP11.server.ClientSocketConnection;
+<i>8</i>&nbsp;import it.polimi.ingsw.PSP11.utils.PlayerInfo;
+<i>9</i>&nbsp;
+<i>10</i>&nbsp;public class VirtualView extends Observable&lt;ControllerMessage&gt; implements Observer&lt;UpdateMessage&gt; {
+<i>11</i>&nbsp;
+<i>12</i>&nbsp;    private ClientSocketConnection connection;
+<i>13</i>&nbsp;    private PlayerInfo player;
+<i>14</i>&nbsp;
+<b class="nc"><i>15</i>&nbsp;    private class MessageReceiver implements Observer&lt;Message&gt; {</b>
+<i>16</i>&nbsp;
+<i>17</i>&nbsp;        @Override
+<i>18</i>&nbsp;        public void update(Message message) {
+<b class="nc"><i>19</i>&nbsp;            handleControllerMessage(message);</b>
+<i>20</i>&nbsp;        }
+<i>21</i>&nbsp;    }
+<i>22</i>&nbsp;
+<i>23</i>&nbsp;    private void handleControllerMessage(Message message) {
+<b class="nc"><i>24</i>&nbsp;        notify(new ControllerMessage(message, this));</b>
+<i>25</i>&nbsp;    }
+<i>26</i>&nbsp;
+<i>27</i>&nbsp;    //due giocatori
+<b class="nc"><i>28</i>&nbsp;    public VirtualView(ClientSocketConnection connection, PlayerInfo opponent, PlayerInfo player) {</b>
+<b class="nc"><i>29</i>&nbsp;        connection.send(new OpponentMessage(opponent, player.getColor()));</b>
+<b class="nc"><i>30</i>&nbsp;        connection.addObserver(new MessageReceiver());</b>
+<b class="nc"><i>31</i>&nbsp;        this.connection = connection;</b>
+<b class="nc"><i>32</i>&nbsp;        this.player = player;</b>
+<i>33</i>&nbsp;    }
+<i>34</i>&nbsp;
+<i>35</i>&nbsp;    //tres jugadores
+<b class="nc"><i>36</i>&nbsp;    public VirtualView(ClientSocketConnection connection, PlayerInfo opponent1, PlayerInfo opponent2, PlayerInfo player){</b>
+<b class="nc"><i>37</i>&nbsp;        connection.send(new OpponentMessage(opponent1, opponent2, player.getColor()));</b>
+<b class="nc"><i>38</i>&nbsp;        connection.addObserver(new MessageReceiver());</b>
+<b class="nc"><i>39</i>&nbsp;        this.connection = connection;</b>
+<b class="nc"><i>40</i>&nbsp;        this.player = player;</b>
+<i>41</i>&nbsp;    }
+<i>42</i>&nbsp;
+<i>43</i>&nbsp;    public PlayerInfo getPlayer() {
+<b class="nc"><i>44</i>&nbsp;        return player;</b>
+<i>45</i>&nbsp;    }
+<i>46</i>&nbsp;
+<i>47</i>&nbsp;    public void sendMessage(Message message){
+<b class="nc"><i>48</i>&nbsp;        connection.send(message);</b>
+<i>49</i>&nbsp;    }
+<i>50</i>&nbsp;
+<i>51</i>&nbsp;    @Override
+<i>52</i>&nbsp;    public void update(UpdateMessage message) {
+<i>53</i>&nbsp;        //TODO trovare un metodo migliore
+<b class="nc"><i>54</i>&nbsp;        if(message.getUpdateMessage() instanceof StartGameMessage){</b>
+<b class="nc"><i>55</i>&nbsp;            startGameUpdate(message);</b>
+<i>56</i>&nbsp;
+<i>57</i>&nbsp;        }else {
+<b class="nc"><i>58</i>&nbsp;            updatePlayerView(message);</b>
+<i>59</i>&nbsp;        }
+<i>60</i>&nbsp;    }
+<i>61</i>&nbsp;
+<i>62</i>&nbsp;    public void startGameUpdate(UpdateMessage message){
+<b class="nc"><i>63</i>&nbsp;        connection.send(message.getUpdateMessage());</b>
+<b class="nc"><i>64</i>&nbsp;        if(player.getName().equals(message.getPlayer().getName())){</b>
+<b class="nc"><i>65</i>&nbsp;            connection.send(new SimpleMessage(message.getBoard().printBoard()));</b>
+<i>66</i>&nbsp;        }
+<i>67</i>&nbsp;        else{
+<b class="nc"><i>68</i>&nbsp;            connection.send(new SimpleMessage(&quot;\n\n\n&quot;+message.getPlayer().getColor().getEscape() + message.getPlayer().getName() + Color.RESET + &quot; started his turn!\n&quot;));</b>
+<i>69</i>&nbsp;        }
+<i>70</i>&nbsp;    }
+<i>71</i>&nbsp;
+<i>72</i>&nbsp;    private void updatePlayerView(UpdateMessage message) {
+<b class="nc"><i>73</i>&nbsp;        if (message.getBoard() != null){</b>
+<b class="nc"><i>74</i>&nbsp;            connection.send(new SimpleMessage(message.getBoard().printBoard()));</b>
+<i>75</i>&nbsp;        }
+<b class="nc"><i>76</i>&nbsp;        if (!player.getName().equals(message.getPlayer().getName())) {</b>
+<b class="nc"><i>77</i>&nbsp;            connection.send(message.getUpdateMessage());</b>
+<i>78</i>&nbsp;        }
+<i>79</i>&nbsp;    }
+<i>80</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2020-05-12 13:51</div>
+</div>
+</body>
+</html>

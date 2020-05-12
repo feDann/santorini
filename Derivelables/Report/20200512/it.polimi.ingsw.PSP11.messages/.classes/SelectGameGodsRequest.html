@@ -1,0 +1,137 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: SelectGameGodsRequest</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">it.polimi.ingsw.PSP11.messages</a> ]
+</div>
+
+<h1>Coverage Summary for Class: SelectGameGodsRequest (it.polimi.ingsw.PSP11.messages)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">SelectGameGodsRequest</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 23)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package it.polimi.ingsw.PSP11.messages;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import it.polimi.ingsw.PSP11.model.Card;
+<i>4</i>&nbsp;import it.polimi.ingsw.PSP11.model.Color;
+<i>5</i>&nbsp;import it.polimi.ingsw.PSP11.model.Deck;
+<i>6</i>&nbsp;
+<i>7</i>&nbsp;import java.util.ArrayList;
+<i>8</i>&nbsp;
+<i>9</i>&nbsp;public class SelectGameGodsRequest extends SimpleMessage {
+<i>10</i>&nbsp;
+<i>11</i>&nbsp;    private int numOfPlayers;
+<i>12</i>&nbsp;    private int numOfDeckCards;
+<i>13</i>&nbsp;    private ArrayList&lt;Card&gt; gods;
+<i>14</i>&nbsp;
+<i>15</i>&nbsp;    public SelectGameGodsRequest(Deck deck,int numOfPlayers){
+<b class="nc"><i>16</i>&nbsp;        super(&quot;&quot;);</b>
+<b class="nc"><i>17</i>&nbsp;        this.numOfPlayers = numOfPlayers;</b>
+<b class="nc"><i>18</i>&nbsp;        this.numOfDeckCards = deck.getCards().size();</b>
+<b class="nc"><i>19</i>&nbsp;        this.gods=deck.getCards();</b>
+<b class="nc"><i>20</i>&nbsp;        String formattedMessage = &quot;\n\nThe Available god are:\n\n&quot;;</b>
+<i>21</i>&nbsp;
+<b class="nc"><i>22</i>&nbsp;        for(Card card : deck.getCards()){</b>
+<b class="nc"><i>23</i>&nbsp;            formattedMessage +=  card.getIdCard() + &quot;) &quot; + card.getName() + &quot;\n   Description: &quot;+ card.getDescription() + &quot;\n\n&quot;;</b>
+<b class="nc"><i>24</i>&nbsp;        }</b>
+<i>25</i>&nbsp;
+<b class="nc"><i>26</i>&nbsp;        formattedMessage = formattedMessage.replaceAll(&quot;Your Move&quot;, Color.BLUE.getEscape() + &quot;Your Move&quot; + Color.RESET );</b>
+<b class="nc"><i>27</i>&nbsp;        formattedMessage = formattedMessage.replaceAll(&quot;Your Build&quot;, Color.BROWN.getEscape() + &quot;Your Build&quot; + Color.RESET );</b>
+<b class="nc"><i>28</i>&nbsp;        formattedMessage = formattedMessage.replaceAll(&quot;Win Condition&quot;, Color.GREEN.getEscape() + &quot;Win Condition&quot; + Color.RESET );</b>
+<b class="nc"><i>29</i>&nbsp;        formattedMessage = formattedMessage.replaceAll(&quot;Your Turn&quot;, Color.PURPLE.getEscape() + &quot;Your Turn&quot; + Color.RESET );</b>
+<b class="nc"><i>30</i>&nbsp;        formattedMessage = formattedMessage.replaceAll(&quot;Opponent’s Turn&quot;, Color.RED.getEscape() + &quot;Opponent&#39;s Turn&quot; + Color.RESET );</b>
+<i>31</i>&nbsp;
+<b class="nc"><i>32</i>&nbsp;        formattedMessage = formattedMessage.concat(&quot;\nChoose &quot; + numOfPlayers + &quot; gods to use in the game, in this format --&gt; &quot;);</b>
+<b class="nc"><i>33</i>&nbsp;        if(numOfPlayers == 2){</b>
+<b class="nc"><i>34</i>&nbsp;            formattedMessage = formattedMessage.concat(&quot;x,y&quot;);</b>
+<i>35</i>&nbsp;        }
+<b class="nc"><i>36</i>&nbsp;        else if (numOfPlayers == 3){</b>
+<b class="nc"><i>37</i>&nbsp;            formattedMessage = formattedMessage.concat(&quot;x,y,z&quot;);</b>
+<i>38</i>&nbsp;        }
+<b class="nc"><i>39</i>&nbsp;        formattedMessage += &quot;\n&gt;&gt;&gt;&quot;;</b>
+<b class="nc"><i>40</i>&nbsp;        setMessage(formattedMessage);</b>
+<i>41</i>&nbsp;    }
+<i>42</i>&nbsp;
+<i>43</i>&nbsp;    public ArrayList&lt;Card&gt; getGods() {
+<b class="nc"><i>44</i>&nbsp;        return gods;</b>
+<i>45</i>&nbsp;    }
+<i>46</i>&nbsp;
+<i>47</i>&nbsp;    public int getNumOfPlayers() {
+<b class="nc"><i>48</i>&nbsp;        return numOfPlayers;</b>
+<i>49</i>&nbsp;    }
+<i>50</i>&nbsp;
+<i>51</i>&nbsp;    public int getNumOfDeckCards() {
+<b class="nc"><i>52</i>&nbsp;        return numOfDeckCards;</b>
+<i>53</i>&nbsp;    }
+<i>54</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2020-05-12 13:51</div>
+</div>
+</body>
+</html>
