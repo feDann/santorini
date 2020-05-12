@@ -16,11 +16,13 @@ public class SelectPlayerGodState implements GameState{
     int index;
     String requestingPlayer;
     private Game game;
-    ArrayList<Card> chosenCards;
+    ArrayList<Card> chosenCards = new ArrayList<>();
 
     public SelectPlayerGodState (Game game){
         this.game = game;
-        this.chosenCards = game.getChosenCards();
+        for(Card card : game.getChosenCards()){
+            this.chosenCards.add(card.cardClone());
+        }
     }
 
     @Override

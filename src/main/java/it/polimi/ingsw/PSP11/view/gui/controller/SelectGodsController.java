@@ -1,7 +1,9 @@
 package it.polimi.ingsw.PSP11.view.gui.controller;
 
 import it.polimi.ingsw.PSP11.messages.Message;
+import it.polimi.ingsw.PSP11.messages.SelectGameGodResponse;
 import it.polimi.ingsw.PSP11.messages.SelectGameGodsRequest;
+import it.polimi.ingsw.PSP11.messages.SelectPlayerGodRequest;
 import it.polimi.ingsw.PSP11.model.Card;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -24,6 +26,7 @@ public class SelectGodsController extends GUIController {
     private final String imageStyle = "-fx-background-image: url(";
     private ArrayList<Card> gods;
     private HashMap<Card, ImageView> selectedGodsMap = new HashMap<>();
+    private int numOfPlayers;
 
 
     @FXML
@@ -74,21 +77,35 @@ public class SelectGodsController extends GUIController {
         Collections.rotate(gods, -1);
         updateStackPane();
     }
+    @FXML
+    public void sendSelection(ActionEvent event) {
+        if(selectedGodsMap.size()==numOfPlayers){
+            ArrayList<Integer> ids = new ArrayList<>();
+            for(Card card : selectedGodsMap.keySet()){
+                ids.add(card.getIdCard()-1);
+                selectedGods.getChildren().remove(selectedGodsMap.get(card));
+            }
+            selectedGodsMap.clear();
+            getClient().asyncWrite(new SelectGameGodResponse(ids));
+        }
+    }
 
     @FXML
     void selectStackPane(MouseEvent event) {
         Platform.runLater(()-> {
 
-                    if (selectedGodsMap.containsKey(gods.get(1))) {
+                    if (!selectedGodsMap.containsKey(gods.get(1))) {
+                        if(selectedGodsMap.size()<numOfPlayers) {
+                            ImageView image = new ImageView();
 
-                        ImageView image = new ImageView();
+                            image.setImage(new Image(getClass().getResource(gods.get(1).getTexture()).toString()));
+                            image.setFitWidth(selectedGods.getWidth());
+                            image.setPreserveRatio(true);
 
-                        image.setImage(new Image(getClass().getResource(gods.get(1).getTexture()).toString()));
-                        image.setFitWidth(selectedGods.getWidth());
-                        image.setPreserveRatio(true);
-
-                        selectedGodsMap.put(gods.get(1), image);
-                        selectedGods.getChildren().add(image);
+                            selectedGodsMap.put(gods.get(1), image);
+                            System.out.println(selectedGodsMap);
+                            selectedGods.getChildren().add(image);
+                        }
 
                     } else {
                         selectedGods.getChildren().remove(selectedGodsMap.get(gods.get(1)));
@@ -109,6 +126,7 @@ public class SelectGodsController extends GUIController {
         leftStack.setStyle(god1);
         centerStack.setStyle(god2);
         rightStack.setStyle(god3);
+        description.setText(gods.get(1).getDescription());
     }
 
 
@@ -119,6 +137,8 @@ public class SelectGodsController extends GUIController {
         leftStack.getStyleClass().add("stack-pane");
         centerStack.getStyleClass().add("stack-pane");
         rightStack.getStyleClass().add("stack-pane");
+
+
 
         updateStackPane();
 
@@ -134,8 +154,14 @@ public class SelectGodsController extends GUIController {
     public void handleMessage(Message message) {
         if(message instanceof SelectGameGodsRequest){
             gods = ((SelectGameGodsRequest) message).getGods();
+            numOfPlayers = ((SelectGameGodsRequest) message).getNumOfPlayers();
+            selectGodScene();
+        }
+        if(message instanceof SelectPlayerGodRequest){
+            gods = ((SelectPlayerGodRequest) message).getChosenCards();
             selectGodScene();
         }
     }
+
 
 }

@@ -9,13 +9,13 @@ public class SelectPlayerGodRequest extends SimpleMessage{
 
     private int numOfCards;
     //TODO
-    private ArrayList<Card> chosenCardsCopy = new ArrayList<Card>();
+    private ArrayList<Card> chosenCards = new ArrayList<Card>();
 
     public SelectPlayerGodRequest(ArrayList<Card> chosenCards) {
         super("");
         int id = 1;
         numOfCards = chosenCards.size();
-        chosenCardsCopy = chosenCards;
+        this.chosenCards= chosenCards;
         String formattedMessage = "\n\n\nAvailable Gods:\n\n";
 
         for (Card card : chosenCards){
@@ -37,7 +37,7 @@ public class SelectPlayerGodRequest extends SimpleMessage{
         return numOfCards;
     }
 
-    public ArrayList<Card> getChosenCardsCopy() {
-        return chosenCardsCopy;
+    public ArrayList<Card> getChosenCards() {
+        return chosenCards;
     }
 }
