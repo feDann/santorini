@@ -5,7 +5,10 @@ import it.polimi.ingsw.PSP11.model.Card;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.Tooltip;
@@ -18,6 +21,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import java.net.ConnectException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -67,13 +71,9 @@ public class SelectGodsController extends GUIController {
         sendGameGods.getStyleClass().add("doneButton");
         sendPlayerGod.getStyleClass().add("doneButton");
 
-        player1.setScrollLeft(0);
-        player2.setScrollLeft(0);
-        player3.setScrollLeft(0);
-
-        player1.setScrollTop(0);
-        player2.setScrollTop(0);
-        player3.setScrollTop(0);
+        player1.setWrapText(true);
+        player2.setWrapText(true);
+        player3.setWrapText(true);
 
         //player1.getStyleClass().add("text-area");
 
@@ -131,12 +131,19 @@ public class SelectGodsController extends GUIController {
                     ids.add(card.getIdCard()-1);
                     selectedGods.getChildren().remove(selectedGodsMap.get(card));
                 }
+                centerStack.getStyleClass().clear();
+                leftStack.getStyleClass().clear();
+                rightStack.getStyleClass().clear();
 
+
+                leftStack.getStyleClass().add("stack-pane");
+                centerStack.getStyleClass().add("stack-pane");
+                rightStack.getStyleClass().add("stack-pane");
                 selectedGodsMap.clear();
                 getClient().asyncWrite(new SelectGameGodResponse(ids));
                 waitScene();
             } else{
-                //TODO create alertbox
+                //TODO create Text Field for error
             }
         });
 
@@ -152,7 +159,7 @@ public class SelectGodsController extends GUIController {
                 selectedGodsMap.clear();
                 waitScene();
             }else{
-                //TODO create alertbox
+                //TODO create Text Field for error
             }
         });
 
@@ -209,6 +216,7 @@ public class SelectGodsController extends GUIController {
                 String god = imageStyle +  getClass().getResource(gods.get(0).getTexture()) +");";
 
                 centerStack.setStyle(god);
+                centerStack.getStyleClass().add("centerStackPane");
                 leftStack.setVisible(false);
                 rightStack.setVisible(false);
                 leftButton.setVisible(false);
@@ -249,6 +257,7 @@ public class SelectGodsController extends GUIController {
 
     private void selectGameGodScene() {
         waitPane.setVisible(false);
+        waitingText.setVisible(false);
         selectPane.setVisible(true);
 
         sendGameGods.setVisible(true);
@@ -279,7 +288,22 @@ public class SelectGodsController extends GUIController {
 
     @Override
     public void changeStage() {
+        Platform.runLater(() -> {
+            try{
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/gameScene.fxml"));
+                Parent root = loader.load();
+                GUIController newController = loader.getController();
+                getClient().setController(newController);
+                newController.setClient(getClient());
+                Scene scene = new Scene(root);
+                Stage newStage = (Stage) initPane.getScene().getWindow();
+                newStage.setScene(scene);
+                newStage.show();
 
+            }catch (Exception e){
+                e.getStackTrace();
+            }
+        });
     }
 
     @Override
@@ -291,11 +315,17 @@ public class SelectGodsController extends GUIController {
             selectGameGodScene();
         }
 
-        if(message instanceof SelectPlayerGodRequest){
+        else if(message instanceof SelectPlayerGodRequest){
             maxSelection = 1;
             immutableGods = ((SelectPlayerGodRequest) message).getChosenCards();
             gods = new ArrayList<>(immutableGods);
             selectPlayerGodScene();
+        }
+        else if(message instanceof StartGameMessage){
+            changeStage();
+        }
+        else if(message instanceof ConnectionClosedMessage){
+            //TODO popup for closure (on popup close also close the application)
         }
     }
 

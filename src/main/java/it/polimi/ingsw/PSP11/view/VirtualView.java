@@ -62,7 +62,7 @@ public class VirtualView extends Observable<ControllerMessage> implements Observ
     public void startGameUpdate(UpdateMessage message){
         connection.send(message.getUpdateMessage());
         if(player.getName().equals(message.getPlayer().getName())){
-            connection.send(new SimpleMessage(message.getBoard().printBoard()));
+            connection.send(new BoardUpdate(message.getBoard()));
         }
         else{
             connection.send(new SimpleMessage("\n\n\n"+message.getPlayer().getColor().getEscape() + message.getPlayer().getName() + Color.RESET + " started his turn!\n"));
@@ -71,7 +71,7 @@ public class VirtualView extends Observable<ControllerMessage> implements Observ
 
     private void updatePlayerView(UpdateMessage message) {
         if (message.getBoard() != null){
-            connection.send(new SimpleMessage(message.getBoard().printBoard()));
+            connection.send(new BoardUpdate(message.getBoard()));
         }
         if (!player.getName().equals(message.getPlayer().getName())) {
             connection.send(message.getUpdateMessage());

@@ -84,10 +84,15 @@ public class InitialSceneController extends GUIController{
     public void sendNickname(ActionEvent event){
         Platform.runLater(()->{
             errorText2.setVisible(false);
-            if(numOfPlayers.getSelectedToggle() != null) {
-                String nick = nickname.getText();
-                getClient().asyncWrite(new NicknameMessage(nick));
-                setNickname(nick);
+            if(numOfPlayers.getSelectedToggle() != null ) {
+                if(!nickname.getText().equals("")) {
+                    String nick = nickname.getText();
+                    getClient().asyncWrite(new NicknameMessage(nick));
+                    setNickname(nick);
+                }else{
+                    nickname.setPromptText("Nickname can't be empty!");
+                    nickname.setStyle("-fx-prompt-text-fill: indianred;");
+                }
             }
             else{
                 errorText2.setVisible(true);
@@ -142,7 +147,6 @@ public class InitialSceneController extends GUIController{
         Platform.runLater(() -> {
             try{
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/selectGods.fxml"));
-                System.out.println("load");
                 Parent root = loader.load();
                 GUIController newController = loader.getController();
                 getClient().setController(newController);
@@ -171,14 +175,14 @@ public class InitialSceneController extends GUIController{
             nickname.setPromptText("Nickname already in use...");
             nickname.setStyle("-fx-prompt-text-fill: indianred;");
         }
-        if(message instanceof ConnectionMessage){
+        else if(message instanceof ConnectionMessage){
             String numOfPlayers = ((RadioButton)this.numOfPlayers.getSelectedToggle()).getText();
             getClient().asyncWrite(new PlayerSetupMessage(numOfPlayers));
         }
-        if(message instanceof WaitMessage){
+        else if(message instanceof WaitMessage){
             waitOpponentScene();
         }
-        if(message instanceof OpponentMessage){
+        else if(message instanceof OpponentMessage){
             setOpponents(((OpponentMessage)message).getOpponents());
             setColor(((OpponentMessage) message).getColor());
             changeStage();

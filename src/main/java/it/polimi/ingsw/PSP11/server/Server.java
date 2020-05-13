@@ -76,6 +76,7 @@ public class Server {
         waitingListForTwo.put(nickname, connection);
             if (waitingListForTwo.size() == 2) {
                 ArrayList<String> nameList = new ArrayList<>(waitingListForTwo.keySet());
+                Collections.shuffle(nameList);
                 String nickname1 = nameList.get(0);
                 String nickname2 = nameList.get(1);
                 ClientSocketConnection connection1 = waitingListForTwo.get(nickname1);
@@ -124,6 +125,7 @@ public class Server {
         waitingListForThree.put(nickname, connection);
         if(waitingListForThree.size()==3) {
             ArrayList<String> nameList = new ArrayList<>(waitingListForThree.keySet());
+            Collections.shuffle(nameList);
             String nickname1 = nameList.get(0);
             String nickname2 = nameList.get(1);
             String nickname3 = nameList.get(2);

@@ -77,7 +77,6 @@ public class Controller implements Observer<ControllerMessage> {
         if (requestingPlayer.equals(game.getCurrentPlayer().getNickname())){
             gameState = gameState.execute(message.getMessage(),requestingView);
             currentPlayers.get(game.getCurrentPlayer().getNickname()).send(gameState.stateMessage());
-            //TODO
             if (game.isThereIsALoser()){
                 looseConditionHandler();
                 gameState = new StartTurnState(game);

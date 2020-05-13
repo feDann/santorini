@@ -8,7 +8,6 @@ import java.util.ArrayList;
 public class SelectPlayerGodRequest extends SimpleMessage{
 
     private int numOfCards;
-    //TODO
     private ArrayList<Card> chosenCards = new ArrayList<Card>();
 
     public SelectPlayerGodRequest(ArrayList<Card> chosenCards) {
