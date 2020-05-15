@@ -11,12 +11,12 @@ public class MinotaurPowerTurnDecorator extends GodTurn {
 
     private boolean canBePushed(Worker worker, Point originalPosition, Board board){
         Point villainWorkerPosition = worker.getPosition();
-        int differenceX = (int)(villainWorkerPosition.getX() - originalPosition.getX());
-        int differenceY = (int)(villainWorkerPosition.getY() - originalPosition.getY());
-        int newPositionX = (int)villainWorkerPosition.getX() + differenceX;
-        int newPositionY = (int)villainWorkerPosition.getY() + differenceY;
+        int differenceX = villainWorkerPosition.x - originalPosition.x;
+        int differenceY = villainWorkerPosition.y - originalPosition.y;
+        int newPositionX = villainWorkerPosition.x + differenceX;
+        int newPositionY = villainWorkerPosition.y + differenceY;
 
-        if(newPositionX > 0 && newPositionX <5 && newPositionY > 0 && newPositionY <5 ){
+        if(newPositionX >= 0 && newPositionX <5 && newPositionY >= 0 && newPositionY <5 ){
             Point newPosition = new Point(newPositionX, newPositionY);
             if(!board.hasDomeOnTop(newPosition) && !board.hasWorkerOnTop(newPosition)){
                 return board.getCurrentLevel(newPosition).ordinal() - board.getCurrentLevel(villainWorkerPosition).ordinal() <= 1;
