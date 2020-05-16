@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -8,6 +9,8 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
 <Pane fx:id="initPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" styleClass="gamePane" stylesheets="@../css/gameScene.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.PSP11.view.gui.controller.GameSceneController">
    <children>
@@ -19,20 +22,20 @@
       <TextArea fx:id="serverLog" layoutX="1053.0" layoutY="383.0" prefHeight="298.0" prefWidth="200.0" />
       <Pane fx:id="imagePane" prefHeight="720.0" prefWidth="1280.0" visible="false">
          <children>
-            <GridPane fx:id="imageGrid" hgap="10.0" layoutX="381.0" layoutY="105.0" prefHeight="517.0" prefWidth="518.0" stylesheets="@../css/gameScene.css" vgap="10.0">
+            <GridPane fx:id="imageGrid" hgap="13.0" layoutX="382.0" layoutY="107.0" prefHeight="517.0" prefWidth="518.0" stylesheets="@../css/gameScene.css" vgap="13.0">
                <columnConstraints>
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="188.0" minWidth="10.0" prefWidth="96.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="171.0" minWidth="10.0" prefWidth="96.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="99.0" minWidth="10.0" prefWidth="97.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="97.0" minWidth="10.0" prefWidth="97.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="94.0" minWidth="10.0" prefWidth="93.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="95.0" minWidth="10.0" prefWidth="95.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="95.0" minWidth="10.0" prefWidth="95.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="95.0" minWidth="10.0" prefWidth="95.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="95.0" minWidth="10.0" prefWidth="95.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="95.0" minWidth="10.0" prefWidth="95.0" />
                </columnConstraints>
                <rowConstraints>
-                  <RowConstraints maxHeight="99.0" minHeight="10.0" prefHeight="97.0" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="182.0" minHeight="10.0" prefHeight="98.0" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="165.0" minHeight="10.0" prefHeight="97.0" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="150.0" minHeight="10.0" prefHeight="96.0" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="102.0" minHeight="10.0" prefHeight="92.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="95.0" minHeight="10.0" prefHeight="95.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="95.0" minHeight="10.0" prefHeight="95.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="95.0" minHeight="10.0" prefHeight="95.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="95.0" minHeight="10.0" prefHeight="95.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="95.0" minHeight="10.0" prefHeight="95.0" vgrow="SOMETIMES" />
                </rowConstraints>
                <padding>
                   <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
@@ -42,25 +45,36 @@
       </Pane>
       <Pane fx:id="actionPane" prefHeight="720.0" prefWidth="1280.0">
          <children>
-            <GridPane fx:id="actionGrid" hgap="10.0" layoutX="381.0" layoutY="105.0" prefHeight="517.0" prefWidth="518.0" stylesheets="@../css/gameScene.css" vgap="10.0">
+            <GridPane fx:id="actionGrid" hgap="13.0" layoutX="382.0" layoutY="107.0" prefHeight="517.0" prefWidth="518.0" stylesheets="@../css/gameScene.css" vgap="13.0">
                <columnConstraints>
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="188.0" minWidth="10.0" prefWidth="96.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="171.0" minWidth="10.0" prefWidth="96.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="99.0" minWidth="10.0" prefWidth="97.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="97.0" minWidth="10.0" prefWidth="97.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="94.0" minWidth="10.0" prefWidth="93.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="95.0" minWidth="10.0" prefWidth="95.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="95.0" minWidth="10.0" prefWidth="95.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="95.0" minWidth="10.0" prefWidth="95.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="95.0" minWidth="10.0" prefWidth="95.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="95.0" minWidth="10.0" prefWidth="95.0" />
                </columnConstraints>
                <rowConstraints>
-                  <RowConstraints maxHeight="99.0" minHeight="10.0" prefHeight="97.0" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="182.0" minHeight="10.0" prefHeight="98.0" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="165.0" minHeight="10.0" prefHeight="97.0" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="150.0" minHeight="10.0" prefHeight="96.0" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="102.0" minHeight="10.0" prefHeight="92.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="95.0" minHeight="10.0" prefHeight="95.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="95.0" minHeight="10.0" prefHeight="95.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="95.0" minHeight="10.0" prefHeight="95.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="95.0" minHeight="10.0" prefHeight="95.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="95.0" minHeight="10.0" prefHeight="95.0" vgrow="SOMETIMES" />
                </rowConstraints>
                <padding>
                   <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
                </padding>
             </GridPane>
+         </children>
+      </Pane>
+      <Pane fx:id="heroPowerPane" prefHeight="720.0" prefWidth="1280.0" styleClass="heroPowerPane" stylesheets="@../css/gameScene.css">
+         <children>
+            <Button fx:id="yesButton" layoutX="469.0" layoutY="360.0" mnemonicParsing="false" onAction="#booleanResponseHandler" prefHeight="38.0" prefWidth="155.0" styleClass="yesButton" stylesheets="@../css/gameScene.css" />
+            <Text fx:id="requestText" layoutX="405.0" layoutY="263.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="requestText" textAlignment="CENTER" wrappingWidth="471.0">
+               <font>
+                  <Font size="57.0" />
+               </font>
+            </Text>
+            <Button fx:id="noButton" layoutX="656.0" layoutY="360.0" mnemonicParsing="false" onAction="#booleanResponseHandler" prefHeight="38.0" prefWidth="155.0" styleClass="noButton" stylesheets="@../css/gameScene.css" />
          </children>
       </Pane>
    </children>

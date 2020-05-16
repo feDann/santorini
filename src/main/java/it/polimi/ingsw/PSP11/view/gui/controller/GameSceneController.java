@@ -18,6 +18,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -26,7 +28,7 @@ public class GameSceneController extends GUIController {
 
 
     @FXML
-    private Pane initPane,actionPane,imagePane;
+    private Pane initPane,actionPane,imagePane,heroPowerPane;
 
     @FXML
     private TextArea serverLog;
@@ -35,15 +37,23 @@ public class GameSceneController extends GUIController {
     private GridPane imageGrid,actionGrid;
 
     @FXML
+    private Text requestText;
+
+    @FXML
+    private Button yesButton,noButton;
+
+    @FXML
     public void initialize(){
         initPane.setVisible(true);
         imagePane.setVisible(true);
-//        imageGrid.setVisible(true);
+        heroPowerPane.setVisible(false);
         initializeActionGridButtons();
         initializeImageGrid();
         actionPane.setVisible(false);
         serverLog.setWrapText(true);
         serverLog.setEditable(false);
+        requestText.setFont(Font.loadFont(getClass().getResource("/font/LillyBelle400.ttf").toString(),13));
+
 
 
     }
@@ -92,6 +102,19 @@ public class GameSceneController extends GUIController {
         });
     }
 
+    @FXML
+    public void booleanResponseHandler(ActionEvent event){
+        heroPowerPane.setVisible(false);
+        String id = ((Button)event.getSource()).getId();
+        if(id.equals("yesButton")){
+            getClient().asyncWrite(new BooleanResponse(true));
+        }
+        else{
+            getClient().asyncWrite(new BooleanResponse(false));
+        }
+
+    }
+
 
     public void initializeActionGridButtons(){
         for(int x = 0;x <5;x++){
@@ -113,7 +136,8 @@ public class GameSceneController extends GUIController {
                 StackPane stackpane = new StackPane();
                 stackpane.setPrefWidth(imageGrid.getPrefWidth()/5);
                 stackpane.setPrefHeight(imageGrid.getPrefHeight()/5);
-                stackpane.setStyle("-fx-background-color: transparent");
+                stackpane.getStylesheets().add(getClass().getResource("/css/gameScene.css").toString());
+                stackpane.getStyleClass().add("stack-pane");
                 stackpane.setVisible(true);
                 imageGrid.add(stackpane,y,x);
             }
@@ -176,14 +200,16 @@ public class GameSceneController extends GUIController {
     public void moveView(ArrayList<Point> possibleMoves){
 
         Platform.runLater(()->{
-            actionPane.setVisible(true);
             setAllInvisible(actionGrid);
             for(Point position : possibleMoves){
                 Button button = (Button )actionGrid.getChildren().get(position.x * 5 + position.y);
+                button.getStyleClass().clear();
+                button.getStyleClass().add("moveButton");
                 button.setId(position.x +","+position.y);
                 button.setOnAction(this::moveWorker);
                 button.setVisible(true);
             }
+            actionPane.setVisible(true);
         });
 
     }
@@ -191,16 +217,23 @@ public class GameSceneController extends GUIController {
     public void buildView(ArrayList<Point> possibleBuilds){
 
         Platform.runLater(()->{
-            actionPane.setVisible(true);
             setAllInvisible(actionGrid);
             for(Point position : possibleBuilds){
                 Button button = (Button )actionGrid.getChildren().get(position.x * 5 + position.y);
+                button.getStyleClass().clear();
+                button.getStyleClass().add("buildButton");
                 button.setId(position.x +","+position.y);
                 button.setOnAction(this::buildBlock);
                 button.setVisible(true);
             }
+            actionPane.setVisible(true);
         });
 
+    }
+
+    public void heroRequestView(String message){
+        requestText.setText(message);
+        heroPowerPane.setVisible(true);
     }
 
 
@@ -213,58 +246,53 @@ public class GameSceneController extends GUIController {
                 for(int y = 0; y<5; y++){
                     Point position = new Point(x,y);
                     StackPane stack = ((StackPane)imageGrid.getChildren().get(x*5+y));
-
                     //set the blocks
-                    if(board.getCurrentLevel(position).ordinal() == 1){
+                    if(board.getCurrentLevel(position).ordinal() >= 1) {
                         ImageView baseBlock = new ImageView();
-                        baseBlock.setFitWidth(imageGrid.getPrefWidth()/5);
-                        baseBlock.setFitHeight(imageGrid.getPrefHeight()/5);
+                        baseBlock.setFitWidth(stack.getWidth()*0.9);
+                        baseBlock.setFitHeight(stack.getHeight()*0.9);
+                        baseBlock.setPreserveRatio(true);
                         baseBlock.setImage(new Image(getClass().getResource("/images/blocks/base_block.png").toString()));
+
                         stack.getChildren().add(baseBlock);
-                    }else if(board.getCurrentLevel(position).ordinal() == 2){
-                        ImageView baseBlock = new ImageView();
-                        baseBlock.setFitWidth(imageGrid.getPrefWidth()/5);
-                        baseBlock.setFitHeight(imageGrid.getPrefHeight()/5);
-                        baseBlock.setImage(new Image(getClass().getResource("/images/blocks/base_block.png").toString()));
-                        ImageView middleBlock = new ImageView();
-                        middleBlock.setFitWidth(imageGrid.getPrefWidth()/5);
-                        middleBlock.setFitHeight(imageGrid.getPrefHeight()/5);
-                        middleBlock.setImage(new Image(getClass().getResource("/images/blocks/mid_block.png").toString()));
-                        stack.getChildren().add(baseBlock);
-                        stack.getChildren().add(middleBlock);
+                        if (board.getCurrentLevel(position).ordinal() >= 2) {
+                            ImageView middleBlock = new ImageView();
+                            middleBlock.setFitWidth(stack.getWidth()*0.72);
+                            middleBlock.setFitHeight(stack.getHeight()*0.72);
+                            middleBlock.setStyle("-fx-effect: dropshadow( three-pass-box, black, 5, 0, 0, 0);");
+                            middleBlock.setPreserveRatio(true);
+                            middleBlock.setImage(new Image(getClass().getResource("/images/blocks/mid_block.png").toString()));
+                            stack.getChildren().add(middleBlock);
+                            if (board.getCurrentLevel(position).ordinal() == 3) {
+                                ImageView topBlock = new ImageView();
+                                topBlock.setFitWidth(stack.getWidth()*0.67);
+                                topBlock.setFitHeight(stack.getHeight() *0.67);
+                                topBlock.setStyle("-fx-effect: dropshadow(three-pass-box, black, 3, 0, 0, 0);");
+                                topBlock.setPreserveRatio(true);
+                                topBlock.setImage(new Image(getClass().getResource("/images/blocks/top_block.png").toString()));
+                                stack.getChildren().add(topBlock);
+                            }
+                        }
                     }
-                    else if(board.getCurrentLevel(position).ordinal() == 3){
-                        ImageView baseBlock = new ImageView();
-                        baseBlock.setFitWidth(imageGrid.getPrefWidth()/5);
-                        baseBlock.setFitHeight(imageGrid.getPrefHeight()/5);
-                        baseBlock.setImage(new Image(getClass().getResource("/images/blocks/base_block.png").toString()));
-                        ImageView middleBlock = new ImageView();
-                        middleBlock.setFitWidth(imageGrid.getPrefWidth()/5);
-                        middleBlock.setFitHeight(imageGrid.getPrefHeight()/5);
-                        middleBlock.setImage(new Image(getClass().getResource("/images/blocks/mid_block.png").toString()));
-                        ImageView topBlock = new ImageView();
-                        topBlock.setFitWidth(imageGrid.getPrefWidth()/5);
-                        topBlock.setFitHeight(imageGrid.getPrefHeight()/5);
-                        topBlock.setImage(new Image(getClass().getResource("/images/blocks/top_block.png").toString()));
-                        stack.getChildren().add(baseBlock);
-                        stack.getChildren().add(middleBlock);
-                        stack.getChildren().add(topBlock);
-                    }
+
 
 
 
 
                     if(board.hasWorkerOnTop(position)){
                         ImageView workerImage = new ImageView();
-                        workerImage.setFitWidth(imageGrid.getPrefWidth()/5);
-                        workerImage.setFitHeight(imageGrid.getPrefHeight()/5);
+                        workerImage.setFitWidth(stack.getWidth()*0.9);
+                        workerImage.setFitHeight(stack.getHeight()*0.9);
+                        workerImage.setSmooth(true);
+                        workerImage.setPreserveRatio(true);
                         workerImage.setImage(new Image(getClass().getResource(chooseWorker(board.getWorker(position).getColor())).toString()));
                         stack.getChildren().add(workerImage);
                     }
                     else if(board.hasDomeOnTop(position)){
                         ImageView dome = new ImageView();
-                        dome.setFitWidth(imageGrid.getPrefWidth()/5);
-                        dome.setFitHeight(imageGrid.getPrefHeight()/5);
+                        dome.setFitWidth(stack.getWidth()*0.60);
+                        dome.setFitHeight(stack.getHeight()*0.60);
+                        dome.setPreserveRatio(true);
                         dome.setImage(new Image(getClass().getResource("/images/blocks/dome.png").toString()));
                         stack.getChildren().add(dome);
                     }
@@ -277,7 +305,7 @@ public class GameSceneController extends GUIController {
 
 
     public String formatString(String message){
-        return message.replaceAll("\n", "").replaceAll("\\[31m","").replaceAll("\\[32m","").replaceAll("\\[33m","").replaceAll("\\[34m","").replaceAll("\\[35m","").replaceAll("\\[0m","").replaceAll(">>>","");
+        return message.replaceAll("\n", "").replaceAll("\\[31m","").replaceAll("\\[32m","").replaceAll("\\[33m","").replaceAll("\\[34m","").replaceAll("\\[35m","").replaceAll("\\[0m","").replaceAll(">>>","").replaceAll("y / n","");
     }
 
 
@@ -306,6 +334,9 @@ public class GameSceneController extends GUIController {
         }
         else if(message instanceof BuildRequest){
             buildView(((BuildRequest) message).getPossibleBuilds());
+        }
+        else if(message instanceof BuildAgainRequest || message instanceof BuildBeforeMoveRequest || message instanceof MoveAgainRequest|| message instanceof BuildDomeRequest){
+            heroRequestView(formatString(message.getMessage()));
         }
         else if(message instanceof InvalidWorkerPosition){
             serverLog.appendText("[SERVER]: " + formatString(message.getMessage()) +"\n");

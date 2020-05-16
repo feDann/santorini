@@ -180,7 +180,6 @@ public class SelectGodsController extends GUIController {
                             image.setPreserveRatio(true);
 
                             selectedGodsMap.put(centerCard, image);
-                            System.out.println(selectedGodsMap);
                             selectedGods.getChildren().add(image);
                         }
 
