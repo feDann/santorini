@@ -9,6 +9,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
@@ -19,10 +20,16 @@
             <Image url="@../images/backgrounds/board.png" />
          </image>
       </ImageView>
+      <ImageView fitHeight="306.0" fitWidth="426.0" layoutX="-22.0" layoutY="490.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/clouds/cloud1.png" />
+         </image>
+      </ImageView>
       <TextArea fx:id="serverLog" layoutX="1053.0" layoutY="383.0" prefHeight="298.0" prefWidth="200.0" />
-      <Pane fx:id="imagePane" prefHeight="720.0" prefWidth="1280.0" visible="false">
+      <StackPane fx:id="playerHero" layoutX="20.0" layoutY="472.0" onMouseClicked="#descriptionView" prefHeight="261.0" prefWidth="232.0" styleClass="playerHero" stylesheets="@../css/gameScene.css" />
+      <Pane fx:id="imagePane" layoutX="359.0" layoutY="85.0" prefHeight="560.0" prefWidth="562.0" visible="false">
          <children>
-            <GridPane fx:id="imageGrid" hgap="13.0" layoutX="382.0" layoutY="107.0" prefHeight="517.0" prefWidth="518.0" stylesheets="@../css/gameScene.css" vgap="13.0">
+            <GridPane fx:id="imageGrid" hgap="13.0" layoutX="22.0" layoutY="22.0" prefHeight="517.0" prefWidth="518.0" stylesheets="@../css/gameScene.css" vgap="13.0">
                <columnConstraints>
                   <ColumnConstraints hgrow="SOMETIMES" maxWidth="95.0" minWidth="10.0" prefWidth="95.0" />
                   <ColumnConstraints hgrow="SOMETIMES" maxWidth="95.0" minWidth="10.0" prefWidth="95.0" />
@@ -43,9 +50,9 @@
             </GridPane>
          </children>
       </Pane>
-      <Pane fx:id="actionPane" prefHeight="720.0" prefWidth="1280.0">
+      <Pane fx:id="actionPane" layoutX="335.0" prefHeight="646.0" prefWidth="611.0">
          <children>
-            <GridPane fx:id="actionGrid" hgap="13.0" layoutX="382.0" layoutY="107.0" prefHeight="517.0" prefWidth="518.0" stylesheets="@../css/gameScene.css" vgap="13.0">
+            <GridPane fx:id="actionGrid" hgap="13.0" layoutX="46.0" layoutY="107.0" prefHeight="517.0" prefWidth="518.0" stylesheets="@../css/gameScene.css" vgap="13.0">
                <columnConstraints>
                   <ColumnConstraints hgrow="SOMETIMES" maxWidth="95.0" minWidth="10.0" prefWidth="95.0" />
                   <ColumnConstraints hgrow="SOMETIMES" maxWidth="95.0" minWidth="10.0" prefWidth="95.0" />
@@ -64,17 +71,26 @@
                   <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
                </padding>
             </GridPane>
+            <Text fx:id="turnText" fill="WHITE" layoutX="25.0" layoutY="65.0" styleClass="turnText" textAlignment="CENTER" wrappingWidth="562.0">
+               <font>
+                  <Font size="47.0" />
+               </font>
+            </Text>
          </children>
       </Pane>
       <Pane fx:id="heroPowerPane" prefHeight="720.0" prefWidth="1280.0" styleClass="heroPowerPane" stylesheets="@../css/gameScene.css">
          <children>
-            <Button fx:id="yesButton" layoutX="469.0" layoutY="360.0" mnemonicParsing="false" onAction="#booleanResponseHandler" prefHeight="38.0" prefWidth="155.0" styleClass="yesButton" stylesheets="@../css/gameScene.css" />
-            <Text fx:id="requestText" layoutX="405.0" layoutY="263.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="requestText" textAlignment="CENTER" wrappingWidth="471.0">
-               <font>
-                  <Font size="57.0" />
-               </font>
+            <Button fx:id="yesButton" layoutX="467.0" layoutY="431.0" mnemonicParsing="false" onAction="#booleanResponseHandler" prefHeight="38.0" prefWidth="155.0" styleClass="yesButton" stylesheets="@../css/gameScene.css" />
+            <Text fx:id="requestText" fill="WHITE" layoutX="238.0" layoutY="264.0" styleClass="turnText" textAlignment="CENTER" wrappingWidth="833.0">
             </Text>
-            <Button fx:id="noButton" layoutX="656.0" layoutY="360.0" mnemonicParsing="false" onAction="#booleanResponseHandler" prefHeight="38.0" prefWidth="155.0" styleClass="noButton" stylesheets="@../css/gameScene.css" />
+            <Button fx:id="noButton" layoutX="654.0" layoutY="431.0" mnemonicParsing="false" onAction="#booleanResponseHandler" prefHeight="38.0" prefWidth="155.0" styleClass="noButton" stylesheets="@../css/gameScene.css" />
+         </children>
+      </Pane>
+      <Pane fx:id="descriptionPane" onMouseClicked="#hide" prefHeight="720.0" prefWidth="1280.0" styleClass="heroPowerPane" stylesheets="@../css/gameScene.css" visible="false">
+         <children>
+            <ImageView fx:id="cardView" fitHeight="383.0" fitWidth="286.0" layoutX="354.0" layoutY="169.0" pickOnBounds="true" preserveRatio="true" />
+            <Text fx:id="cardDescription" fill="WHITE" layoutX="611.0" layoutY="210.0" styleClass="descriptionText" wrappingWidth="313.0">
+            </Text>
          </children>
       </Pane>
    </children>

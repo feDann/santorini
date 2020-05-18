@@ -2,6 +2,7 @@ package it.polimi.ingsw.PSP11.view.gui.controller;
 
 import it.polimi.ingsw.PSP11.client.GUIClient;
 import it.polimi.ingsw.PSP11.messages.Message;
+import it.polimi.ingsw.PSP11.model.Card;
 import it.polimi.ingsw.PSP11.model.Color;
 import it.polimi.ingsw.PSP11.utils.PlayerInfo;
 
@@ -12,6 +13,7 @@ public abstract class GUIController {
     private static String nickname;
     private static Color color;
     private static ArrayList<PlayerInfo> opponents = new ArrayList<>();
+    private static Card playerCard;
 
     public abstract void changeStage();
     public abstract void handleMessage(Message message);
@@ -51,5 +53,13 @@ public abstract class GUIController {
 
     public static void setOpponents(ArrayList<PlayerInfo> opponents) {
         GUIController.opponents = opponents;
+    }
+
+    public static Card getPlayerCard() {
+        return playerCard;
+    }
+
+    public static void setPlayerCard(Card playerCard) {
+        GUIController.playerCard = playerCard;
     }
 }

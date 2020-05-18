@@ -74,12 +74,33 @@
     -fx-effect: dropshadow(three-pass-box, black, 10, 0, 0, 0);
 }
 
-.requestText{
-    -fx-font-size: 30;
-    -fx-text-fill: white;
-}
 
 .heroPowerPane{
     -fx-background-color: rgba(128,128,128,0.5)
 }
+.turnText{
+    -fx-stroke: black  ;
+    -fx-stroke-width: 2;
+}
 
+.descriptionText{
+    -fx-stroke: black  ;
+    -fx-stroke-width: 1;
+}
+
+.playerHero{
+    -fx-background-color: transparent;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    -fx-background-size: 100% 100%;
+    -fx-alignment: top-center;
+}
+
+.playerHero:pressed{
+    -fx-opacity: 90%;
+}
+
+.playerHero:hover{
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(three-pass-box, black, 10, 0, 0, 0);
+}

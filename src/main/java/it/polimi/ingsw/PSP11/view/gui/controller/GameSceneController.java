@@ -15,6 +15,7 @@ import javafx.scene.control.TextArea;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
@@ -28,7 +29,7 @@ public class GameSceneController extends GUIController {
 
 
     @FXML
-    private Pane initPane,actionPane,imagePane,heroPowerPane;
+    private Pane initPane,actionPane,imagePane,heroPowerPane,descriptionPane;
 
     @FXML
     private TextArea serverLog;
@@ -37,7 +38,13 @@ public class GameSceneController extends GUIController {
     private GridPane imageGrid,actionGrid;
 
     @FXML
-    private Text requestText;
+    private StackPane playerHero;
+
+    @FXML
+    private ImageView cardView;
+
+    @FXML
+    private Text requestText,turnText,cardDescription;
 
     @FXML
     private Button yesButton,noButton;
@@ -47,12 +54,19 @@ public class GameSceneController extends GUIController {
         initPane.setVisible(true);
         imagePane.setVisible(true);
         heroPowerPane.setVisible(false);
+        descriptionPane.setVisible(false);
         initializeActionGridButtons();
         initializeImageGrid();
         actionPane.setVisible(false);
         serverLog.setWrapText(true);
         serverLog.setEditable(false);
-        requestText.setFont(Font.loadFont(getClass().getResource("/font/LillyBelle400.ttf").toString(),13));
+        requestText.setFont(Font.loadFont(getClass().getResource("/font/LillyBelle400.ttf").toString(),40));
+        turnText.setFont(Font.loadFont(getClass().getResource("/font/LillyBelle400.ttf").toString(),47));
+        cardDescription.setFont(Font.loadFont(getClass().getResource("/font/LillyBelle400.ttf").toString(),33));
+        cardView.setImage(new Image(getClass().getResource(getPlayerCard().getTexture()).toString()));
+        cardDescription.setText(getPlayerCard().getDescription().toUpperCase());
+        playerHero.setStyle("-fx-background-image: url(" + getClass().getResource("/images/gods/podium/podium-"+getPlayerCard().getName()+".png").toString() + ");");
+
 
 
 
@@ -115,6 +129,16 @@ public class GameSceneController extends GUIController {
 
     }
 
+    @FXML
+    public void descriptionView(MouseEvent event){
+        descriptionPane.setVisible(true);
+    }
+
+    @FXML
+    public void hide(MouseEvent event){
+        descriptionPane.setVisible(false);
+    }
+
 
     public void initializeActionGridButtons(){
         for(int x = 0;x <5;x++){
@@ -170,6 +194,7 @@ public class GameSceneController extends GUIController {
 
     public void placeWorker(){
         Platform.runLater(() -> {
+            turnText.setText("PLACE YOUR WORKERS");
             actionPane.setVisible(true);
             actionGrid.setVisible(true);
         });
@@ -184,8 +209,8 @@ public class GameSceneController extends GUIController {
 
     public void selectWorkerView(ArrayList<Worker> workers){
         Platform.runLater(()->{
-            actionPane.setVisible(true);
             setAllInvisible(actionGrid);
+            turnText.setText("SELECT YOUR WORKER!");
             for(Worker worker : workers){
                 Point workerPosition = worker.getPosition();
                 Button button = (Button )actionGrid.getChildren().get(workerPosition.x * 5 + workerPosition.y);
@@ -193,6 +218,7 @@ public class GameSceneController extends GUIController {
                 button.setOnAction(this::selectWorker);
                 button.setVisible(true);
             }
+            actionPane.setVisible(true);
         });
 
     }
@@ -201,6 +227,7 @@ public class GameSceneController extends GUIController {
 
         Platform.runLater(()->{
             setAllInvisible(actionGrid);
+            turnText.setText("MOVE YOUR WORKER!");
             for(Point position : possibleMoves){
                 Button button = (Button )actionGrid.getChildren().get(position.x * 5 + position.y);
                 button.getStyleClass().clear();
@@ -218,6 +245,7 @@ public class GameSceneController extends GUIController {
 
         Platform.runLater(()->{
             setAllInvisible(actionGrid);
+            turnText.setText("BUILD YOUR WORKER!");
             for(Point position : possibleBuilds){
                 Button button = (Button )actionGrid.getChildren().get(position.x * 5 + position.y);
                 button.getStyleClass().clear();
@@ -232,7 +260,7 @@ public class GameSceneController extends GUIController {
     }
 
     public void heroRequestView(String message){
-        requestText.setText(message);
+        requestText.setText(message.toUpperCase());
         heroPowerPane.setVisible(true);
     }
 

@@ -155,6 +155,7 @@ public class SelectGodsController extends GUIController {
     public void sendSelectionForPlayerGod(ActionEvent event) {
         Platform.runLater(() -> {
             if(selectedGodsMap.size()==1){
+                setPlayerCard(new ArrayList<>(selectedGodsMap.keySet()).get(0));
                 getClient().asyncWrite(new SelectPlayerGodResponse(immutableGods.indexOf(new ArrayList<>(selectedGodsMap.keySet()).get(0))));
                 selectedGodsMap.clear();
                 waitScene();
