@@ -1,5 +1,5 @@
 package it.polimi.ingsw.PSP11.view.gui.controller;
-import it.polimi.ingsw.PSP11.client.GUIClient;
+
 import it.polimi.ingsw.PSP11.messages.*;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -17,7 +17,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -76,8 +75,9 @@ public class InitialSceneController extends GUIController{
                 return null;
             }
         };
-       new Thread(task).start();
-
+        Thread thread = new Thread(task);
+        thread.setDaemon(true);
+        thread.start();
     }
 
     @FXML
