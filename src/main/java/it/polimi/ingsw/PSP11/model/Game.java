@@ -99,7 +99,7 @@ public class Game extends Observable<UpdateMessage> {
      */
 
     public Card selectPlayerGod (int indexOfChosenGod){
-        notify(new UpdateMessage(null,getCurrentPlayer().playerClone(),new SimpleMessage("\n\n"+getCurrentPlayer().getColor().getEscape() + getCurrentPlayer().getNickname() + Color.RESET + " has chosen " + chosenCards.get(indexOfChosenGod).getName() + "\n")));
+        notify(new UpdateMessage(null,getCurrentPlayer().playerClone(),new OpponentCardMessage("\n\n"+getCurrentPlayer().getColor().getEscape() + getCurrentPlayer().getNickname() + Color.RESET + " has chosen " + chosenCards.get(indexOfChosenGod).getName() + "\n",chosenCards.get(indexOfChosenGod).cardClone(),getCurrentPlayer().getNickname())));
         return chosenCards.get(indexOfChosenGod);
     }
 

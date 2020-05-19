@@ -14,6 +14,7 @@ public abstract class GUIController {
     private static Color color;
     private static ArrayList<PlayerInfo> opponents = new ArrayList<>();
     private static Card playerCard;
+    private static ArrayList<Card> opponentCards = new ArrayList<>();
 
     public abstract void changeStage();
     public abstract void handleMessage(Message message);
@@ -57,6 +58,10 @@ public abstract class GUIController {
 
     public static Card getPlayerCard() {
         return playerCard;
+    }
+
+    public static ArrayList<Card> getOpponentCards() {
+        return opponentCards;
     }
 
     public static void setPlayerCard(Card playerCard) {

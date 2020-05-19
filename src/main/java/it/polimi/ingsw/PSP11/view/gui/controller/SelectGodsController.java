@@ -2,6 +2,8 @@ package it.polimi.ingsw.PSP11.view.gui.controller;
 
 import it.polimi.ingsw.PSP11.messages.*;
 import it.polimi.ingsw.PSP11.model.Card;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -18,8 +20,10 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.net.ConnectException;
 import java.util.ArrayList;
@@ -58,8 +62,7 @@ public class SelectGodsController extends GUIController {
     public void initialize(){
 
 
-        waitPane.setVisible(true);
-        selectPane.setVisible(false);
+        waitScene();
 
         leftStack.getStyleClass().add("stack-pane");
         centerStack.getStyleClass().add("stack-pane");
@@ -70,6 +73,7 @@ public class SelectGodsController extends GUIController {
 
         sendGameGods.getStyleClass().add("doneButton");
         sendPlayerGod.getStyleClass().add("doneButton");
+        waitingText.setFont(Font.loadFont(getClass().getResource("/font/LillyBelle400.ttf").toString(),40));
 
         player1.setWrapText(true);
         player2.setWrapText(true);
@@ -257,7 +261,6 @@ public class SelectGodsController extends GUIController {
 
     private void selectGameGodScene() {
         waitPane.setVisible(false);
-        waitingText.setVisible(false);
         selectPane.setVisible(true);
 
         sendGameGods.setVisible(true);
@@ -283,6 +286,22 @@ public class SelectGodsController extends GUIController {
     private void waitScene(){
         waitPane.setVisible(true);
         selectPane.setVisible(false);
+
+        Platform.runLater(() ->{
+            Timeline timeline = new Timeline(
+                    new KeyFrame(Duration.ZERO, event -> {
+                        String text = waitingText.getText();
+                        waitingText.setText(
+                                ("GOD SELECTION IN PROCESS, PLEASE WAIT . . .".equals(text))
+                                        ? "GOD SELECTION IN PROCESS, PLEASE WAIT ."
+                                        : text + " ."
+                        );
+                    }),
+                    new KeyFrame(Duration.millis(500))
+            );
+            timeline.setCycleCount(Timeline.INDEFINITE);
+            timeline.play();
+        });
     }
 
 
@@ -323,6 +342,9 @@ public class SelectGodsController extends GUIController {
         }
         else if(message instanceof StartGameMessage){
             changeStage();
+        }
+        else if(message instanceof OpponentCardMessage){
+
         }
         else if(message instanceof ConnectionClosedMessage){
             //TODO popup for closure (on popup close also close the application)

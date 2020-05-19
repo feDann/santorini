@@ -10,9 +10,9 @@
 
 <Pane fx:id="initPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="574.0" prefWidth="944.0" styleClass="pane" stylesheets="@../css/secondScene.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.PSP11.view.gui.controller.SelectGodsController">
     <children>
-      <Pane fx:id="waitPane" prefHeight="574.0" prefWidth="944.0" style="-fx-background-color: transparent;" visible="false">
+      <Pane fx:id="waitPane" prefHeight="574.0" prefWidth="944.0" style="-fx-background-color: transparent;">
          <children>
-            <Text fx:id="waitingText" layoutX="140.0" layoutY="292.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ASPETTAAAAA">
+            <Text fx:id="waitingText" fill="white" layoutX="67.0" layoutY="261.0" styleClass="waitingText" text="GOD SELECTION IN PROCESS, PLEASE WAIT ." wrappingWidth="518.8544921875">
                <font>
                   <Font size="39.0" />
                </font>

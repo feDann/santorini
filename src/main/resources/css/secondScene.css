@@ -91,4 +91,7 @@
     -fx-background-color: #3f3f3f;
     -fx-opacity: 60%;
 }
-
+.waitingText{
+    -fx-stroke: black  ;
+    -fx-stroke-width: 2;
+}

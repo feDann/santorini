@@ -88,6 +88,11 @@
     -fx-stroke-width: 1;
 }
 
+.log{
+    -fx-stroke: black  ;
+    -fx-stroke-width: 0.2;
+}
+
 .playerHero{
     -fx-background-color: transparent;
     -fx-background-repeat: no-repeat;
@@ -103,4 +108,66 @@
 .playerHero:hover{
     -fx-cursor: hand;
     -fx-effect: dropshadow(three-pass-box, black, 10, 0, 0, 0);
+}
+
+
+.serverLogPane {
+    -fx-background-image: url("/images/backgrounds/serverLog3.png");
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    -fx-background-size: 100% 100%;
+    -fx-alignment: top-center;
+    -fx-text-fill: white;
+}
+
+.serverLog {
+    -fx-background-color: transparent;
+
+}
+
+.serverLog .scroll-pane {
+    -fx-background-color: transparent;
+}
+
+
+.serverLog .scroll-pane .viewport{
+    -fx-background-color: transparent;
+}
+
+
+.serverLog .scroll-pane .content{
+    -fx-background-color: transparent;
+
+}
+
+.scroll-bar:vertical .track{
+    -fx-background-color : rgba(210,198,185,0.5);
+    -fx-border-color :transparent;
+    -fx-background-radius : 0.0em;
+    -fx-border-radius :2.0em;
+}
+
+.scroll-bar:vertical .thumb{
+    -fx-background-color: #9e9486;
+}
+
+
+.scroll-bar:vertical .increment-button ,
+.scroll-bar:vertical .decrement-button {
+    -fx-background-color :transparent;
+    -fx-background-radius : 0.0em;
+    -fx-padding :0.0 10.0 0.0 0.0;
+
+}
+
+.scroll-bar .increment-arrow,
+.scroll-bar .decrement-arrow{
+    -fx-shape : " ";
+    -fx-padding :0.15em 0.0;
+}
+
+.scroll-bar:vertical .increment-arrow,
+.scroll-bar:vertical .decrement-arrow{
+    -fx-shape : " ";
+    -fx-padding :0.0 0.15em;
 }

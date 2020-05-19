@@ -29,7 +29,7 @@ public class GameSceneController extends GUIController {
 
 
     @FXML
-    private Pane initPane,actionPane,imagePane,heroPowerPane,descriptionPane;
+    private Pane initPane,actionPane,imagePane,heroPowerPane,descriptionPane,serverLogPane;
 
     @FXML
     private TextArea serverLog;
@@ -44,7 +44,7 @@ public class GameSceneController extends GUIController {
     private ImageView cardView;
 
     @FXML
-    private Text requestText,turnText,cardDescription;
+    private Text requestText,turnText,cardDescription,log;
 
     @FXML
     private Button yesButton,noButton;
@@ -63,7 +63,9 @@ public class GameSceneController extends GUIController {
         requestText.setFont(Font.loadFont(getClass().getResource("/font/LillyBelle400.ttf").toString(),40));
         turnText.setFont(Font.loadFont(getClass().getResource("/font/LillyBelle400.ttf").toString(),47));
         cardDescription.setFont(Font.loadFont(getClass().getResource("/font/LillyBelle400.ttf").toString(),33));
+        log.setFont(Font.loadFont(getClass().getResource("/font/LillyBelle400.ttf").toString(),18));
         cardView.setImage(new Image(getClass().getResource(getPlayerCard().getTexture()).toString()));
+
         cardDescription.setText(getPlayerCard().getDescription().toUpperCase());
         playerHero.setStyle("-fx-background-image: url(" + getClass().getResource("/images/gods/podium/podium-"+getPlayerCard().getName()+".png").toString() + ");");
 
@@ -245,7 +247,7 @@ public class GameSceneController extends GUIController {
 
         Platform.runLater(()->{
             setAllInvisible(actionGrid);
-            turnText.setText("BUILD YOUR WORKER!");
+            turnText.setText("BUILD!");
             for(Point position : possibleBuilds){
                 Button button = (Button )actionGrid.getChildren().get(position.x * 5 + position.y);
                 button.getStyleClass().clear();
