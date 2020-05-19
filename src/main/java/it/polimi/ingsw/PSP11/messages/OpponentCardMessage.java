@@ -10,6 +10,7 @@ public class OpponentCardMessage extends SimpleMessage {
     public OpponentCardMessage(String theMessage ,Card card , String opponent) {
         super(theMessage);
         this.opponentCard = card;
+        this.opponent = opponent;
     }
 
     public Card getOpponentCard() {

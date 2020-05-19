@@ -6,9 +6,11 @@ import it.polimi.ingsw.PSP11.model.Board;
 
 import it.polimi.ingsw.PSP11.model.Color;
 import it.polimi.ingsw.PSP11.model.Worker;
+import it.polimi.ingsw.PSP11.utils.PlayerInfo;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.application.Platform;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
@@ -19,14 +21,17 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
+import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 
 import java.awt.*;
 import java.util.ArrayList;
 
 public class GameSceneController extends GUIController {
-
+    private final String font = "/font/LillyBelle400.ttf";
 
     @FXML
     private Pane initPane,actionPane,imagePane,heroPowerPane,descriptionPane,serverLogPane;
@@ -50,6 +55,9 @@ public class GameSceneController extends GUIController {
     private Button yesButton,noButton;
 
     @FXML
+    private VBox opponentBox;
+
+    @FXML
     public void initialize(){
         initPane.setVisible(true);
         imagePane.setVisible(true);
@@ -60,14 +68,14 @@ public class GameSceneController extends GUIController {
         actionPane.setVisible(false);
         serverLog.setWrapText(true);
         serverLog.setEditable(false);
-        requestText.setFont(Font.loadFont(getClass().getResource("/font/LillyBelle400.ttf").toString(),40));
-        turnText.setFont(Font.loadFont(getClass().getResource("/font/LillyBelle400.ttf").toString(),47));
-        cardDescription.setFont(Font.loadFont(getClass().getResource("/font/LillyBelle400.ttf").toString(),33));
-        log.setFont(Font.loadFont(getClass().getResource("/font/LillyBelle400.ttf").toString(),18));
-        cardView.setImage(new Image(getClass().getResource(getPlayerCard().getTexture()).toString()));
-
-        cardDescription.setText(getPlayerCard().getDescription().toUpperCase());
+        requestText.setFont(Font.loadFont(getClass().getResource(font).toString(),40));
+        turnText.setFont(Font.loadFont(getClass().getResource(font).toString(),47));
+        cardDescription.setFont(Font.loadFont(getClass().getResource(font).toString(),33));
+        log.setFont(Font.loadFont(getClass().getResource(font).toString(),18));
         playerHero.setStyle("-fx-background-image: url(" + getClass().getResource("/images/gods/podium/podium-"+getPlayerCard().getName()+".png").toString() + ");");
+        opponentBox.setAlignment(Pos.CENTER);
+        opponentBox.setSpacing(3);
+        createOpponentBox();
 
 
 
@@ -133,7 +141,24 @@ public class GameSceneController extends GUIController {
 
     @FXML
     public void descriptionView(MouseEvent event){
-        descriptionPane.setVisible(true);
+        Platform.runLater(()->{
+            String id = ((StackPane)event.getSource()).getId();
+
+            if(id.equals("playerHero")){
+                cardView.setImage(new Image(getClass().getResource(getPlayerCard().getTexture()).toString()));
+                cardDescription.setText(getPlayerCard().getDescription().toUpperCase());
+            }
+            else{
+                for(PlayerInfo player: getOpponents()){
+                    if(id.equals(player.getName())){
+                        cardView.setImage(new Image(getClass().getResource(player.getCard().getTexture()).toString()));
+                        cardDescription.setText(player.getCard().getDescription().toUpperCase());
+                        break;
+                    }
+                }
+            }
+            descriptionPane.setVisible(true);
+        });
     }
 
     @FXML
@@ -167,6 +192,37 @@ public class GameSceneController extends GUIController {
                 stackpane.setVisible(true);
                 imageGrid.add(stackpane,y,x);
             }
+        }
+    }
+
+    public void createOpponentBox(){
+
+        String styleSheet ="/css/gameScene.css";
+        for(PlayerInfo player: getOpponents()){
+            StackPane pane = new StackPane();
+            Text opponent = new Text(player.getName().toUpperCase());
+            ImageView god = new ImageView();
+
+            pane.setPrefWidth(opponentBox.getPrefWidth());
+            pane.setPrefHeight(opponentBox.getPrefHeight());
+            pane.getStylesheets().add(getClass().getResource(styleSheet).toString());
+            pane.getStyleClass().add("playerHero");
+            pane.setId(player.getName());
+            god.setImage(new Image(getClass().getResource("/images/gods/podium/podium-"+ player.getCard().getName() +".png").toString()));
+            pane.setOnMouseClicked(this::descriptionView);
+
+            opponent.setFont(Font.loadFont(getClass().getResource(font).toString(),18));
+            opponent.setFill(Paint.valueOf(player.getColor().toString().toLowerCase()));
+            opponent.setWrappingWidth(pane.getPrefWidth());
+            opponent.setTextAlignment(TextAlignment.CENTER);
+            god.setFitHeight(pane.getPrefHeight());
+            god.setPreserveRatio(true);
+
+            pane.getChildren().add(god);
+            opponentBox.getChildren().add(pane);
+            opponentBox.getChildren().add(opponent);
+
+
         }
     }
 
@@ -225,6 +281,8 @@ public class GameSceneController extends GUIController {
 
     }
 
+
+
     public void moveView(ArrayList<Point> possibleMoves){
 
         Platform.runLater(()->{
@@ -282,24 +340,24 @@ public class GameSceneController extends GUIController {
                         baseBlock.setFitWidth(stack.getWidth()*0.9);
                         baseBlock.setFitHeight(stack.getHeight()*0.9);
                         baseBlock.setPreserveRatio(true);
-                        baseBlock.setImage(new Image(getClass().getResource("/images/blocks/base_block.png").toString()));
+                        baseBlock.setImage(new Image(getClass().getResource("/images/blocks/base_block1.png").toString()));
 
                         stack.getChildren().add(baseBlock);
                         if (board.getCurrentLevel(position).ordinal() >= 2) {
                             ImageView middleBlock = new ImageView();
-                            middleBlock.setFitWidth(stack.getWidth()*0.72);
-                            middleBlock.setFitHeight(stack.getHeight()*0.72);
-                            middleBlock.setStyle("-fx-effect: dropshadow( three-pass-box, black, 5, 0, 0, 0);");
+                            middleBlock.setFitWidth(stack.getWidth()*0.80);
+                            middleBlock.setFitHeight(stack.getHeight()*0.80);
+//                            middleBlock.setStyle("-fx-effect: dropshadow( three-pass-box, black, 5, 0, 0, 0);");
                             middleBlock.setPreserveRatio(true);
-                            middleBlock.setImage(new Image(getClass().getResource("/images/blocks/mid_block.png").toString()));
+                            middleBlock.setImage(new Image(getClass().getResource("/images/blocks/mid_block1.png").toString()));
                             stack.getChildren().add(middleBlock);
                             if (board.getCurrentLevel(position).ordinal() == 3) {
                                 ImageView topBlock = new ImageView();
                                 topBlock.setFitWidth(stack.getWidth()*0.67);
                                 topBlock.setFitHeight(stack.getHeight() *0.67);
-                                topBlock.setStyle("-fx-effect: dropshadow(three-pass-box, black, 3, 0, 0, 0);");
+//                                topBlock.setStyle("-fx-effect: dropshadow(three-pass-box, black, 3, 0, 0, 0);");
                                 topBlock.setPreserveRatio(true);
-                                topBlock.setImage(new Image(getClass().getResource("/images/blocks/top_block.png").toString()));
+                                topBlock.setImage(new Image(getClass().getResource("/images/blocks/top_block1.png").toString()));
                                 stack.getChildren().add(topBlock);
                             }
                         }

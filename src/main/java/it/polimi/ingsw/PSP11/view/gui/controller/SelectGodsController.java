@@ -2,6 +2,7 @@ package it.polimi.ingsw.PSP11.view.gui.controller;
 
 import it.polimi.ingsw.PSP11.messages.*;
 import it.polimi.ingsw.PSP11.model.Card;
+import it.polimi.ingsw.PSP11.utils.PlayerInfo;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
@@ -324,6 +325,15 @@ public class SelectGodsController extends GUIController {
             }
         });
     }
+    private void setOpponentCard(Card card, String opponent){
+        for(PlayerInfo info : getOpponents()){
+            if(info.getName().equals(opponent)){
+                info.setCard(card);
+            }
+        }
+    }
+
+
 
     @Override
     public void handleMessage(Message message) {
@@ -344,7 +354,7 @@ public class SelectGodsController extends GUIController {
             changeStage();
         }
         else if(message instanceof OpponentCardMessage){
-
+            setOpponentCard(((OpponentCardMessage) message).getOpponentCard(), ((OpponentCardMessage) message).getOpponent());
         }
         else if(message instanceof ConnectionClosedMessage){
             //TODO popup for closure (on popup close also close the application)
