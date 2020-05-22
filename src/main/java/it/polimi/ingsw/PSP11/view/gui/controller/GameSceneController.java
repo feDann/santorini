@@ -7,6 +7,7 @@ import it.polimi.ingsw.PSP11.model.Board;
 import it.polimi.ingsw.PSP11.model.Color;
 import it.polimi.ingsw.PSP11.model.Worker;
 import it.polimi.ingsw.PSP11.utils.PlayerInfo;
+import javafx.animation.FadeTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.application.Platform;
@@ -15,6 +16,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 
+import javafx.scene.effect.GaussianBlur;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -26,15 +28,18 @@ import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
+import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.awt.*;
 import java.util.ArrayList;
 
 public class GameSceneController extends GUIController {
     private final String font = "/font/LillyBelle400.ttf";
+    private boolean gameEnded = false;
 
     @FXML
-    private Pane initPane,actionPane,imagePane,heroPowerPane,descriptionPane,serverLogPane;
+    private Pane initPane,actionPane,imagePane,heroPowerPane,descriptionPane,serverLogPane,disconnectionPane,endPane;
 
     @FXML
     private TextArea serverLog;
@@ -46,13 +51,13 @@ public class GameSceneController extends GUIController {
     private StackPane playerHero;
 
     @FXML
-    private ImageView cardView;
+    private ImageView cardView,endImage;
 
     @FXML
-    private Text requestText,turnText,cardDescription,log;
+    private Text requestText,turnText,cardDescription,log,disconnectionText;
 
     @FXML
-    private Button yesButton,noButton;
+    private Button yesButton,noButton, closeButton, closeButton1;
 
     @FXML
     private VBox opponentBox;
@@ -63,6 +68,8 @@ public class GameSceneController extends GUIController {
         imagePane.setVisible(true);
         heroPowerPane.setVisible(false);
         descriptionPane.setVisible(false);
+        disconnectionPane.setVisible(false);
+        endPane.setVisible(false);
         initializeActionGridButtons();
         initializeImageGrid();
         actionPane.setVisible(false);
@@ -71,6 +78,7 @@ public class GameSceneController extends GUIController {
         requestText.setFont(Font.loadFont(getClass().getResource(font).toString(),40));
         turnText.setFont(Font.loadFont(getClass().getResource(font).toString(),47));
         cardDescription.setFont(Font.loadFont(getClass().getResource(font).toString(),33));
+        disconnectionText.setFont(Font.loadFont(getClass().getResource(font).toString(),33));
         log.setFont(Font.loadFont(getClass().getResource(font).toString(),18));
         playerHero.setStyle("-fx-background-image: url(" + getClass().getResource("/images/gods/podium/podium-"+getPlayerCard().getName()+".png").toString() + ");");
         opponentBox.setAlignment(Pos.CENTER);
@@ -179,6 +187,12 @@ public class GameSceneController extends GUIController {
                 actionGrid.add(button,y,x);
             }
         }
+    }
+
+    @FXML
+    public void closeClient(ActionEvent event){
+        Stage stage = (Stage) initPane.getScene().getWindow();
+        stage.close();
     }
 
     public void initializeImageGrid(){
@@ -324,6 +338,33 @@ public class GameSceneController extends GUIController {
         heroPowerPane.setVisible(true);
     }
 
+    public void connectionClosedView(String message){
+        Platform.runLater(()->{
+            imagePane.setEffect(new GaussianBlur());
+            actionPane.setEffect(new GaussianBlur());
+            descriptionPane.setEffect(new GaussianBlur());
+            heroPowerPane.setEffect(new GaussianBlur());
+            serverLogPane.setEffect(new GaussianBlur());
+            disconnectionPane.setVisible(true);
+            disconnectionText.setText(message.toUpperCase());
+        });
+    }
+
+    public void endView(boolean win){
+        Platform.runLater(()->{
+            if(win){
+                endImage.setImage(new Image(getClass().getResource("/images/endscreen/endgame_win_screen.png").toString()));
+            }
+            else{
+                endImage.setImage(new Image(getClass().getResource("/images/endscreen/endgame_lose_screen.png").toString()));
+            }
+            endPane.setVisible(true);
+            FadeTransition ft = new FadeTransition(Duration.millis(1000),endPane);
+            ft.setFromValue(0.0);
+            ft.setToValue(1.0);
+            ft.play();
+        });
+    }
 
 
 
@@ -347,7 +388,6 @@ public class GameSceneController extends GUIController {
                             ImageView middleBlock = new ImageView();
                             middleBlock.setFitWidth(stack.getWidth()*0.80);
                             middleBlock.setFitHeight(stack.getHeight()*0.80);
-//                            middleBlock.setStyle("-fx-effect: dropshadow( three-pass-box, black, 5, 0, 0, 0);");
                             middleBlock.setPreserveRatio(true);
                             middleBlock.setImage(new Image(getClass().getResource("/images/blocks/mid_block1.png").toString()));
                             stack.getChildren().add(middleBlock);
@@ -355,15 +395,12 @@ public class GameSceneController extends GUIController {
                                 ImageView topBlock = new ImageView();
                                 topBlock.setFitWidth(stack.getWidth()*0.67);
                                 topBlock.setFitHeight(stack.getHeight() *0.67);
-//                                topBlock.setStyle("-fx-effect: dropshadow(three-pass-box, black, 3, 0, 0, 0);");
                                 topBlock.setPreserveRatio(true);
                                 topBlock.setImage(new Image(getClass().getResource("/images/blocks/top_block1.png").toString()));
                                 stack.getChildren().add(topBlock);
                             }
                         }
                     }
-
-
 
 
 
@@ -412,7 +449,7 @@ public class GameSceneController extends GUIController {
             updateBoardView(((BoardUpdate) message).getBoard());
         }
         else if(message instanceof EndTurnMessage){
-            //TODO view per End Turn
+            turnText.setText("YOUR TURN IS ENDED!");
         }
         else if (message instanceof SelectWorkerRequest){
             selectWorkerView(((SelectWorkerRequest) message).getAvailableWorkers());
@@ -430,8 +467,22 @@ public class GameSceneController extends GUIController {
             serverLog.appendText("[SERVER]: " + formatString(message.getMessage()) +"\n");
             placeWorker();
         }
+        else if(message instanceof ConnectionClosedMessage){
+            if(!gameEnded){
+                connectionClosedView(message.getMessage());
+            }
+        }
+        else if(message instanceof WinMessage){
+            gameEnded = true;
+            endView(true);
+        }
+        else if (message instanceof LoseMessage){
+            gameEnded = true;
+            endView(false);
+        }
         else if(message instanceof SimpleMessage){
             serverLog.appendText("[SERVER]: " + formatString(message.getMessage()) +"\n");
         }
+
     }
 }

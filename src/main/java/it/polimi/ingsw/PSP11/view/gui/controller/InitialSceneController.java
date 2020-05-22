@@ -23,6 +23,8 @@ import javafx.util.Duration;
 
 public class InitialSceneController extends GUIController{
 
+    private Message buffer;
+
     @FXML
     private Pane initialPane;
 
@@ -101,6 +103,12 @@ public class InitialSceneController extends GUIController{
 
     }
 
+    @FXML
+    public void resetField(MouseEvent event){
+        nickname.setText("");
+        nickname.setPromptText("");
+    }
+
     private void setupInfoScene() {
         ip.setVisible(false);
         connection.setVisible(false);
@@ -155,6 +163,9 @@ public class InitialSceneController extends GUIController{
                 Stage newStage = (Stage) initialPane.getScene().getWindow();
                 newStage.setScene(scene);
                 newStage.show();
+                if(buffer!=null){
+                    getClient().getGuiController().handleMessage(buffer);
+                }
 
             }catch (Exception e){
                 e.getStackTrace();
@@ -162,11 +173,6 @@ public class InitialSceneController extends GUIController{
         });
     }
 
-    @FXML
-    public void resetField(MouseEvent event){
-        nickname.setText("");
-        nickname.setPromptText("");
-    }
 
     @Override
     public void handleMessage(Message message) {
@@ -186,6 +192,9 @@ public class InitialSceneController extends GUIController{
             setOpponents(((OpponentMessage)message).getOpponents());
             setColor(((OpponentMessage) message).getColor());
             changeStage();
+        }
+        else if(message instanceof SelectGameGodsRequest){
+            buffer=message;
         }
 
     }

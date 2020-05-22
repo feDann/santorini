@@ -45,7 +45,6 @@ public class GUIClient {
                 try{
                     while(isActive()){
                         Message msg = (Message) socketIn.readObject();
-                        TimeUnit.MILLISECONDS.sleep(300);
                         guiController.handleMessage(msg);
                     }
                 }catch (Exception e){

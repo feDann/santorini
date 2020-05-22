@@ -69,7 +69,11 @@
     -fx-alignment: top-center;
 }
 
-.yesButton:hover, .noButton :hover{
+.yesButton:hover{
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(three-pass-box, black, 10, 0, 0, 0);
+}
+.noButton:hover{
     -fx-cursor: hand;
     -fx-effect: dropshadow(three-pass-box, black, 10, 0, 0, 0);
 }

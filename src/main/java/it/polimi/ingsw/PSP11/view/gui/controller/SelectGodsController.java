@@ -9,20 +9,24 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.Tooltip;
+import javafx.scene.effect.GaussianBlur;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -35,32 +39,34 @@ import java.util.HashMap;
 public class SelectGodsController extends GUIController {
 
     private final String imageStyle = "-fx-background-image: url(";
-    private final String textFillStyle = "-fx-text-fill:";
+    private final String font = "/font/LillyBelle400.ttf" ;
     private ArrayList<Card> immutableGods;
     private ArrayList<Card> gods;
     private HashMap<Card, ImageView> selectedGodsMap = new HashMap<>();
     private int maxSelection;
     private Card centerCard;
+    private Message buffer;
 
     @FXML
-    private Pane initPane,waitPane,selectPane;
+    private Pane initPane,waitPane,selectPane, disconnectionPane;
 
     @FXML
-    private Text waitingText;
+    private Text waitingText,disconnectionText;
 
     @FXML
     private StackPane centerStack,leftStack,rightStack;
 
     @FXML
-    private Button rightButton,leftButton,sendGameGods, sendPlayerGod;
+    private Button rightButton,leftButton,sendGameGods, sendPlayerGod,closeButton;
 
     @FXML
-    private VBox selectedGods;
+    private VBox selectedGods,playerBox;
 
     @FXML
-    private TextArea description,player1,player2,player3;
+    private TextArea description;
 
     public void initialize(){
+        disconnectionPane.setVisible(false);
 
 
         waitScene();
@@ -74,30 +80,18 @@ public class SelectGodsController extends GUIController {
 
         sendGameGods.getStyleClass().add("doneButton");
         sendPlayerGod.getStyleClass().add("doneButton");
-        waitingText.setFont(Font.loadFont(getClass().getResource("/font/LillyBelle400.ttf").toString(),40));
+        waitingText.setFont(Font.loadFont(getClass().getResource(font).toString(),40));
+        disconnectionText.setFont(Font.loadFont(getClass().getResource(font).toString(),33));
+        playerBox.setAlignment(Pos.CENTER);
+        playerBox.setSpacing(8);
 
-        player1.setWrapText(true);
-        player2.setWrapText(true);
-        player3.setWrapText(true);
 
-        //player1.getStyleClass().add("text-area");
+
+        initializePlayerBox();
 
         description.setWrapText(true);
 
-        player1.setText(getNickname());
 
-        player1.setStyle(textFillStyle + getColor()+";");
-        player2.setText(getOpponents().get(0).getName());
-        player2.setStyle(textFillStyle + getOpponents().get(0).getColor()+";");
-
-
-        if(getOpponents().size()>1){
-            player3.setText(getOpponents().get(1).getName());
-            player3.setStyle(textFillStyle + getOpponents().get(1).getColor()+";");
-        }
-        else{
-            player3.setVisible(false);
-        }
     }
 
 
@@ -121,8 +115,9 @@ public class SelectGodsController extends GUIController {
         }
     }
 
+    @FXML
     public void showTip(MouseEvent mouseEvent) {
-        Tooltip tp = new Tooltip("clicca per selezionare");
+        Tooltip tp = new Tooltip("click to select");
         Tooltip.install(centerStack,tp);
     }
 
@@ -153,6 +148,29 @@ public class SelectGodsController extends GUIController {
         });
 
 
+    }
+
+    @FXML
+    public void closeClient(ActionEvent event){
+        Stage stage = (Stage) initPane.getScene().getWindow();
+        stage.close();
+    }
+
+    public void initializePlayerBox(){
+        double width = playerBox.getPrefWidth();
+        Text selfText = new Text(getNickname());
+        selfText.setWrappingWidth(width);
+        selfText.setFill(Paint.valueOf(getColor().toString().toLowerCase()));
+        selfText.setTextAlignment(TextAlignment.LEFT);
+        playerBox.getChildren().add(selfText);
+
+        for(PlayerInfo player: getOpponents()){
+            Text opponentText = new Text(player.getName());
+            opponentText.setFill(Paint.valueOf(player.getColor().toString().toLowerCase()));
+            opponentText.setWrappingWidth(width);
+            opponentText.setTextAlignment(TextAlignment.LEFT);
+            playerBox.getChildren().add(opponentText);
+        }
     }
 
 
@@ -305,6 +323,15 @@ public class SelectGodsController extends GUIController {
         });
     }
 
+    public void connectionClosedView(String message){
+        Platform.runLater(()->{
+            waitPane.setEffect(new GaussianBlur());
+            selectPane.setEffect(new GaussianBlur());
+            disconnectionPane.setVisible(true);
+            disconnectionText.setText(message.toUpperCase());
+        });
+    }
+
 
     @Override
     public void changeStage() {
@@ -319,6 +346,9 @@ public class SelectGodsController extends GUIController {
                 Stage newStage = (Stage) initPane.getScene().getWindow();
                 newStage.setScene(scene);
                 newStage.show();
+                if(buffer!=null){
+                    getClient().getGuiController().handleMessage(buffer);
+                }
 
             }catch (Exception e){
                 e.getStackTrace();
@@ -343,7 +373,6 @@ public class SelectGodsController extends GUIController {
             maxSelection = ((SelectGameGodsRequest) message).getNumOfPlayers();
             selectGameGodScene();
         }
-
         else if(message instanceof SelectPlayerGodRequest){
             maxSelection = 1;
             immutableGods = ((SelectPlayerGodRequest) message).getChosenCards();
@@ -357,10 +386,14 @@ public class SelectGodsController extends GUIController {
             setOpponentCard(((OpponentCardMessage) message).getOpponentCard(), ((OpponentCardMessage) message).getOpponent());
         }
         else if(message instanceof ConnectionClosedMessage){
-            //TODO popup for closure (on popup close also close the application)
+            connectionClosedView(message.getMessage());
+        }
+        else if(message instanceof PlaceWorkerRequest){
+            buffer = message;
         }
     }
 
 
 
 }
+

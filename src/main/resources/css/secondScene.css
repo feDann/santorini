@@ -70,21 +70,29 @@
     -fx-alignment: top-center;
 }
 
-.playerText {
-    -fx-background-color: transparent;
+.disconnectionPane{
+    -fx-background-color:  rgba(128,128,128,0.5);
 }
 
-.playerText .scroll-pane {
+.closeButton{
+    -fx-background-image: url("../images/buttons/exit_button.png");
     -fx-background-color: transparent;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    -fx-background-size: 100% 100%;
+    -fx-alignment: top-center;
 }
-
-.playerText .scroll-pane .viewport{
+.closeButton:pressed{
+    -fx-background-image: url("../images/buttons/exit_button_pressed.png");
     -fx-background-color: transparent;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    -fx-background-size: 100% 100%;
+    -fx-alignment: top-center;
 }
-
-
-.playerText .scroll-pane .content{
-    -fx-background-color: transparent;
+.closeButton:hover{
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(three-pass-box, black, 10, 0, 0, 0);
 }
 
 .playerBox{
@@ -94,4 +102,8 @@
 .waitingText{
     -fx-stroke: black  ;
     -fx-stroke-width: 2;
+}
+.disconnectionText{
+    -fx-stroke: black  ;
+    -fx-stroke-width: 1;
 }
