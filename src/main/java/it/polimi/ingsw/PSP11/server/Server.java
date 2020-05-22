@@ -1,7 +1,6 @@
 package it.polimi.ingsw.PSP11.server;
 
 import it.polimi.ingsw.PSP11.controller.Controller;
-import it.polimi.ingsw.PSP11.messages.SimpleMessage;
 import it.polimi.ingsw.PSP11.messages.WaitMessage;
 import it.polimi.ingsw.PSP11.model.Game;
 import it.polimi.ingsw.PSP11.model.Player;
@@ -60,7 +59,7 @@ public class Server {
         }
         if(playingNameList.contains(nickname)){
             for (ClientSocketConnection c : playingConnections.get(playingList.get(nickname))){
-                c.closeConnection();
+                c.closeConnection(nickname+" has disconnected from the server. ");
                 String nick = playingList.keySet().stream().filter(s -> playingList.get(s).equals(c)).collect(Collectors.toList()).get(0);
                 playingList.remove(nick);
                 playingNameList.remove(nick);

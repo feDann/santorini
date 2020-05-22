@@ -3,10 +3,7 @@ package it.polimi.ingsw.PSP11.controller;
 import it.polimi.ingsw.PSP11.controller.state.GameState;
 import it.polimi.ingsw.PSP11.controller.state.SelectGameGodsState;
 import it.polimi.ingsw.PSP11.controller.state.StartTurnState;
-import it.polimi.ingsw.PSP11.messages.ControllerMessage;
-import it.polimi.ingsw.PSP11.messages.LoseMessage;
-import it.polimi.ingsw.PSP11.messages.NotYourTurnMessage;
-import it.polimi.ingsw.PSP11.messages.WinMessage;
+import it.polimi.ingsw.PSP11.messages.*;
 import it.polimi.ingsw.PSP11.model.Game;
 import it.polimi.ingsw.PSP11.observer.Observer;
 import it.polimi.ingsw.PSP11.server.ClientSocketConnection;
@@ -45,7 +42,7 @@ public class Controller implements Observer<ControllerMessage> {
             String playerToKill = game.getCurrentPlayer().getNickname();
             for (String player : currentPlayers.keySet()){
                 if (! player.equals(playerToKill)){
-                    currentPlayers.get(player).send(new LoseMessage(playerToKill));
+                    currentPlayers.get(player).send(new UpdateLoseMessage(playerToKill));
                 }
             }
             currentPlayers.get(playerToKill).goCommitDie(playerToKill);
@@ -64,7 +61,7 @@ public class Controller implements Observer<ControllerMessage> {
         String winner = game.getCurrentPlayer().getNickname();
         for (String player : currentPlayers.keySet()){
             if (! player.equals(winner)){
-                currentPlayers.get(player).send(new WinMessage(winner));
+                currentPlayers.get(player).send(new LoseMessage(winner));
             }
         }
         endGame();

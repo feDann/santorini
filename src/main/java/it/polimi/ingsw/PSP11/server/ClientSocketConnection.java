@@ -48,24 +48,24 @@ public class ClientSocketConnection extends Observable<Message> implements Runna
     }
 
 
-    public synchronized void closeConnection() {
-        send(new ConnectionClosedMessage());
+    public synchronized void closeConnection(String message) {
+        send(new ConnectionClosedMessage(message));
         try {
             clientSocket.close();
         } catch (IOException e) {
-            System.err.println("Error when closing socket!");
+            System.err.println("Error when closing socket! ");
         }
         active = false;
     }
 
     public void killGame(String nickname){
         server.killLobby(nickname);
-        closeConnection();
+        closeConnection("Game Ended! ");
     }
 
     public void goCommitDie(String playerToKill){
         server.looserDisconnect(playerToKill);
-        closeConnection();
+        closeConnection("");
     }
 
 
