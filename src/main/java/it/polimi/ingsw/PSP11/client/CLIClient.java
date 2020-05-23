@@ -19,30 +19,13 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
-public class CLIClient implements Pinger {
+public class CLIClient extends Client{
 
-    private String ip;
-    private int port;
-    private boolean active = true;
-    private Message message;
-    private ObjectInputStream socketIn;
-    private ObjectOutputStream socketOut;
-    private Socket clientSocket;
-    private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
-    private ScheduledFuture<?> pingHandler;
     private Scanner stdin;
-
-    public synchronized boolean isActive(){
-        return active;
-    }
-
-    public synchronized void setActive(boolean active){
-        this.active = active;
-    }
+    private Message message;
 
     public CLIClient(String ip, int port) {
-        this.ip = ip;
-        this.port = port;
+        super(ip,port);
     }
 
 
@@ -52,9 +35,9 @@ public class CLIClient implements Pinger {
             @Override
             public void run() {
                 try {
-                    clientSocket.setSoTimeout(6000);
+                    setSocketTimeout(6000);
                     while (isActive()) {
-                        Message tmp = (Message)socketIn.readObject();
+                        Message tmp = (Message)getSocketIn().readObject();
                         if(!(tmp instanceof Ping)){
                             message = tmp ;
                             ClientMessageDecoder.decodeMessage(message);
@@ -66,9 +49,8 @@ public class CLIClient implements Pinger {
                     }
                 }
                 catch (SocketTimeoutException t){
-                    System.out.println("(read)Server Down\nConnection closed.\n");
-                    pingHandler.cancel(true);
-                    scheduler.shutdown();
+                    System.out.println("Server Down\nConnection closed.\n");
+                    killPinger();
                     setActive(false);
                 }catch (Exception e){
                     setActive(false);
@@ -89,10 +71,10 @@ public class CLIClient implements Pinger {
                             String inputLine = stdin.nextLine();
                             Message answer = null;
                             answer = ClientMessageEncoder.encodeMessage(message, inputLine);
-                            synchronized (socketOut) {
-                                socketOut.writeObject(answer);
-                                socketOut.flush();
-                                socketOut.notifyAll();
+                            synchronized (getSocketOut()) {
+                                getSocketOut().writeObject(answer);
+                                getSocketOut().flush();
+                                getSocketOut().notifyAll();
                             }
                         } catch (IllegalInputException e) {
                             System.out.println(e.getErrorMessage());
@@ -100,7 +82,7 @@ public class CLIClient implements Pinger {
                         }
                     }
                 }catch(Exception e){
-                    System.err.println("(write)Error: " + e.getMessage());
+                    System.err.println("Error: " + e.getMessage());
                     setActive(false);
                 }
             }
@@ -109,42 +91,17 @@ public class CLIClient implements Pinger {
         return t;
     }
 
-    @Override
-    public void killPinger(){
-        pingHandler.cancel(true);
-        scheduler.shutdown();
-    }
 
-    @Override
-    public void pinger() {
-        Runnable ping = () -> {
-            try {
-                synchronized (socketOut) {
-                    socketOut.reset();
-                    socketOut.writeObject(new Ping());
-                    socketOut.flush();
-                    socketOut.notifyAll();
-                }
-            } catch (IOException e) {
-                System.err.println("(pinger)Error writing to server: " + e.getMessage());
-                setActive(false);
-                killPinger();
-            }
-        };
-        pingHandler = scheduler.scheduleAtFixedRate(ping, 0, 3, TimeUnit.SECONDS);
-
-
-    }
 
     public void start() throws IOException {
 
-        try (Scanner stdin = new Scanner(System.in); Socket clientSocket = new Socket(ip, port);
+        try (Scanner stdin = new Scanner(System.in); Socket clientSocket = new Socket(getIp(), getPort());
              ObjectInputStream socketIn = new ObjectInputStream(clientSocket.getInputStream());
              ObjectOutputStream socketOut = new ObjectOutputStream(clientSocket.getOutputStream())) {
             this.stdin = stdin;
-            this.clientSocket = clientSocket;
-            this.socketIn = socketIn;
-            this.socketOut = socketOut;
+            setClientSocket(clientSocket);
+            setSocketIn(socketIn);
+            setSocketOut(socketOut);
             Thread t0 = asyncRead();
             Thread t1 = asyncWrite();
             pinger();
@@ -155,9 +112,7 @@ public class CLIClient implements Pinger {
         } finally {
             killPinger();
             stdin.close();
-            socketIn.close();
-            socketOut.close();
-            clientSocket.close();
+            close();
         }
 
     }
