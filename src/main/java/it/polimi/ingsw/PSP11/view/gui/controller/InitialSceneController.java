@@ -196,6 +196,9 @@ public class InitialSceneController extends GUIController{
         else if(message instanceof SelectGameGodsRequest){
             buffer=message;
         }
+        else if(message instanceof ConnectionClosedMessage){
+            //TODO pannello closed
+        }
 
     }
 
