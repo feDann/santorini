@@ -110,9 +110,15 @@ public class CLIClient extends Client{
         } catch (InterruptedException | NoSuchElementException e) {
             System.out.println("(start)Connection closed from the client side");
         } finally {
-            killPinger();
-            stdin.close();
-            close();
+            if(stdin != null){
+                stdin.close();
+            }
+            if(getPingHandler()!= null && getScheduler() != null){
+                killPinger();
+            }
+            if(getClientSocket() != null){
+                close();
+            }
         }
 
     }

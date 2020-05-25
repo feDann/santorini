@@ -88,6 +88,14 @@ public class Client implements Pinger{
         clientSocket.setSoTimeout(millis);
     }
 
+    public ScheduledExecutorService getScheduler() {
+        return scheduler;
+    }
+
+    public ScheduledFuture<?> getPingHandler() {
+        return pingHandler;
+    }
+
     @Override
     public void pinger() {
         Runnable ping = () -> {
