@@ -108,7 +108,7 @@ public class CLIClient extends Client{
             t0.join();
             t1.join();
         } catch (InterruptedException | NoSuchElementException e) {
-            System.out.println("(start)Connection closed from the client side");
+            System.out.println("Connection closed from the client side");
         } finally {
             if(stdin != null){
                 stdin.close();

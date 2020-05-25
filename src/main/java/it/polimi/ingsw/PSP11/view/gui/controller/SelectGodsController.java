@@ -48,7 +48,7 @@ public class SelectGodsController extends GUIController {
     private Message buffer;
 
     @FXML
-    private Pane initPane,waitPane,selectPane, disconnectionPane;
+    private Pane initPane,waitPane,selectPane, selectedGodsPane, disconnectionPane;
 
     @FXML
     private Text waitingText,disconnectionText;
@@ -62,8 +62,6 @@ public class SelectGodsController extends GUIController {
     @FXML
     private VBox selectedGods,playerBox;
 
-    @FXML
-    private TextArea description;
 
     public void initialize(){
         disconnectionPane.setVisible(false);
@@ -85,11 +83,11 @@ public class SelectGodsController extends GUIController {
         playerBox.setAlignment(Pos.CENTER);
         playerBox.setSpacing(8);
 
+        selectedGods.setSpacing(26);
 
 
         initializePlayerBox();
 
-        description.setWrapText(true);
 
 
     }
@@ -159,16 +157,18 @@ public class SelectGodsController extends GUIController {
     public void initializePlayerBox(){
         double width = playerBox.getPrefWidth();
         Text selfText = new Text(getNickname());
+        selfText.setFont(Font.loadFont(getClass().getResource(font).toString(),15));
         selfText.setWrappingWidth(width);
         selfText.setFill(Paint.valueOf(getColor().toString().toLowerCase()));
-        selfText.setTextAlignment(TextAlignment.LEFT);
+        selfText.setTextAlignment(TextAlignment.CENTER);
         playerBox.getChildren().add(selfText);
 
         for(PlayerInfo player: getOpponents()){
             Text opponentText = new Text(player.getName());
+            opponentText.setFont(Font.loadFont(getClass().getResource(font).toString(),15));
             opponentText.setFill(Paint.valueOf(player.getColor().toString().toLowerCase()));
             opponentText.setWrappingWidth(width);
-            opponentText.setTextAlignment(TextAlignment.LEFT);
+            opponentText.setTextAlignment(TextAlignment.CENTER);
             playerBox.getChildren().add(opponentText);
         }
     }
@@ -200,8 +200,9 @@ public class SelectGodsController extends GUIController {
                             ImageView image = new ImageView();
 
                             image.setImage(new Image(getClass().getResource(centerCard.getTexture()).toString()));
-                            image.setFitWidth(selectedGods.getWidth());
-                            image.setPreserveRatio(true);
+                            image.setFitWidth(selectedGods.getPrefWidth());
+                            image.setFitHeight(selectedGods.getPrefHeight());
+
 
                             selectedGodsMap.put(centerCard, image);
                             selectedGods.getChildren().add(image);
@@ -227,7 +228,7 @@ public class SelectGodsController extends GUIController {
             leftStack.setStyle(god1);
             centerStack.setStyle(god2);
             rightStack.setStyle(god3);
-            description.setText(gods.get(1).getDescription());
+
             centerCard = gods.get(1);
         });
     }
@@ -245,7 +246,7 @@ public class SelectGodsController extends GUIController {
                 leftButton.setVisible(false);
                 rightButton.setVisible(false);
 
-                description.setText(gods.get(0).getDescription());
+
                 centerCard = gods.get(0);
             }
             else{
@@ -257,7 +258,7 @@ public class SelectGodsController extends GUIController {
 
                 centerCard = gods.get(1);
 
-                description.setText(gods.get(1).getDescription());
+
 
                 String god1 = imageStyle + getClass().getResource(gods.get(0).getTexture()) +");";
                 String god2 = imageStyle + getClass().getResource(gods.get(1).getTexture()) +")";
@@ -281,6 +282,7 @@ public class SelectGodsController extends GUIController {
     private void selectGameGodScene() {
         waitPane.setVisible(false);
         selectPane.setVisible(true);
+        selectedGodsPane.setVisible(true);
 
         sendGameGods.setVisible(true);
         sendPlayerGod.setVisible(false);
@@ -293,6 +295,7 @@ public class SelectGodsController extends GUIController {
     private void selectPlayerGodScene() {
         waitPane.setVisible(false);
         selectPane.setVisible(true);
+        selectedGodsPane.setVisible(true);
 
         sendGameGods.setVisible(false);
         sendPlayerGod.setVisible(true);
@@ -305,6 +308,7 @@ public class SelectGodsController extends GUIController {
     private void waitScene(){
         waitPane.setVisible(true);
         selectPane.setVisible(false);
+        selectedGodsPane.setVisible(false);
 
         Platform.runLater(() ->{
             Timeline timeline = new Timeline(

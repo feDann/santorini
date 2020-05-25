@@ -100,7 +100,7 @@ public class ClientSocketConnection extends Observable<Message> implements Runna
         Runnable ping = () -> {
             try {
                 synchronized (out) {
-                    System.out.println("sending ping to socket + " + this.toString());
+//                    System.out.println("sending ping to socket + " + this.toString());
                     out.reset();
                     out.writeObject(new Ping());
                     out.flush();

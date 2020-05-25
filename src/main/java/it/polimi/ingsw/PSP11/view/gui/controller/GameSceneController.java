@@ -153,13 +153,13 @@ public class GameSceneController extends GUIController {
             String id = ((StackPane)event.getSource()).getId();
 
             if(id.equals("playerHero")){
-                cardView.setImage(new Image(getClass().getResource(getPlayerCard().getTexture()).toString()));
+                cardView.setImage(new Image(getClass().getResource(getPlayerCard().getTexture().replaceAll("cards", "cards_no_description")).toString()));
                 cardDescription.setText(getPlayerCard().getDescription().toUpperCase());
             }
             else{
                 for(PlayerInfo player: getOpponents()){
                     if(id.equals(player.getName())){
-                        cardView.setImage(new Image(getClass().getResource(player.getCard().getTexture()).toString()));
+                        cardView.setImage(new Image(getClass().getResource(player.getCard().getTexture().replaceAll("cards", "cards_no_description")).toString()));
                         cardDescription.setText(player.getCard().getDescription().toUpperCase());
                         break;
                     }

@@ -69,6 +69,15 @@
     -fx-background-size: 100% 100%;
     -fx-alignment: top-center;
 }
+.selectedGodsPane{
+    -fx-background-image: url("../images/backgrounds/background.png");
+    -fx-background-color: transparent;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    -fx-background-size: 100% 100%;
+    -fx-alignment: top-center;
+    -fx-effect: dropshadow(three-pass-box, black , 10, 0, 0, 0);
+}
 
 .disconnectionPane{
     -fx-background-color:  rgba(128,128,128,0.5);
