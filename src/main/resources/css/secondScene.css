@@ -6,7 +6,7 @@
     -fx-background-size: 100% 100%;
     -fx-alignment: top-center;
 }
-.pane{
+.selectPane{
     -fx-background-image: url("/images/backgrounds/background.png");
     -fx-background-repeat: no-repeat;
     -fx-background-position: center;
@@ -70,7 +70,7 @@
     -fx-alignment: top-center;
 }
 .selectedGodsPane{
-    -fx-background-image: url("../images/backgrounds/background.png");
+    -fx-background-image: url("../images/backgrounds/selectionBoxBackground.png");
     -fx-background-color: transparent;
     -fx-background-repeat: no-repeat;
     -fx-background-position: center;
@@ -109,6 +109,11 @@
     -fx-opacity: 60%;
 }
 .waitingText{
+    -fx-stroke: black  ;
+    -fx-stroke-width: 2;
+}
+
+.selectionText{
     -fx-stroke: black  ;
     -fx-stroke-width: 2;
 }

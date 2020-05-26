@@ -51,7 +51,7 @@ public class SelectGodsController extends GUIController {
     private Pane initPane,waitPane,selectPane, selectedGodsPane, disconnectionPane;
 
     @FXML
-    private Text waitingText,disconnectionText;
+    private Text waitingText,disconnectionText,selectionText,errorText;
 
     @FXML
     private StackPane centerStack,leftStack,rightStack;
@@ -79,7 +79,9 @@ public class SelectGodsController extends GUIController {
         sendGameGods.getStyleClass().add("doneButton");
         sendPlayerGod.getStyleClass().add("doneButton");
         waitingText.setFont(Font.loadFont(getClass().getResource(font).toString(),40));
+        selectionText.setFont(Font.loadFont(getClass().getResource(font).toString(),40));
         disconnectionText.setFont(Font.loadFont(getClass().getResource(font).toString(),33));
+        errorText.setFont(Font.loadFont(getClass().getResource(font).toString(),27));
         playerBox.setAlignment(Pos.CENTER);
         playerBox.setSpacing(8);
 
@@ -141,7 +143,8 @@ public class SelectGodsController extends GUIController {
                 getClient().asyncWrite(new SelectGameGodResponse(ids));
                 waitScene();
             } else{
-                //TODO create Text Field for error
+                errorText.setVisible(true);
+                errorText.setText("KEEP CHOOSING!");
             }
         });
 
@@ -183,7 +186,8 @@ public class SelectGodsController extends GUIController {
                 selectedGodsMap.clear();
                 waitScene();
             }else{
-                //TODO create Text Field for error
+                errorText.setVisible(true);
+                errorText.setText("CHOOSE ONE GOD");
             }
         });
 
@@ -194,7 +198,7 @@ public class SelectGodsController extends GUIController {
     @FXML
     void selectStackPane(MouseEvent event) {
         Platform.runLater(()-> {
-
+                    errorText.setVisible(false);
                     if (!selectedGodsMap.containsKey(centerCard)) {
                         if(selectedGodsMap.size() < maxSelection) {
                             ImageView image = new ImageView();
@@ -279,14 +283,14 @@ public class SelectGodsController extends GUIController {
     }
 
 
-    private void selectGameGodScene() {
+    private void selectGameGodScene(int numOfPlayers) {
         waitPane.setVisible(false);
+        selectionText.setText("CHOOSE " + numOfPlayers + " GODS TO USE IN THE GAME");
         selectPane.setVisible(true);
         selectedGodsPane.setVisible(true);
 
         sendGameGods.setVisible(true);
         sendPlayerGod.setVisible(false);
-
 
         updateStackPaneForGameGods();
 
@@ -295,6 +299,7 @@ public class SelectGodsController extends GUIController {
     private void selectPlayerGodScene() {
         waitPane.setVisible(false);
         selectPane.setVisible(true);
+        selectionText.setText("CHOOSE YOUR GOD");
         selectedGodsPane.setVisible(true);
 
         sendGameGods.setVisible(false);
@@ -375,7 +380,7 @@ public class SelectGodsController extends GUIController {
         if(message instanceof SelectGameGodsRequest){
             gods = ((SelectGameGodsRequest) message).getGods();
             maxSelection = ((SelectGameGodsRequest) message).getNumOfPlayers();
-            selectGameGodScene();
+            selectGameGodScene( ((SelectGameGodsRequest) message).getNumOfPlayers());
         }
         else if(message instanceof SelectPlayerGodRequest){
             maxSelection = 1;
