@@ -36,7 +36,6 @@ public class ApolloPowerTurnDecorator extends GodTurn {
                 }
             }
         }
-
         return possiblePosition;
     }
 

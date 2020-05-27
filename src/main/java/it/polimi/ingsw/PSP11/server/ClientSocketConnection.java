@@ -1,7 +1,10 @@
 package it.polimi.ingsw.PSP11.server;
 
 import it.polimi.ingsw.PSP11.client.Pinger;
-import it.polimi.ingsw.PSP11.messages.*;
+import it.polimi.ingsw.PSP11.messages.ConnectionClosedMessage;
+import it.polimi.ingsw.PSP11.messages.Message;
+import it.polimi.ingsw.PSP11.messages.Ping;
+import it.polimi.ingsw.PSP11.messages.WelcomeMessage;
 import it.polimi.ingsw.PSP11.observer.Observable;
 
 import java.io.IOException;
@@ -63,8 +66,8 @@ public class ClientSocketConnection extends Observable<Message> implements Runna
                 out.flush();
                 out.notifyAll();
             }
-        } catch(IOException e){
-            System.err.println(e.getMessage());
+        } catch(Exception e){
+            System.err.println("error during send");
         }
     }
 

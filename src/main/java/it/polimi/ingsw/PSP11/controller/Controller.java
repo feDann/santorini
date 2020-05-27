@@ -92,7 +92,7 @@ public class Controller implements Observer<ControllerMessage> {
     public void start (){
         ClientSocketConnection firstPlayerConnection;
         game.startGame();
-        this.gameState = new SelectGameGodsState(game, gameState);
+        this.gameState = new SelectGameGodsState(game);
         firstPlayerConnection = currentPlayers.get(game.getCurrentPlayer().getNickname());
         firstPlayerConnection.send(gameState.stateMessage());
     }

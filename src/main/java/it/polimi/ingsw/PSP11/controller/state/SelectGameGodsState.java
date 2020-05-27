@@ -13,11 +13,9 @@ import java.util.ArrayList;
 public class SelectGameGodsState implements GameState{
 
     private Game game;
-    private GameState gameState;
 
-    public SelectGameGodsState(Game game, GameState gameState) {
+    public SelectGameGodsState(Game game) {
         this.game = game;
-        this.gameState = gameState;
     }
 
     @Override

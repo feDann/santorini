@@ -30,6 +30,7 @@ public class VirtualView extends Observable<ControllerMessage> implements Observ
         connection.addObserver(new MessageReceiver());
         this.connection = connection;
         this.player = player;
+        sendMessage(null);
     }
 
     //tres jugadores
