@@ -449,7 +449,7 @@ public class GameSceneController extends GUIController {
             updateBoardView(((BoardUpdate) message).getBoard());
         }
         else if(message instanceof EndTurnMessage){
-            turnText.setText("YOUR TURN IS ENDED!");
+            serverLog.appendText("[SERVER] Your turn is ended!\n");
         }
         else if (message instanceof SelectWorkerRequest){
             selectWorkerView(((SelectWorkerRequest) message).getAvailableWorkers());
