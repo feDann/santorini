@@ -36,6 +36,7 @@
         <profile>
             <id>ClientApp</id>
             <build>
+                <finalName>ClientApp</finalName>
                 <plugins>
                         <plugin>
                             <groupId>org.apache.maven.plugins</groupId>
@@ -64,6 +65,7 @@
         <profile>
             <id>ServerApp</id>
             <build>
+                <finalName>ServerApp</finalName>
                 <plugins>
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>

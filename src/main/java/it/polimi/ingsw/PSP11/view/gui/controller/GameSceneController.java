@@ -468,6 +468,7 @@ public class GameSceneController extends GUIController {
             placeWorker();
         }
         else if(message instanceof ConnectionClosedMessage){
+            getClient().setActive(false);
             if(!gameEnded){
                 connectionClosedView(message.getMessage());
             }
