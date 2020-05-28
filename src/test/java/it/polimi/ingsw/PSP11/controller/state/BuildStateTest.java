@@ -51,7 +51,7 @@ public class BuildStateTest {
         game.getCurrentPlayer().setPlayerTurn(game.getSharedTurn());
 
 
-        GameState newState = state.execute(new BuildResponse(new Point(2,2)),new VirtualView(new ClientSocketConnection(null, null), init.getP3().playerClone(), init.getP2().playerClone(), init.getP1().playerClone()));
+        GameState newState = state.execute(new BuildResponse(new Point(2,2)),new VirtualView(new ClientSocketConnection(null, null), init.getP2().playerClone(), init.getP1().playerClone()));
         assertTrue(newState instanceof StartTurnState);
     }
 
@@ -74,7 +74,7 @@ public class BuildStateTest {
 
         currentPlayer.getPlayerTurn().startTurn();
 
-        GameState newState = state.execute(new BuildResponse(new Point(2,2)),new VirtualView(new ClientSocketConnection(null, null), init.getP3().playerClone(), init.getP2().playerClone(), init.getP1().playerClone()));
+        GameState newState = state.execute(new BuildResponse(new Point(2,2)),new VirtualView(new ClientSocketConnection(null, null), init.getP2().playerClone(), init.getP1().playerClone()));
 
         assertTrue(state.stateMessage() instanceof BuildDomeRequest);
     }
@@ -93,7 +93,7 @@ public class BuildStateTest {
 
         currentPlayer.getPlayerTurn().startTurn();
 
-        GameState newState = state.execute(new BuildResponse(buildPoint),new VirtualView(new ClientSocketConnection(null, null), init.getP3().playerClone(), init.getP2().playerClone(), init.getP1().playerClone()));
+        GameState newState = state.execute(new BuildResponse(buildPoint),new VirtualView(new ClientSocketConnection(null, null), init.getP2().playerClone(), init.getP1().playerClone()));
 
         assertTrue(newState instanceof StartTurnState);
     }
@@ -107,9 +107,9 @@ public class BuildStateTest {
         currentPlayer.getPlayerTurn().startTurn();
         Point buildPosition = new Point(2,2);
 
-        state.execute(new BuildResponse(buildPosition),new VirtualView(new ClientSocketConnection(null, null), init.getP3().playerClone(), init.getP2().playerClone(), init.getP1().playerClone()));
+        state.execute(new BuildResponse(buildPosition),new VirtualView(new ClientSocketConnection(null, null), init.getP2().playerClone(), init.getP1().playerClone()));
 
-        state.execute(new BooleanResponse(true),new VirtualView(new ClientSocketConnection(null, null), init.getP3().playerClone(), init.getP2().playerClone(), init.getP1().playerClone()));
+        state.execute(new BooleanResponse(true),new VirtualView(new ClientSocketConnection(null, null), init.getP2().playerClone(), init.getP1().playerClone()));
 
         assertTrue(init.getGame().getBoard().hasDomeOnTop(buildPosition));
     }
@@ -122,7 +122,7 @@ public class BuildStateTest {
 
         currentPlayer.getPlayerTurn().startTurn();
 
-        GameState newState = state.execute(new BuildResponse(new Point(2,2)),new VirtualView(new ClientSocketConnection(null, null), init.getP3().playerClone(), init.getP2().playerClone(), init.getP1().playerClone()));
+        GameState newState = state.execute(new BuildResponse(new Point(2,2)),new VirtualView(new ClientSocketConnection(null, null), init.getP2().playerClone(), init.getP1().playerClone()));
 
         assertTrue(state.stateMessage() instanceof BuildAgainRequest);
     }
@@ -136,7 +136,7 @@ public class BuildStateTest {
         currentPlayer.getPlayerTurn().startTurn();
         assertTrue(game.getSharedTurn().isCanBuildBeforeMove());
 
-        GameState newState = state.execute(new BuildResponse(new Point(2,2)),new VirtualView(new ClientSocketConnection(null, null), init.getP3().playerClone(), init.getP2().playerClone(), init.getP1().playerClone()));
+        GameState newState = state.execute(new BuildResponse(new Point(2,2)),new VirtualView(new ClientSocketConnection(null, null), init.getP2().playerClone(), init.getP1().playerClone()));
 
         assertTrue(newState instanceof MoveState);
     }
@@ -150,7 +150,7 @@ public class BuildStateTest {
         currentPlayer.getPlayerTurn().startTurn();
         assertTrue(game.getSharedTurn().isCanBuildBeforeMove());
 
-        GameState newState = state.execute(new BooleanResponse(true),new VirtualView(new ClientSocketConnection(null, null), init.getP3().playerClone(), init.getP2().playerClone(), init.getP1().playerClone()));
+        GameState newState = state.execute(new BooleanResponse(true),new VirtualView(new ClientSocketConnection(null, null), init.getP2().playerClone(), init.getP1().playerClone()));
 
         assertTrue(newState instanceof BuildState);
     }
@@ -164,7 +164,7 @@ public class BuildStateTest {
         currentPlayer.getPlayerTurn().startTurn();
         assertTrue(game.getSharedTurn().isCanBuildBeforeMove());
 
-        GameState newState = state.execute(new BooleanResponse(true),new VirtualView(new ClientSocketConnection(null, null), init.getP3().playerClone(), init.getP2().playerClone(), init.getP1().playerClone()));
+        GameState newState = state.execute(new BooleanResponse(true),new VirtualView(new ClientSocketConnection(null, null), init.getP2().playerClone(), init.getP1().playerClone()));
 
         assertTrue(newState instanceof BuildState);
     }
@@ -178,7 +178,7 @@ public class BuildStateTest {
         currentPlayer.getPlayerTurn().startTurn();
         assertTrue(game.getSharedTurn().isCanBuildBeforeMove());
 
-        GameState newState = state.execute(new BooleanResponse(true),new VirtualView(new ClientSocketConnection(null, null), init.getP3().playerClone(), init.getP2().playerClone(), init.getP1().playerClone()));
+        GameState newState = state.execute(new BooleanResponse(true),new VirtualView(new ClientSocketConnection(null, null), init.getP2().playerClone(), init.getP1().playerClone()));
 
         assertTrue(newState instanceof BuildState);
     }
