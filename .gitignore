@@ -4,3 +4,4 @@
 /target/
 /out/
 /src/manifests/
+/dependency-reduced-pom.xml
