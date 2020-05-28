@@ -395,6 +395,7 @@ public class SelectGodsController extends GUIController {
             setOpponentCard(((OpponentCardMessage) message).getOpponentCard(), ((OpponentCardMessage) message).getOpponent());
         }
         else if(message instanceof ConnectionClosedMessage){
+            getClient().setActive(false);
             connectionClosedView(message.getMessage());
         }
         else if(message instanceof PlaceWorkerRequest){

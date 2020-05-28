@@ -197,6 +197,7 @@ public class InitialSceneController extends GUIController{
             buffer=message;
         }
         else if(message instanceof ConnectionClosedMessage){
+            getClient().setActive(false);
             //TODO pannello closed
         }
 

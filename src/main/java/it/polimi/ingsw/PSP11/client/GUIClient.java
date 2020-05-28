@@ -41,7 +41,9 @@ public class GUIClient extends Client{
                     setSocketTimeout(6000);
                     while(isActive()){
                         Message msg = (Message) getSocketIn().readObject();
-                        guiController.handleMessage(msg);
+                        if(!(msg instanceof Ping)) {
+                            guiController.handleMessage(msg);
+                        }
                     }
                 }catch(SocketTimeoutException t){
                     System.out.println("Server Down");
@@ -51,6 +53,7 @@ public class GUIClient extends Client{
                     System.err.println("Error: " + e.getMessage());
                 }
                 finally {
+                    setActive(false);
                     killPinger();
                 }
             }
@@ -85,7 +88,7 @@ public class GUIClient extends Client{
     }
 
 
-    public void start() throws IOException {
+    public void start() throws IOException{
         setClientSocket(new Socket(getIp(),getPort())) ;
         setSocketIn(new ObjectInputStream(getClientSocket().getInputStream()));
         setSocketOut( new ObjectOutputStream(getClientSocket().getOutputStream()));
