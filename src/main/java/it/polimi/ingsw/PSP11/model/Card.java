@@ -53,6 +53,11 @@ public class Card implements Serializable {
         this.texture = texture;
     }
 
+    /**
+     * redefinition of the equals function for this specific class
+     * @param obj the card which we want to compare
+     * @return true id the two card have the same name, false otherwise
+     */
     @Override
     public boolean equals(Object obj) {
         if(obj instanceof Card){
@@ -61,6 +66,10 @@ public class Card implements Serializable {
         return false;
     }
 
+    /**
+     * redefinition of the clone function for this specific class
+     * @return a copy of the card on which this function is called
+     */
     public Card cardClone(){
         Card clonedCard = new Card();
         clonedCard.setName(this.getName());

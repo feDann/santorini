@@ -68,7 +68,7 @@ public class PlaceWorkerStateTest {
         assertTrue(board.hasWorkerOnTop(workerPosition));
         assertTrue(newState instanceof PlaceWorkerState);
 
-        newState = state.execute(new PlaceWorkerResponse(workerPosition),new VirtualView(new ClientSocketConnection(null, null), init.getP2().playerClone(), init.getP1().playerClone()));
+        newState = newState.execute(new PlaceWorkerResponse(workerPosition),new VirtualView(new ClientSocketConnection(null, null), init.getP2().playerClone(), init.getP1().playerClone()));
         assertTrue(newState.stateMessage() instanceof InvalidWorkerPosition);
 
     }
@@ -89,7 +89,7 @@ public class PlaceWorkerStateTest {
         game.getCurrentPlayer().setPlayerTurn(game.getSharedTurn());
 
         GameState newState = state.execute(new PlaceWorkerResponse(workerPosition),new VirtualView(new ClientSocketConnection(null, null), init.getP2().playerClone(), init.getP1().playerClone()));
-        newState = state.execute(new PlaceWorkerResponse(new Point(4,4)),new VirtualView(new ClientSocketConnection(null, null), init.getP2().playerClone(), init.getP1().playerClone()));
+        newState = newState.execute(new PlaceWorkerResponse(new Point(4,4)),new VirtualView(new ClientSocketConnection(null, null), init.getP2().playerClone(), init.getP1().playerClone()));
 
         assertTrue(newState instanceof PlaceWorkerState);
         assertFalse(currentPlayer.equals(game.getCurrentPlayer()));
@@ -104,11 +104,11 @@ public class PlaceWorkerStateTest {
 
         //player 1
         GameState newState = state.execute(new PlaceWorkerResponse(workerPosition),new VirtualView(new ClientSocketConnection(null, null), init.getP2().playerClone(), init.getP1().playerClone()));
-        newState = state.execute(new PlaceWorkerResponse(new Point(4,4)),new VirtualView(new ClientSocketConnection(null, null), init.getP2().playerClone(), init.getP1().playerClone()));
+        newState = newState.execute(new PlaceWorkerResponse(new Point(4,4)),new VirtualView(new ClientSocketConnection(null, null), init.getP2().playerClone(), init.getP1().playerClone()));
 
         //player 2
-        newState = state.execute(new PlaceWorkerResponse(new Point(3,4)),new VirtualView(new ClientSocketConnection(null, null), init.getP1().playerClone(), init.getP2().playerClone()));
-        newState = state.execute(new PlaceWorkerResponse(new Point(3,3)),new VirtualView(new ClientSocketConnection(null, null), init.getP1().playerClone(), init.getP2().playerClone()));
+        newState = newState.execute(new PlaceWorkerResponse(new Point(3,4)),new VirtualView(new ClientSocketConnection(null, null), init.getP1().playerClone(), init.getP2().playerClone()));
+        newState = newState.execute(new PlaceWorkerResponse(new Point(3,3)),new VirtualView(new ClientSocketConnection(null, null), init.getP1().playerClone(), init.getP2().playerClone()));
 
         assertTrue(newState instanceof StartTurnState);
     }
