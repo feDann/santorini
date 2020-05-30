@@ -23,6 +23,11 @@
     -fx-alignment: top-center;
 }
 
+.disconnectionText{
+    -fx-stroke: black  ;
+    -fx-stroke-width: 1;
+}
+
 .playButton:pressed{
     -fx-background-image: url("../images/buttons/play_button_pressed.png");
     -fx-background-color: transparent;

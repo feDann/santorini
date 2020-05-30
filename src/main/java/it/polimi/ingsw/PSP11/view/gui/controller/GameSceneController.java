@@ -107,7 +107,6 @@ public class GameSceneController extends GUIController {
         Button button = (Button)event.getSource();
         getClient().asyncWrite(new SelectWorkerResponse(Integer.parseInt(button.getId())));
         actionPane.setVisible(false);
-        //TODO button.setOnAction(null)
     }
 
     @FXML

@@ -23,35 +23,53 @@
             <Image url="@../images/logo/santorini-logo.png" />
          </image>
       </ImageView>
-      <TextField fx:id="ip" layoutX="71.0" layoutY="173.0" onAction="#sendIp" prefHeight="28.0" prefWidth="155.0" promptText="Ip address..." visible="false" />
-      <Button fx:id="connection" layoutX="71.0" layoutY="233.0" lineSpacing="1.0" mnemonicParsing="false" onAction="#sendIp" prefHeight="38.0" prefWidth="155.0" styleClass="connectButton" stylesheets="@../css/initialScene.css" textOverrun="CLIP" visible="false" />
-      <Text fx:id="errorText" fill="RED" layoutX="116.0" layoutY="299.0" strokeType="OUTSIDE" strokeWidth="0.0" visible="false">
-         <font>
-            <Font name="Arial" size="15.0" />
-         </font>
-      </Text>
-      <Button fx:id="playButton" layoutX="77.0" layoutY="266.0" lineSpacing="1.0" mnemonicParsing="false" onAction="#sendNickname" prefHeight="38.0" prefWidth="155.0" styleClass="playButton" stylesheets="@../css/initialScene.css" textOverrun="CLIP" visible="false" />
-      <TextField fx:id="nickname" layoutX="77.0" layoutY="153.0" onMouseClicked="#resetField" prefHeight="28.0" prefWidth="155.0" promptText="Nickname" visible="false" />
-      <Group fx:id="radioButtons" layoutX="116.0" layoutY="224.0" visible="false">
+      <Pane fx:id="connectionPane" prefHeight="361.0" prefWidth="566.0" visible="false">
          <children>
-            <RadioButton fx:id="twoPlayers" mnemonicParsing="false" text="2">
-               <toggleGroup>
-                  <ToggleGroup fx:id="numOfPlayers" />
-               </toggleGroup>
-            </RadioButton>
-            <RadioButton fx:id="threePlayers" layoutX="50.0" mnemonicParsing="false" text="3" toggleGroup="$numOfPlayers" />
+            <TextField fx:id="ip" layoutX="71.0" layoutY="173.0" onAction="#sendIp" prefHeight="28.0" prefWidth="155.0" promptText="Ip address..." />
+            <Button fx:id="connection" layoutX="71.0" layoutY="233.0" lineSpacing="1.0" mnemonicParsing="false" onAction="#sendIp" prefHeight="38.0" prefWidth="155.0" styleClass="connectButton" stylesheets="@../css/initialScene.css" textOverrun="CLIP" />
+            <Text fx:id="errorText" fill="RED" layoutX="116.0" layoutY="299.0" strokeType="OUTSIDE" strokeWidth="0.0">
+               <font>
+                  <Font name="Arial" size="15.0" />
+               </font>
+            </Text>
          </children>
-      </Group>
-      <Text fx:id="numOfPlayersText" layoutX="105.0" layoutY="214.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Number of players:" visible="false" />
-      <Text fx:id="errorText2" fill="RED" layoutX="88.0" layoutY="324.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Select num of players!" visible="false">
-         <font>
-            <Font name="Arial" size="15.0" />
-         </font>
-      </Text>
-      <Text fx:id="opponentText" layoutX="52.0" layoutY="231.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Wait for opponent . . ." visible="false" wrappingWidth="186.720703125">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Text>
+      </Pane>
+      <Pane fx:id="setupPane" prefHeight="361.0" prefWidth="566.0" visible="false">
+         <children>
+            <Button fx:id="playButton" layoutX="77.0" layoutY="266.0" lineSpacing="1.0" mnemonicParsing="false" onAction="#sendNickname" prefHeight="38.0" prefWidth="155.0" styleClass="playButton" stylesheets="@../css/initialScene.css" textOverrun="CLIP" />
+            <TextField fx:id="nickname" layoutX="77.0" layoutY="153.0" onMouseClicked="#resetField" prefHeight="28.0" prefWidth="155.0" promptText="Nickname" />
+            <Group fx:id="radioButtons" layoutX="116.0" layoutY="224.0">
+               <children>
+                  <RadioButton fx:id="twoPlayers" mnemonicParsing="false" text="2">
+                     <toggleGroup>
+                        <ToggleGroup fx:id="numOfPlayers" />
+                     </toggleGroup>
+                  </RadioButton>
+                  <RadioButton fx:id="threePlayers" layoutX="50.0" mnemonicParsing="false" text="3" toggleGroup="$numOfPlayers" />
+               </children>
+            </Group>
+            <Text fx:id="numOfPlayersText" layoutX="105.0" layoutY="214.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Number of players:" />
+            <Text fx:id="errorText2" fill="RED" layoutX="81.0" layoutY="325.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Select num of players!" textAlignment="CENTER" visible="false">
+               <font>
+                  <Font name="Arial" size="15.0" />
+               </font>
+            </Text>
+         </children>
+      </Pane>
+      <Pane fx:id="waitPane" prefHeight="361.0" prefWidth="566.0" stylesheets="@../css/initialScene.css">
+         <children>
+            <Text fx:id="opponentText" fill="white" layoutX="64.0" layoutY="213.0" styleClass="disconnectionText" text="WAIT FOR OPPONENT . . ." wrappingWidth="210.720703125">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Text>
+         </children>
+      </Pane>
+      <Pane fx:id="disconnectionPane" prefHeight="361.0" prefWidth="566.0" style="-fx-background-color: rgba(128,128,128,0.7);" stylesheets="@../css/initialScene.css" visible="false">
+         <children>
+            <Text fx:id="disconnectionText" fill="WHITE" layoutX="90.0" layoutY="137.0" styleClass="disconnectionText" textAlignment="CENTER" wrappingWidth="387.7354736328125" />
+            <Button fx:id="exit" layoutX="206.0" layoutY="265.0" lineSpacing="1.0" mnemonicParsing="false" onAction="#exit" prefHeight="38.0" prefWidth="155.0" styleClass="closeButton" stylesheets="@../css/secondScene.css" textOverrun="CLIP" />
+         </children>
+      </Pane>
    </children>
 </Pane>
