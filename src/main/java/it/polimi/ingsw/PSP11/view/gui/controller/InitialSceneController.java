@@ -15,8 +15,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.effect.GaussianBlur;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -24,18 +26,19 @@ import javafx.util.Duration;
 public class InitialSceneController extends GUIController{
 
     private Message buffer;
+    private final String font = "/font/LillyBelle400.ttf" ;
 
     @FXML
-    private Pane initialPane;
+    private Pane initialPane,connectionPane,disconnectionPane,waitPane,setupPane;
 
     @FXML
     private TextField ip, nickname;
 
     @FXML
-    private Button connection,playButton;
+    private Button connection,playButton,exit;
 
     @FXML
-    private Text errorText,numOfPlayersText,errorText2,opponentText;
+    private Text errorText,numOfPlayersText,errorText2,opponentText,disconnectionText;
 
     @FXML
     private Group radioButtons;
@@ -50,15 +53,12 @@ public class InitialSceneController extends GUIController{
     @FXML
     public void initialize(){
         ip.setVisible(true);
-        connection.setVisible(true);
-        errorText.setVisible(true);
-        playButton.setVisible(false);
-        nickname.setVisible(false);
-        numOfPlayersText.setVisible(false);
-        errorText2.setVisible(false);
-        radioButtons.setVisible(false);
-        opponentText.setVisible(false);
-
+        disconnectionPane.setVisible(false);
+        setupPane.setVisible(false);
+        waitPane.setVisible(false);
+        connectionPane.setVisible(true);
+        disconnectionText.setFont(Font.loadFont(getClass().getResource(font).toString(),33));
+        opponentText.setFont(Font.loadFont(getClass().getResource(font).toString(),25));
     }
 
 
@@ -67,11 +67,12 @@ public class InitialSceneController extends GUIController{
         Task task = new Task<Void>(){
             @Override
             protected Void call() throws Exception {
+                errorText.setVisible(false);
                 getClient().setIp(ip.getText());
                 try{
                     getClient().start();
-                    setupInfoScene();
                 }catch (Exception e) {
+                    errorText.setVisible(true);
                     errorText.setText("Invalid Ip!");
                 }
                 return null;
@@ -109,36 +110,30 @@ public class InitialSceneController extends GUIController{
         nickname.setPromptText("");
     }
 
+    @FXML
+    public void exit(ActionEvent event){
+        Stage stage = (Stage) initialPane.getScene().getWindow();
+        stage.close();
+    }
+
     private void setupInfoScene() {
-        ip.setVisible(false);
-        connection.setVisible(false);
-        errorText.setVisible(false);
-        playButton.setVisible(true);
-        nickname.setVisible(true);
-        numOfPlayersText.setVisible(true);
-        radioButtons.setVisible(true);
-        opponentText.setVisible(false);
+        connectionPane.setVisible(false);
+        setupPane.setVisible(true);
+
     }
 
     private void waitOpponentScene(){
-        ip.setVisible(false);
-        connection.setVisible(false);
-        errorText.setVisible(false);
-        playButton.setVisible(false);
-        nickname.setVisible(false);
-        numOfPlayersText.setVisible(false);
-        radioButtons.setVisible(false);
-        errorText2.setVisible(false);
-        opponentText.setVisible(true);
-
+        setupPane.setVisible(false);
+        connectionPane.setVisible(false);
+        waitPane.setVisible(true);
 
         Platform.runLater(() ->{
             Timeline timeline = new Timeline(
                     new KeyFrame(Duration.ZERO, event -> {
                         String text = opponentText.getText();
                         opponentText.setText(
-                                ("Wait for opponent . . .".equals(text))
-                                        ? "Wait for opponent ."
+                                ("WAIT FOR OPPONENT . . .".equals(text))
+                                        ? "WAIT FOR OPPONENT ."
                                         : text + " ."
                         );
                     }),
@@ -146,6 +141,19 @@ public class InitialSceneController extends GUIController{
             );
             timeline.setCycleCount(Timeline.INDEFINITE);
             timeline.play();
+        });
+    }
+
+    private void connectionClosedView(String message){
+        Platform.runLater(()->{
+            if(setupPane.isVisible()){
+                setupPane.setEffect(new GaussianBlur());
+            }
+            if(waitPane.isVisible()){
+                waitPane.setEffect(new GaussianBlur());
+            }
+            disconnectionText.setText(message);
+            disconnectionPane.setVisible(true);
         });
     }
 
@@ -176,14 +184,17 @@ public class InitialSceneController extends GUIController{
 
     @Override
     public void handleMessage(Message message) {
-        if(message instanceof DuplicateNicknameMessage){
-            nickname.clear();
-            nickname.setPromptText("Nickname already in use...");
-            nickname.setStyle("-fx-prompt-text-fill: indianred;");
+        if(message instanceof WelcomeMessage){
+            setupInfoScene();
         }
         else if(message instanceof ConnectionMessage){
             String numOfPlayers = ((RadioButton)this.numOfPlayers.getSelectedToggle()).getText();
             getClient().asyncWrite(new PlayerSetupMessage(numOfPlayers));
+        }
+        else if(message instanceof DuplicateNicknameMessage){
+            nickname.clear();
+            nickname.setPromptText("Nickname already in use...");
+            nickname.setStyle("-fx-prompt-text-fill: indianred;");
         }
         else if(message instanceof WaitMessage){
             waitOpponentScene();
@@ -198,7 +209,7 @@ public class InitialSceneController extends GUIController{
         }
         else if(message instanceof ConnectionClosedMessage){
             getClient().setActive(false);
-            //TODO pannello closed
+            connectionClosedView(message.getMessage().toUpperCase());
         }
 
     }
