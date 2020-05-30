@@ -2,7 +2,17 @@ package it.polimi.ingsw.PSP11.server;
 
 import it.polimi.ingsw.PSP11.messages.*;
 
+/**
+ * Class for decode message sent by the client
+ */
 public class ServerMessageDecoder {
+    /**
+     * Called by {@link ClientSocketConnection#run()}
+     * Decode the message sent by the client and, if it's possible call {@link ClientSocketConnection#send(Object)}, otherwise {@code notify()} the message to the {@link it.polimi.ingsw.PSP11.controller.Controller}
+     * @param server the server
+     * @param clientSocket the {@link ClientSocketConnection} object of the client
+     * @param message the message sent by the client
+     */
 
     public static void decodeMessage(Server server, ClientSocketConnection clientSocket,Message message) {
 

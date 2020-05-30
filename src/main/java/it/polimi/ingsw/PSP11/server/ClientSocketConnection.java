@@ -28,7 +28,12 @@ public class ClientSocketConnection extends Observable<Message> implements Runna
 
     private boolean active = true;
     private String nickname ="";
-    //private ExecutorService executor = Executors.newSingleThreadExecutor();
+
+    /**
+     * Allocates a new ClientSocketConnection Object
+     * @param socket the socket
+     * @param server the server
+     */
 
     public ClientSocketConnection(Socket socket, Server server){
         this.clientSocket = socket;
@@ -43,20 +48,19 @@ public class ClientSocketConnection extends Observable<Message> implements Runna
         this.nickname = nickname;
     }
 
+    /**
+     *
+     * @return true if the connection is active, false otherwise
+     */
+
     private synchronized boolean isActive(){
         return active;
     }
 
-//    public void asyncSend(final Object message){
-//        Thread thread;
-//        thread = new Thread(new Runnable() {
-//            @Override
-//            public void run() {
-//                send(message);
-//            }
-//        });
-//        executor.submit(thread);
-//    }
+    /**
+     * Send an Object to the client with {@link ClientSocketConnection#out}
+     * @param message the message sent to client
+     */
 
     public synchronized void send(Object message) {
         try {
@@ -71,6 +75,10 @@ public class ClientSocketConnection extends Observable<Message> implements Runna
         }
     }
 
+    /**
+     * Send a message to client and close the {@link ClientSocketConnection#clientSocket} connection
+     * @param message the reason of the close
+     */
 
     public synchronized void closeConnection(String message) {
         send(new ConnectionClosedMessage(message));
@@ -82,21 +90,40 @@ public class ClientSocketConnection extends Observable<Message> implements Runna
         active = false;
     }
 
+    /**
+     * Called by the {@link it.polimi.ingsw.PSP11.controller.Controller} when a game is ended.
+     * Disconnect all the player in game with {@code nickname} calling {@link Server#killLobby(String nickname)}
+     * @param nickname the nickname of the player to disconnect
+     */
+
     public void killGame(String nickname){
         server.killLobby(nickname);
         closeConnection("Game Ended! ");
     }
+
+    /**
+     * Called by the {@link it.polimi.ingsw.PSP11.controller.Controller} when a player lose in a three player  game and the game continue.
+     * Close the connection of {@code playerToKill} and call {@link Server#looserDisconnect(String playerToKill)}
+     * @param playerToKill the player to disconnect from the server
+     */
 
     public void goCommitDie(String playerToKill){
         server.looserDisconnect(playerToKill);
         closeConnection("");
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void killPinger() {
         pingHandler.cancel(true);
         scheduler.shutdown();
     }
+
+    /**
+     * {@inheritDoc}
+     */
 
     @Override
     public void pinger() {
@@ -117,7 +144,9 @@ public class ClientSocketConnection extends Observable<Message> implements Runna
         pingHandler = scheduler.scheduleAtFixedRate(ping, 0, 3, TimeUnit.SECONDS);
     }
 
-
+    /**
+     * Allocate the {@link ObjectOutputStream} ,{@link ObjectInputStream},call the {@link Pinger#pinger()} and handle the message sent from client
+     */
     @Override
     public void run() {
         Message message;

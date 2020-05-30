@@ -27,10 +27,21 @@ public class Server {
     private List<String> playingNameList = new ArrayList<>();
     private Map<ClientSocketConnection, ArrayList<ClientSocketConnection>> playingConnections = new HashMap<>();
 
+    /**
+     * Allocates a new Server object and initialize serverSocket
+     * @throws IOException if cannot initialize the ServerSocket
+     */
 
     public Server () throws IOException {
         serverSocket = new ServerSocket(serverPort);
     }
+
+    /**
+     * Check if a nickname is already in use and if it's not, add them in {@link Server#waitingNameList}
+     * @param connection the {@link ClientSocketConnection} of the player
+     * @param nickname the nickname of the player
+     * @return true if the nickname is not in the {@link Server#waitingNameList}, false otherwise
+     */
 
     public synchronized boolean insertInWaitingList(ClientSocketConnection connection, String nickname){
         if (waitingNameList.contains(nickname) || playingNameList.contains(nickname)){
@@ -40,6 +51,10 @@ public class Server {
         return true;
     }
 
+    /**
+     * Disconnect {@code playerToKill} from the server and remove it from {@link Server#playingList} and {@link Server#playingConnections}
+     * @param playerToKill the player to disconnect from the server
+     */
     public synchronized void looserDisconnect(String playerToKill){
         playingNameList.remove(playerToKill);
         ClientSocketConnection playerToKillSocket = playingList.get(playerToKill);
@@ -49,6 +64,12 @@ public class Server {
         playingConnections.remove(playerToKillSocket);
         playingList.remove(playerToKill);
     }
+
+    /**
+     * Method called when an exception occurred in the {@link ClientSocketConnection} of {@code nickname} or the game is ended.
+     * If the {@code nickname} is still in the {@link Server#waitingNameList} then it is removed, otherwise disconnect all the player in the same game of {@code nickname} and remove them from the {@link Server#playingList} and {@link Server#playingConnections}
+     * @param nickname the nickname of the player to disconnect
+     */
 
     public synchronized void killLobby(String nickname){
         if(waitingNameList.contains(nickname)){
@@ -70,6 +91,12 @@ public class Server {
             playingNameList.remove(nickname);
         }
     }
+
+    /**
+     * Insert the new nickname and connection in {@link Server#waitingListForTwo} and if the waiting list  is full initialize a new game otherwise send a {@link WaitMessage} to connection
+     * @param nickname the nickname of the player
+     * @param connection the {@link ClientSocketConnection} of the player
+     */
 
     public synchronized void lobbyForTwoPlayer(String nickname,ClientSocketConnection connection) {
         waitingListForTwo.put(nickname, connection);
@@ -119,6 +146,12 @@ public class Server {
                 connection.send(new WaitMessage());
             }
     }
+
+    /**
+     * Insert the new nickname and connection in the {@link Server#waitingListForThree} and if the waiting list  is full initialize a new game otherwise send a {@link WaitMessage} to connection
+     * @param nickname the nickname of the player
+     * @param connection the ClientSocketConnection of the player
+     */
 
     public synchronized void lobbyForThreePlayer(String nickname,ClientSocketConnection connection){
         waitingListForThree.put(nickname, connection);
@@ -181,6 +214,9 @@ public class Server {
         }
     }
 
+    /**
+     *Accept all the new connection and launch a thread for the new ClientSocketConnection
+     */
 
     public void start(){
         System.out.println("The Santorini server is up and running...");
