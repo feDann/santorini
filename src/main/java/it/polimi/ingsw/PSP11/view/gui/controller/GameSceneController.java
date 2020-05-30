@@ -5,6 +5,7 @@ import it.polimi.ingsw.PSP11.messages.*;
 import it.polimi.ingsw.PSP11.model.Board;
 
 import it.polimi.ingsw.PSP11.model.Color;
+import it.polimi.ingsw.PSP11.model.Player;
 import it.polimi.ingsw.PSP11.model.Worker;
 import it.polimi.ingsw.PSP11.utils.PlayerInfo;
 import javafx.animation.FadeTransition;
@@ -239,6 +240,15 @@ public class GameSceneController extends GUIController {
         }
     }
 
+    public void rebuildOpponentBox(String playerToDelete){
+        Platform.runLater(() ->{
+            //remove loser player
+            getOpponents().removeIf(player -> player.getName().equals(playerToDelete));
+            opponentBox.getChildren().clear();
+            createOpponentBox();
+        });
+    }
+
     public void clearStackPanes(){
         for(Node node: imageGrid.getChildren()){
             ((StackPane) node).getChildren().clear();
@@ -465,6 +475,10 @@ public class GameSceneController extends GUIController {
         else if(message instanceof InvalidWorkerPosition){
             serverLog.appendText("[SERVER]: " + formatString(message.getMessage()) +"\n");
             placeWorker();
+        }
+        else if (message instanceof UpdateLoseMessage){
+            serverLog.appendText("[SERVER]: " + formatString(message.getMessage()) +"\n");
+            rebuildOpponentBox(((UpdateLoseMessage) message).getPlayer());
         }
         else if(message instanceof ConnectionClosedMessage){
             getClient().setActive(false);
