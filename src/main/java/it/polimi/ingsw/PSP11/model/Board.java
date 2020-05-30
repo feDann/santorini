@@ -46,7 +46,6 @@ public class Board implements Serializable {
 
     /**
      * place the worker in the designated point
-     *
      * @param point indicates the spot in witch the player wants to put the worker
      */
     public void placeWorker(Point point, Worker worker) {
@@ -69,7 +68,6 @@ public class Board implements Serializable {
 
     /**
      * Remove the worker on top of the cell
-     *
      * @param point the position of worker
      */
     public void removeWorker(Point point) {
@@ -82,7 +80,6 @@ public class Board implements Serializable {
 
     /**
      * place the dome in the designated point
-     *
      * @param point indicates the spot in witch the player wants to put the dome
      */
     public void addDome(Point point) {
@@ -94,7 +91,6 @@ public class Board implements Serializable {
 
     /**
      * place the block in the designated point
-     *
      * @param point indicates the spot in witch the player wants to put the block
      */
     public void addBlock(Point point) {
@@ -106,7 +102,6 @@ public class Board implements Serializable {
 
     /**
      * return the height of the building on the designated cell
-     *
      * @param point indicates the spot in witch we want to know the height of the building
      * @return the name of the block
      */
@@ -117,6 +112,12 @@ public class Board implements Serializable {
         return board[x][y].getCurrentLevel();
     }
 
+    /**
+     * find all the point that surround the given position
+     * does not include point outside the board
+     * @param position the position of the worker for which we want to calculate the neighbouring point
+     * @return an arrayList of point with all the point surrounding position
+     */
     public ArrayList<Point> getNeighbouringPoints(Point position) {
         ArrayList<Point> positions = new ArrayList<>();
         int x = (int) position.getX();
@@ -136,6 +137,10 @@ public class Board implements Serializable {
         return positions;
     }
 
+    /**
+     * create a formatted messages for the board to be printed in the CLI
+     * @return a string with the board ready to be printed
+     */
     public String printBoard() {
         String formattedMessage = "\n\n\n\n\n";
         formattedMessage = formattedMessage.concat("    1      2      3      4      5   y/x\n");
@@ -160,6 +165,10 @@ public class Board implements Serializable {
         return formattedMessage;
     }
 
+    /**
+     * clone the board for safe usage outside the model
+     * @return a copy of the board
+     */
     public Board boardClone() {
         Board clonedBoard = new Board();
         clonedBoard.init();
