@@ -50,6 +50,9 @@ public class InitialSceneController extends GUIController{
     private ToggleGroup numOfPlayers;
 
 
+    /**
+     * Initialize the scene setting the visibility of the panes and loading fonts
+     */
     @FXML
     public void initialize(){
         ip.setVisible(true);
@@ -61,6 +64,10 @@ public class InitialSceneController extends GUIController{
         opponentText.setFont(Font.loadFont(getClass().getResource(font).toString(),25));
     }
 
+
+    /**
+     * Called when the {@link InitialSceneController#connection} button is pressed, start the connection with the server and change panes visibility
+     */
 
     @FXML
     public void sendIp(ActionEvent event) {
@@ -83,6 +90,10 @@ public class InitialSceneController extends GUIController{
         thread.start();
     }
 
+    /**
+     * Called when the {@link InitialSceneController#playButton} is pressed, send a {@link NicknameMessage}  to the server
+     */
+
     @FXML
     public void sendNickname(ActionEvent event){
         Platform.runLater(()->{
@@ -104,11 +115,19 @@ public class InitialSceneController extends GUIController{
 
     }
 
+    /**
+     * Called when the {@link InitialSceneController#nickname} TextField is clicked, reset the prompt text
+     */
+
     @FXML
     public void resetField(MouseEvent event){
         nickname.setText("");
         nickname.setPromptText("");
     }
+
+    /**
+     *Called when the {@link InitialSceneController#exit} button is pressed, close the stage
+     */
 
     @FXML
     public void exit(ActionEvent event){
@@ -116,11 +135,19 @@ public class InitialSceneController extends GUIController{
         stage.close();
     }
 
+    /**
+     * change the visibility for {@link InitialSceneController#connectionPane} (false) and {@link InitialSceneController#setupPane} (false)
+     */
+
     private void setupInfoScene() {
         connectionPane.setVisible(false);
         setupPane.setVisible(true);
 
     }
+
+    /**
+     * Set the {@link InitialSceneController#waitPane} visible and load a text animation
+     */
 
     private void waitOpponentScene(){
         setupPane.setVisible(false);
@@ -144,6 +171,11 @@ public class InitialSceneController extends GUIController{
         });
     }
 
+    /**
+     * Called when a {@link ConnectionClosedMessage} is sent by the server, set the  {@link InitialSceneController#disconnectionPane} visible
+     * @param message
+     */
+
     private void connectionClosedView(String message){
         Platform.runLater(()->{
             if(setupPane.isVisible()){
@@ -157,6 +189,9 @@ public class InitialSceneController extends GUIController{
         });
     }
 
+    /**
+     * {@inheritDoc}
+     */
 
     @Override
     public void changeStage() {
@@ -181,6 +216,10 @@ public class InitialSceneController extends GUIController{
         });
     }
 
+
+    /**
+     * {@inheritDoc}
+     */
 
     @Override
     public void handleMessage(Message message) {
