@@ -1,13 +1,19 @@
 package it.polimi.ingsw.PSP11.client;
 
-import it.polimi.ingsw.PSP11.messages.ConnectionClosedMessage;
 import it.polimi.ingsw.PSP11.messages.Message;
 import it.polimi.ingsw.PSP11.messages.SimpleMessage;
 import it.polimi.ingsw.PSP11.messages.StartGameMessage;
 
+/**
+ * Class that handles server messages for {@link CLIClient}
+ */
 public class ClientMessageDecoder {
 
 
+    /**
+     * Decodes server message, printing it to the standard output
+     * @param message message from the server
+     */
     public static void decodeMessage(Message message) {
         if (message instanceof StartGameMessage){
             //reset the screen without making the clear

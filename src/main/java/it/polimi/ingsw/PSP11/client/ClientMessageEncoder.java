@@ -6,18 +6,27 @@ import it.polimi.ingsw.PSP11.messages.*;
 import java.awt.*;
 import java.util.ArrayList;
 
+/**
+ * Class used as support by {@link CLIClient} to check user input and generate messages
+ */
 public class ClientMessageEncoder {
 
+    /**
+     * Parses user input for an (x,y) position on the board
+     * @param position String array containing the coordinates
+     * @return a point representing the position on the board
+     * @throws IllegalInputException when the user input is in an incorrect format
+     */
     private static Point checkLegalInput(String[] position) throws IllegalInputException{
         try {
             int x = Integer.parseInt(position[0]) - 1;
             int y = Integer.parseInt(position[1]) - 1;
             if (x < 0 || x > 4 || y < 0 || y > 4){
-                throw new IllegalInputException("Stay between 1 and 5 pls");
+                throw new IllegalInputException("Stay between 1 and 5 please");
             }
             Point point = new Point(x,y);
             if (position.length != 2){
-                throw new IllegalInputException("DONT YOU KNOW THAT WE ARE IN A BI-DIMENTIONAL SPACE YOU MORON!");
+                throw new IllegalInputException("Please insert two coordinates");
             }
             return point;
         } catch (NumberFormatException | IndexOutOfBoundsException e){
@@ -25,6 +34,13 @@ public class ClientMessageEncoder {
         }
     }
 
+    /**
+     * Parses user input and generates the corresponding message for the server
+     * @param lastServerMessage the last message this client has received from the server
+     * @param inputLine the user input
+     * @return the generated message
+     * @throws IllegalInputException when the user input is in an incorrect format
+     */
     public static Message encodeMessage(Message lastServerMessage, String inputLine) throws IllegalInputException{
 
         if(lastServerMessage instanceof WelcomeMessage || lastServerMessage instanceof DuplicateNicknameMessage){
@@ -79,7 +95,7 @@ public class ClientMessageEncoder {
                 }
                 return new SelectPlayerGodResponse(index-1);
             }catch (NumberFormatException e){
-                throw new IllegalInputException("Invalid input, try again, EDDAI IMPEGNATEVI UN PO ANCHE VOI FIGA");
+                throw new IllegalInputException("Invalid input");
             }
         }
 
