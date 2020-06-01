@@ -13,6 +13,12 @@ public class Gui extends Application {
     private Stage newStage;
     GUIClient client;
 
+    /**
+     * Start the GUI and load the first scene
+     * @param stage the primary stage for this application, onto which the application scene can be set
+     * @throws Exception if an error occurred during the initialization of the scene
+     */
+
     @Override
     public void start(Stage stage) throws Exception {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/initialScene.fxml"));
@@ -28,6 +34,9 @@ public class Gui extends Application {
         newStage.show();
     }
 
+    /**
+     * This method is called when the application should stop, and provides a convenient place to prepare for application exit and close the client connection
+     */
     @Override
     public void stop(){
         try {
