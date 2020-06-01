@@ -21,7 +21,7 @@ public class ClientMessageDecoder {
             System.out.println("\033[H");
 
         }
-        else if (message instanceof SimpleMessage) {
+        if (message instanceof SimpleMessage) {
             //actually calls view methods to show messages
             String messaggino = message.getMessage();
             System.out.print(messaggino);
