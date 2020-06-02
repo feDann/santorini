@@ -10,26 +10,31 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.net.SocketException;
 import java.net.SocketTimeoutException;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.ScheduledFuture;
-import java.util.concurrent.TimeUnit;
 
+/**
+ * This class implements features for a player who chooses to play with CLI
+ */
 public class CLIClient extends Client{
 
     private Scanner stdin;
     private Message message;
 
+    /**
+     * Constructs a CLIClient object with the given IP address and port number
+     * @param ip IP address of the server
+     * @param port port number of the server
+     */
     public CLIClient(String ip, int port) {
         super(ip,port);
     }
 
-
-
+    /**
+     * Creates and starts a Thread that continuously reads incoming messages from the server, as long as the client is active
+     * @return the created Thread
+     */
     public Thread asyncRead(){
         Thread t = new Thread(new Runnable() {
             @Override
@@ -61,6 +66,10 @@ public class CLIClient extends Client{
         return t;
     }
 
+    /**
+     * Creates and starts a Thread that reads user input and sends the corresponding message to the server, as long as the client is active
+     * @return the created thread
+     */
     public Thread asyncWrite(){
         Thread t = new Thread(new Runnable() {
             @Override
@@ -91,8 +100,10 @@ public class CLIClient extends Client{
         return t;
     }
 
-
-
+    /**
+     * Allocates resources for this client, initializes threads for communicating with the server and ping feature. It then waits for the communication threads to die.
+     * @throws IOException when there is a problem initialising resources for this client
+     */
     public void start() throws IOException {
 
         try (Scanner stdin = new Scanner(System.in); Socket clientSocket = new Socket(getIp(), getPort());

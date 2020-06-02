@@ -10,29 +10,40 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.ScheduledFuture;
-import java.util.concurrent.TimeUnit;
 
+/**
+ * This class implements features for a player who chooses to play with GUI
+ */
 public class GUIClient extends Client{
 
     private GUIController guiController;
 
-
+    /**
+     * Constructs a GUI client
+     */
     public GUIClient(){
         super("", 50000);
     }
 
+    /**
+     * Setter method for the client's {@link GUIController}
+     * @param controller the appropriate controller for the current game scene
+     */
     public void setController(GUIController controller) {
         this.guiController = controller;
     }
 
+    /**
+     * Getter method for the client's {@link GUIController}
+     * @return the current scene controller
+     */
     public GUIController getGuiController() {
         return guiController;
     }
 
-
+    /**
+     * Creates and starts a Thread, as a daemon, that continuously reads incoming messages from the server, as long as the client is active
+     */
     public void asyncRead(){
         Thread t = new Thread(){
             @Override
@@ -63,6 +74,10 @@ public class GUIClient extends Client{
     }
 
 
+    /**
+     * Creates and starts a Thread that sends a message to the server
+     * @param message the message to send to the server
+     */
     public void asyncWrite(Message message) {
         new Thread(){
             @Override
@@ -80,14 +95,20 @@ public class GUIClient extends Client{
         }.start();
     }
 
-
+    /**
+     * Marks this client as inactive and closes its resources
+     * @throws IOException when there is a problem closing this client's resources
+     */
     public void close() throws IOException {
         setActive(false);
         killPinger();
         super.close();
     }
 
-
+    /**
+     * Allocates resources for this client and initializes the Thread for server communication
+     * @throws IOException when there is a problem initialising resources for this client
+     */
     public void start() throws IOException{
         setClientSocket(new Socket(getIp(),getPort())) ;
         setSocketIn(new ObjectInputStream(getClientSocket().getInputStream()));
