@@ -230,7 +230,7 @@ public class SelectGodsController extends GUIController {
      */
 
     @FXML
-    void selectStackPane(MouseEvent event) {
+    public void selectStackPane(MouseEvent event) {
         Platform.runLater(()-> {
                     errorText.setVisible(false);
                     if (!selectedGodsMap.containsKey(centerCard)) {
@@ -261,7 +261,7 @@ public class SelectGodsController extends GUIController {
      * Update the image in the {@link SelectGodsController#leftStack}, {@link SelectGodsController#rightStack}, {@link SelectGodsController#centerStack} and set the new {@link SelectGodsController#centerCard}
      */
 
-    public void updateStackPaneForGameGods(){
+    private void updateStackPaneForGameGods(){
         Platform.runLater(()->{
             String god1 = imageStyle + getClass().getResource(gods.get(0).getTexture()) +");";
             String god2 = imageStyle + getClass().getResource(gods.get(1).getTexture()) +")";
@@ -278,7 +278,7 @@ public class SelectGodsController extends GUIController {
      * Update the image in the {@link SelectGodsController#leftStack}, {@link SelectGodsController#rightStack}, {@link SelectGodsController#centerStack} and set the new {@link SelectGodsController#centerCard}
      */
 
-    public void updateStackPaneForPlayerGod(){
+    private void updateStackPaneForPlayerGod(){
         Platform.runLater(() ->{
             if(gods.size() == 1){
                 String god = imageStyle +  getClass().getResource(gods.get(0).getTexture()) +");";
@@ -389,7 +389,7 @@ public class SelectGodsController extends GUIController {
      * @param message the disconnection message of the server
      */
 
-    public void connectionClosedView(String message){
+    private void connectionClosedView(String message){
         Platform.runLater(()->{
             waitPane.setEffect(new GaussianBlur());
             selectPane.setEffect(new GaussianBlur());

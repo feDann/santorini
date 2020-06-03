@@ -221,7 +221,7 @@ public class GameSceneController extends GUIController {
      * Initialize the {@link GameSceneController#actionGrid} adding to every cell a button
      */
 
-    public void initializeActionGridButtons(){
+    private void initializeActionGridButtons(){
         for(int x = 0;x <5;x++){
             for(int y = 0; y<5; y++){
                 Button button = new Button();
@@ -239,7 +239,7 @@ public class GameSceneController extends GUIController {
      * Initialize the {@link GameSceneController#imageGrid} adding to every cell a {@code stack-pane}
      */
 
-    public void initializeImageGrid(){
+    private void initializeImageGrid(){
         for(int x = 0;x <5;x++){
             for(int y = 0; y<5; y++){
                 StackPane stackpane = new StackPane();
@@ -257,7 +257,7 @@ public class GameSceneController extends GUIController {
      * Add to the {@link GameSceneController#opponentBox} the opponents information
      */
 
-    public void createOpponentBox(){
+    private void createOpponentBox(){
 
         String styleSheet ="/css/gameScene.css";
         for(PlayerInfo player: getOpponents()){
@@ -293,7 +293,7 @@ public class GameSceneController extends GUIController {
      * @param playerToDelete the name of the player to remove
      */
 
-    public void rebuildOpponentBox(String playerToDelete){
+    private void rebuildOpponentBox(String playerToDelete){
         Platform.runLater(() ->{
             //remove loser player
             getOpponents().removeIf(player -> player.getName().equals(playerToDelete));
@@ -306,7 +306,7 @@ public class GameSceneController extends GUIController {
      * Remove al the children of the {@code stackPane} in the {@link GameSceneController#imageGrid}
      */
 
-    public void clearStackPanes(){
+    private void clearStackPanes(){
         for(Node node: imageGrid.getChildren()){
             ((StackPane) node).getChildren().clear();
         }
@@ -319,7 +319,7 @@ public class GameSceneController extends GUIController {
      * @return the resource path ot the worker as a string
      */
 
-    public String chooseWorker(Color color){
+    private String chooseWorker(Color color){
         if(color == Color.RED){
             return "/images/worker/redWorker.png";
         }
@@ -338,7 +338,7 @@ public class GameSceneController extends GUIController {
      * Set the {@link GameSceneController#actionGrid} and {@link GameSceneController#imageGrid} visible
      */
 
-    public void placeWorker(){
+    private void placeWorker(){
         Platform.runLater(() -> {
             turnText.setText("PLACE YOUR WORKERS");
             actionPane.setVisible(true);
@@ -350,7 +350,7 @@ public class GameSceneController extends GUIController {
      * Set to invisible all the children of the {@code pane}
      */
 
-    public void setAllInvisible(GridPane pane){
+    private void setAllInvisible(GridPane pane){
         for(Node n : pane.getChildren()){
             n.setVisible(false);
         }
@@ -361,7 +361,7 @@ public class GameSceneController extends GUIController {
      * @param workers the available workers sent by the server
      */
 
-    public void selectWorkerView(ArrayList<Worker> workers){
+    private void selectWorkerView(ArrayList<Worker> workers){
         Platform.runLater(()->{
             setAllInvisible(actionGrid);
             turnText.setText("SELECT YOUR WORKER!");
@@ -383,7 +383,7 @@ public class GameSceneController extends GUIController {
      * @param possibleMoves possible move position sent by the server
      */
 
-    public void moveView(ArrayList<Point> possibleMoves){
+    private void moveView(ArrayList<Point> possibleMoves){
 
         Platform.runLater(()->{
             setAllInvisible(actionGrid);
@@ -406,7 +406,7 @@ public class GameSceneController extends GUIController {
      * @param possibleBuilds possible build position sent by the server
      */
 
-    public void buildView(ArrayList<Point> possibleBuilds){
+    private void buildView(ArrayList<Point> possibleBuilds){
 
         Platform.runLater(()->{
             setAllInvisible(actionGrid);
@@ -429,7 +429,7 @@ public class GameSceneController extends GUIController {
      * @param message the hero power request text
      */
 
-    public void heroRequestView(String message){
+    private void heroRequestView(String message){
         requestText.setText(message.toUpperCase());
         heroPowerPane.setVisible(true);
     }
@@ -439,7 +439,7 @@ public class GameSceneController extends GUIController {
      * @param message the disconnection message of the server
      */
 
-    public void connectionClosedView(String message){
+    private void connectionClosedView(String message){
         Platform.runLater(()->{
             imagePane.setEffect(new GaussianBlur());
             actionPane.setEffect(new GaussianBlur());
@@ -456,7 +456,7 @@ public class GameSceneController extends GUIController {
      * @param win true if the player won, false otherwise
      */
 
-    public void endView(boolean win){
+    private void endView(boolean win){
         Platform.runLater(()->{
             if(win){
                 endImage.setImage(new Image(getClass().getResource("/images/endscreen/endgame_win_screen.png").toString()));
@@ -474,11 +474,11 @@ public class GameSceneController extends GUIController {
 
 
     /**
-     * Update the {@link GameSceneController#imageGrid}
-     * @param board
+     * Update the {@link GameSceneController#imageGrid} loading into every {@code stack-pane} the correct image
+     * @param board the board received from the server
      */
 
-    public void updateBoardView(Board board){
+    private void updateBoardView(Board board){
         Platform.runLater( ()->{
             clearStackPanes();
             for(int x = 0; x <5 ; x++){
@@ -543,7 +543,7 @@ public class GameSceneController extends GUIController {
      * @return the formatted string
      */
 
-    public String formatString(String message){
+    private String formatString(String message){
         return message.replaceAll("\n", "").replaceAll("\\[31m","").replaceAll("\\[32m","").replaceAll("\\[33m","").replaceAll("\\[34m","").replaceAll("\\[35m","").replaceAll("\\[0m","").replaceAll(">>>","").replaceAll("y / n","");
     }
 
