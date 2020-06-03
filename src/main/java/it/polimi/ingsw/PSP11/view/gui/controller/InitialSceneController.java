@@ -173,7 +173,7 @@ public class InitialSceneController extends GUIController{
 
     /**
      * Called when a {@link ConnectionClosedMessage} is sent by the server, set the  {@link InitialSceneController#disconnectionPane} visible
-     * @param message
+     * @param message the disconnection message of the server
      */
 
     private void connectionClosedView(String message){

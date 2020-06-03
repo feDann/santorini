@@ -36,15 +36,15 @@ public abstract class GUIController {
 
     /**
      *
-     * @return the {{@link GUIController#client}} reference
+     * @return the {@link GUIController#client} reference
      */
     public GUIClient getClient() {
         return client;
     }
 
     /**
-     * Set the {{@link GUIController#client}} attribute
-     * @param client the {{@link GUIClient} object
+     * Set the {@link GUIController#client} attribute
+     * @param client the {@link GUIClient} object
      */
 
     public void setClient(GUIClient client) {
@@ -62,7 +62,7 @@ public abstract class GUIController {
 
     /**
      *
-     * @return the {@link GUIController#color } associated to the player
+     * @return the {@link GUIController#color} associated to the player
      */
 
     public static Color getColor() {
@@ -98,7 +98,7 @@ public abstract class GUIController {
 
     /**
      * set the {@link GUIController#opponents} attribute
-     * @param opponents the {@code ArrayList<PlayerInfo>}} structure
+     * @param opponents the {@code ArrayList<PlayerInfo>} structure
      */
 
     public static void setOpponents(ArrayList<PlayerInfo> opponents) {

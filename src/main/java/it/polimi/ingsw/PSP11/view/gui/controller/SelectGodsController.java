@@ -63,6 +63,10 @@ public class SelectGodsController extends GUIController {
     private VBox selectedGods,playerBox;
 
 
+    /**
+     * Initialize the scene setting the visibility of the panes , loading fonts and style
+     */
+
     public void initialize(){
         disconnectionPane.setVisible(false);
 
@@ -94,6 +98,9 @@ public class SelectGodsController extends GUIController {
 
     }
 
+    /**
+     * Called when the {@link SelectGodsController#leftButton} is pressed, rotate to left the list of cards and update the visualization
+     */
 
     @FXML
     void goLeft(ActionEvent event) {
@@ -105,6 +112,10 @@ public class SelectGodsController extends GUIController {
         }
     }
 
+    /**
+     * Called when the {@link SelectGodsController#rightButton} is pressed, rotate to right the list of cards and update the visualization
+     */
+
     @FXML
     void goRight(ActionEvent event) {
         Collections.rotate(gods, -1);
@@ -115,11 +126,19 @@ public class SelectGodsController extends GUIController {
         }
     }
 
+    /**
+     * Show a tip the the cursor is holt on {@link SelectGodsController#centerStack}
+     */
+
     @FXML
     public void showTip(MouseEvent mouseEvent) {
         Tooltip tp = new Tooltip("click to select");
         Tooltip.install(centerStack,tp);
     }
+
+    /**
+     * Called when the {@link SelectGodsController#sendGameGods} button is pressed,if it's possible send the selected gods to the server, show an error text otherwise
+     */
 
     @FXML
     public void sendSelectionForGameGods(ActionEvent event) {
@@ -151,11 +170,19 @@ public class SelectGodsController extends GUIController {
 
     }
 
+    /**
+     *Called when the {@link SelectGodsController#closeButton} is pressed, close the stage
+     */
+
     @FXML
     public void closeClient(ActionEvent event){
         Stage stage = (Stage) initPane.getScene().getWindow();
         stage.close();
     }
+
+    /**
+     * Add to the {@link SelectGodsController#playerBox} the name of the player in game
+     */
 
     public void initializePlayerBox(){
         double width = playerBox.getPrefWidth();
@@ -176,6 +203,9 @@ public class SelectGodsController extends GUIController {
         }
     }
 
+    /**
+     *Called when the {@link SelectGodsController#sendPlayerGod} button is pressed, if it's possible send the selected god to the server, show an error text otherwise
+     */
 
     @FXML
     public void sendSelectionForPlayerGod(ActionEvent event) {
@@ -194,6 +224,10 @@ public class SelectGodsController extends GUIController {
 
 
     }
+
+    /**
+     * Called when the {@link SelectGodsController#centerStack} is pressed, add to the {@link SelectGodsController#selectedGodsMap} and {@link SelectGodsController#selectedGods} the {@link SelectGodsController#centerCard}. If the card is already in the {@link SelectGodsController#selectedGodsMap} then it is removed.
+     */
 
     @FXML
     void selectStackPane(MouseEvent event) {
@@ -223,6 +257,9 @@ public class SelectGodsController extends GUIController {
     }
 
 
+    /**
+     * Update the image in the {@link SelectGodsController#leftStack}, {@link SelectGodsController#rightStack}, {@link SelectGodsController#centerStack} and set the new {@link SelectGodsController#centerCard}
+     */
 
     public void updateStackPaneForGameGods(){
         Platform.runLater(()->{
@@ -237,6 +274,9 @@ public class SelectGodsController extends GUIController {
         });
     }
 
+    /**
+     * Update the image in the {@link SelectGodsController#leftStack}, {@link SelectGodsController#rightStack}, {@link SelectGodsController#centerStack} and set the new {@link SelectGodsController#centerCard}
+     */
 
     public void updateStackPaneForPlayerGod(){
         Platform.runLater(() ->{
@@ -282,6 +322,10 @@ public class SelectGodsController extends GUIController {
 
     }
 
+    /**
+     * Set the {@link SelectGodsController#selectPane} and the {@link SelectGodsController#sendGameGods} visible and update the {@link SelectGodsController#selectionText}
+     * @param numOfPlayers number of players in the game
+     */
 
     private void selectGameGodScene(int numOfPlayers) {
         waitPane.setVisible(false);
@@ -296,6 +340,10 @@ public class SelectGodsController extends GUIController {
 
     }
 
+    /**
+     * Set the {@link SelectGodsController#selectPane} and the {@link SelectGodsController#sendPlayerGod} visible and update the {@link SelectGodsController#selectionText}
+     */
+
     private void selectPlayerGodScene() {
         waitPane.setVisible(false);
         selectPane.setVisible(true);
@@ -309,6 +357,10 @@ public class SelectGodsController extends GUIController {
         updateStackPaneForPlayerGod();
 
     }
+
+    /**
+     * set the {@link SelectGodsController#waitPane} visible and load a text animation
+     */
 
     private void waitScene(){
         waitPane.setVisible(true);
@@ -332,6 +384,11 @@ public class SelectGodsController extends GUIController {
         });
     }
 
+    /**
+     * Called when a {@link ConnectionClosedMessage} is sent by the server, set the  {@link SelectGodsController#disconnectionPane} visible
+     * @param message the disconnection message of the server
+     */
+
     public void connectionClosedView(String message){
         Platform.runLater(()->{
             waitPane.setEffect(new GaussianBlur());
@@ -341,6 +398,10 @@ public class SelectGodsController extends GUIController {
         });
     }
 
+
+    /**
+     * {@inheritDoc}
+     */
 
     @Override
     public void changeStage() {
@@ -373,6 +434,9 @@ public class SelectGodsController extends GUIController {
     }
 
 
+    /**
+     *{@inheritDoc}
+     */
 
     @Override
     public void handleMessage(Message message) {

@@ -63,6 +63,10 @@ public class GameSceneController extends GUIController {
     @FXML
     private VBox opponentBox;
 
+    /**
+     * Initialize the scene setting the visibility of the panes and loading fonts
+     */
+
     @FXML
     public void initialize(){
         initPane.setVisible(true);
@@ -91,6 +95,10 @@ public class GameSceneController extends GUIController {
 
     }
 
+    /**
+     * Called when a button of the {@link GameSceneController#actionGrid} is pressed, send a {@link PlaceWorkerResponse} to the server with the position of the id of the button
+     */
+
     @FXML
     public void placeWorkerAction(ActionEvent event){
         Platform.runLater(() -> {
@@ -102,6 +110,9 @@ public class GameSceneController extends GUIController {
     }
 
 
+    /**
+     * Called when a button of the {@link GameSceneController#actionGrid} is pressed, send a {@link SelectWorkerResponse} to the server with the position of the id of the button
+     */
 
     @FXML
     public void selectWorker(ActionEvent event){
@@ -109,6 +120,10 @@ public class GameSceneController extends GUIController {
         getClient().asyncWrite(new SelectWorkerResponse(Integer.parseInt(button.getId())));
         actionPane.setVisible(false);
     }
+
+    /**
+     * Called when a button of the {@link GameSceneController#actionGrid} is pressed, send a {@link MoveResponse} to the server with the position of the id of the button
+     */
 
     @FXML
     public void moveWorker(ActionEvent event) {
@@ -122,6 +137,10 @@ public class GameSceneController extends GUIController {
         });
     }
 
+    /**
+     * Called when a button of the {@link GameSceneController#actionGrid} is pressed, send a {@link BuildResponse} to the server with the position of the id of the button
+     */
+
     @FXML
     public void buildBlock(ActionEvent event) {
         Platform.runLater(() -> {
@@ -133,6 +152,11 @@ public class GameSceneController extends GUIController {
 
         });
     }
+
+    /**
+     * Called when the {@link GameSceneController#yesButton} or {@link GameSceneController#noButton} is pressed, send a {@link BooleanResponse} message to the server
+     * @param event
+     */
 
     @FXML
     public void booleanResponseHandler(ActionEvent event){
@@ -146,6 +170,10 @@ public class GameSceneController extends GUIController {
         }
 
     }
+
+    /**
+     * Called when the {@link GameSceneController#playerHero} or a {@code stack-pane} inside the {@link GameSceneController#opponentBox} is pressed, set the {@link GameSceneController#descriptionPane} to visible and show a description of the card
+     */
 
     @FXML
     public void descriptionView(MouseEvent event){
@@ -169,11 +197,29 @@ public class GameSceneController extends GUIController {
         });
     }
 
+    /**
+     * Called when the {@link GameSceneController#descriptionPane} is pressed, set to invisible itself
+     */
+
     @FXML
     public void hide(MouseEvent event){
         descriptionPane.setVisible(false);
     }
 
+
+    /**
+     *Called when the {@link GameSceneController#closeButton} button is pressed, close the stage
+     */
+
+    @FXML
+    public void closeClient(ActionEvent event){
+        Stage stage = (Stage) initPane.getScene().getWindow();
+        stage.close();
+    }
+
+    /**
+     * Initialize the {@link GameSceneController#actionGrid} adding to every cell a button
+     */
 
     public void initializeActionGridButtons(){
         for(int x = 0;x <5;x++){
@@ -189,11 +235,9 @@ public class GameSceneController extends GUIController {
         }
     }
 
-    @FXML
-    public void closeClient(ActionEvent event){
-        Stage stage = (Stage) initPane.getScene().getWindow();
-        stage.close();
-    }
+    /**
+     * Initialize the {@link GameSceneController#imageGrid} adding to every cell a {@code stack-pane}
+     */
 
     public void initializeImageGrid(){
         for(int x = 0;x <5;x++){
@@ -208,6 +252,10 @@ public class GameSceneController extends GUIController {
             }
         }
     }
+
+    /**
+     * Add to the {@link GameSceneController#opponentBox} the opponents information
+     */
 
     public void createOpponentBox(){
 
@@ -240,6 +288,11 @@ public class GameSceneController extends GUIController {
         }
     }
 
+    /**
+     * Remove the {@code playerToDelete} from the opponents in {@link GUIController} and rebuild the {@link GameSceneController#opponentBox} using the {@link GameSceneController#createOpponentBox()}
+     * @param playerToDelete the name of the player to remove
+     */
+
     public void rebuildOpponentBox(String playerToDelete){
         Platform.runLater(() ->{
             //remove loser player
@@ -249,6 +302,10 @@ public class GameSceneController extends GUIController {
         });
     }
 
+    /**
+     * Remove al the children of the {@code stackPane} in the {@link GameSceneController#imageGrid}
+     */
+
     public void clearStackPanes(){
         for(Node node: imageGrid.getChildren()){
             ((StackPane) node).getChildren().clear();
@@ -256,7 +313,11 @@ public class GameSceneController extends GUIController {
     }
 
 
-
+    /**
+     * Return the resource path of the worker with the color equals {@code color}
+     * @param color the color of the worker
+     * @return the resource path ot the worker as a string
+     */
 
     public String chooseWorker(Color color){
         if(color == Color.RED){
@@ -272,6 +333,10 @@ public class GameSceneController extends GUIController {
     }
 
 
+    /**
+     * Called when a {@link PlaceWorkerRequest} is sent by the server.
+     * Set the {@link GameSceneController#actionGrid} and {@link GameSceneController#imageGrid} visible
+     */
 
     public void placeWorker(){
         Platform.runLater(() -> {
@@ -281,12 +346,20 @@ public class GameSceneController extends GUIController {
         });
     }
 
+    /**
+     * Set to invisible all the children of the {@code pane}
+     */
 
     public void setAllInvisible(GridPane pane){
         for(Node n : pane.getChildren()){
             n.setVisible(false);
         }
     }
+
+    /**
+     * Show the available worker on the {@link GameSceneController#actionGrid}
+     * @param workers the available workers sent by the server
+     */
 
     public void selectWorkerView(ArrayList<Worker> workers){
         Platform.runLater(()->{
@@ -305,6 +378,10 @@ public class GameSceneController extends GUIController {
     }
 
 
+    /**
+     * Show the possible move position on the {@link GameSceneController#actionGrid}
+     * @param possibleMoves possible move position sent by the server
+     */
 
     public void moveView(ArrayList<Point> possibleMoves){
 
@@ -324,6 +401,11 @@ public class GameSceneController extends GUIController {
 
     }
 
+    /**
+     * Show the possible build position on the {@link GameSceneController#actionGrid}
+     * @param possibleBuilds possible build position sent by the server
+     */
+
     public void buildView(ArrayList<Point> possibleBuilds){
 
         Platform.runLater(()->{
@@ -342,10 +424,20 @@ public class GameSceneController extends GUIController {
 
     }
 
+    /**
+     * Set the {@link GameSceneController#heroPowerPane} visible and set the {@link GameSceneController#requestText}
+     * @param message the hero power request text
+     */
+
     public void heroRequestView(String message){
         requestText.setText(message.toUpperCase());
         heroPowerPane.setVisible(true);
     }
+
+    /**
+     * Called when a {@link ConnectionClosedMessage} is sent by the server, set the  {@link InitialSceneController#disconnectionPane} visible
+     * @param message the disconnection message of the server
+     */
 
     public void connectionClosedView(String message){
         Platform.runLater(()->{
@@ -358,6 +450,11 @@ public class GameSceneController extends GUIController {
             disconnectionText.setText(message.toUpperCase());
         });
     }
+
+    /**
+     * Set the {@link GameSceneController#endPane} to visible and load to {@link GameSceneController#endImage} the win_image if {@code win} is true, lose_image otherwise
+     * @param win true if the player won, false otherwise
+     */
 
     public void endView(boolean win){
         Platform.runLater(()->{
@@ -376,6 +473,10 @@ public class GameSceneController extends GUIController {
     }
 
 
+    /**
+     * Update the {@link GameSceneController#imageGrid}
+     * @param board
+     */
 
     public void updateBoardView(Board board){
         Platform.runLater( ()->{
@@ -436,18 +537,30 @@ public class GameSceneController extends GUIController {
         });
     }
 
-
+    /**
+     * Format the server message for a better visualization in {@link GameSceneController#serverLog}
+     * @param message the message from the server
+     * @return the formatted string
+     */
 
     public String formatString(String message){
         return message.replaceAll("\n", "").replaceAll("\\[31m","").replaceAll("\\[32m","").replaceAll("\\[33m","").replaceAll("\\[34m","").replaceAll("\\[35m","").replaceAll("\\[0m","").replaceAll(">>>","").replaceAll("y / n","");
     }
 
 
+    /**
+     * {@inheritDoc}
+     */
+
     @Override
     public void changeStage() {
 
     }
 
+
+    /**
+     * {@inheritDoc}
+     */
 
     @Override
     public void handleMessage(Message message) {
