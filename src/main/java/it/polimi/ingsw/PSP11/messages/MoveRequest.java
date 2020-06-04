@@ -7,6 +7,10 @@ public class MoveRequest extends SimpleMessage{
 
     private ArrayList<Point> possibleMoves;
 
+    /**
+     * message with all the possible move location available for the player to choose
+     * @param possibleMoves ArrayList of all the possible position in which the player could move
+     */
     public MoveRequest(ArrayList<Point> possibleMoves) {
         super("");
         this.possibleMoves = possibleMoves;

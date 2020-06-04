@@ -8,6 +8,12 @@ public class UpdateMessage {
     private PlayerInfo player;
     private Message updateMessage;
 
+    /**
+     * message used to update all the player on the state of the game
+     * @param board the game board with all the buildings
+     * @param player the current player
+     * @param message the update message
+     */
     public UpdateMessage(Board board, PlayerInfo player, Message message) {
         this.board = board;
         this.player = player;

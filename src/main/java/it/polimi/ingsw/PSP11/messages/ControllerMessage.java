@@ -7,6 +7,9 @@ public class ControllerMessage {
     private Message message;
     private VirtualView virtualView;
 
+    /**
+     * message used to update the controller
+     */
     public ControllerMessage(Message message, VirtualView virtualView) {
         this.message = message;
         this.virtualView = virtualView;

@@ -112,7 +112,7 @@ public class PlaceWorkerState implements GameState{
         if (invalidPoint){
             return new InvalidWorkerPosition();
         }
-        return new PlaceWorkerRequest(game.boardClone());
+        return new PlaceWorkerRequest();
     }
 
     @Override

@@ -7,6 +7,10 @@ public class BuildRequest extends SimpleMessage{
 
     private ArrayList<Point> possibleBuilds;
 
+    /**
+     * message with all the possible build location available for the player to choose
+     * @param possibleBuilds ArrayList of all the possible position in which the player could build
+     */
     public BuildRequest(ArrayList<Point> possibleBuilds) {
         super("");
         this.possibleBuilds = possibleBuilds;

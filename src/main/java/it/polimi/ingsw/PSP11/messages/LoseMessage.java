@@ -5,6 +5,9 @@ import it.polimi.ingsw.PSP11.model.Color;
 
 public class LoseMessage extends SimpleMessage{
 
+    /**
+     * message send if a player lose the game, but there is no winner (3 player game)
+     */
     public LoseMessage() {
         super(Color.RED.getEscape() +
                 "\n\n▓██   ██▓ ▒█████   █    ██     ██▓     ▒█████    ██████ ▄▄▄█████▓\n" +
@@ -19,7 +22,10 @@ public class LoseMessage extends SimpleMessage{
                 " ░ ░                                                             \n"+ Color.RESET);
     }
 
-
+    /**
+     * message sent if a player lose the game and there is a winner
+     * @param winner name of the winner
+     */
     public LoseMessage(String winner){
         super(Color.GREEN.getEscape()+"\n\n>>>>The winner is: " + winner + "<<<<\n" + Color.RED.getEscape()+
                 "\n\n\n\n" +

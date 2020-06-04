@@ -11,6 +11,12 @@ public class SelectWorkerRequest extends SimpleMessage {
 
     private ArrayList<Worker> availableWorkers = new ArrayList<>();
 
+    /**
+     * print a message to notify the player that his turn has started and remind him what god he has chosen
+     * also ask the player the id of the worker he wants to move
+     * @param workers of the player, between which he has to choose
+     * @param playerGod the god chosen by the player
+     */
     public SelectWorkerRequest(ArrayList<Worker> workers, Card playerGod) {
         super("");
         String formattedMessage = "\n\n" + Color.GREEN.getEscape()+

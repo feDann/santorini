@@ -10,6 +10,10 @@ public class SelectPlayerGodRequest extends SimpleMessage{
     private int numOfCards;
     private ArrayList<Card> chosenCards = new ArrayList<Card>();
 
+    /**
+     * message used to ask the player to chose his personal god
+     * @param chosenCards the gods chosen for the game by the challenger
+     */
     public SelectPlayerGodRequest(ArrayList<Card> chosenCards) {
         super("");
         int id = 1;
