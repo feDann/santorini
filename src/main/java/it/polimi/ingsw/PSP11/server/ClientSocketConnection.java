@@ -72,7 +72,7 @@ public class ClientSocketConnection extends Observable<Message> implements Runna
                 out.notifyAll();
             }
         } catch(Exception e){
-            System.err.println(TimeStamp.getTimeSTamp() + "Error during send of " + clientSocket.getInetAddress().toString());
+            System.err.println(TimeStamp.getTimeSTamp() + "Error during send!");
         }
     }
 
