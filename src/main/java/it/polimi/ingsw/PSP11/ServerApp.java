@@ -1,6 +1,7 @@
 package it.polimi.ingsw.PSP11;
 
 import it.polimi.ingsw.PSP11.server.Server;
+import it.polimi.ingsw.PSP11.utils.TimeStamp;
 
 public class ServerApp {
 
@@ -10,7 +11,7 @@ public class ServerApp {
             server = new Server();
             server.start();
         } catch (Exception e) {
-            System.err.println("Impossible to initialize the server: " + e.getMessage() + "!");
+            System.err.println(TimeStamp.getTimeSTamp() + "Impossible to initialize the server: " + e.getMessage() + "!");
         }
     }
 

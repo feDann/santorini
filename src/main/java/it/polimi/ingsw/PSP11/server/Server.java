@@ -4,6 +4,7 @@ import it.polimi.ingsw.PSP11.controller.Controller;
 import it.polimi.ingsw.PSP11.messages.WaitMessage;
 import it.polimi.ingsw.PSP11.model.Game;
 import it.polimi.ingsw.PSP11.model.Player;
+import it.polimi.ingsw.PSP11.utils.TimeStamp;
 import it.polimi.ingsw.PSP11.view.VirtualView;
 
 import java.io.IOException;
@@ -56,6 +57,7 @@ public class Server {
      * @param playerToKill the player to disconnect from the server
      */
     public synchronized void looserDisconnect(String playerToKill){
+        System.out.println(TimeStamp.getTimeSTamp() + playerToKill +" has lost!");
         playingNameList.remove(playerToKill);
         ClientSocketConnection playerToKillSocket = playingList.get(playerToKill);
         for (ClientSocketConnection c : playingConnections.get(playerToKillSocket)){
@@ -73,12 +75,14 @@ public class Server {
 
     public synchronized void killLobby(String nickname){
         if(waitingNameList.contains(nickname)){
+            System.out.println(TimeStamp.getTimeSTamp() +"Removing " + nickname +" from waiting list" );
             waitingListForTwo.remove(nickname);
             waitingListForThree.remove(nickname);
             waitingNameList.remove(nickname);
             return;
         }
         if(playingNameList.contains(nickname)){
+            System.out.println(TimeStamp.getTimeSTamp() +"Closing game for " + nickname );
             for (ClientSocketConnection c : playingConnections.get(playingList.get(nickname))){
                 c.closeConnection(nickname+" has disconnected from the server. ");
                 String nick = playingList.keySet().stream().filter(s -> playingList.get(s).equals(c)).collect(Collectors.toList()).get(0);
@@ -99,12 +103,14 @@ public class Server {
      */
 
     public synchronized void lobbyForTwoPlayer(String nickname,ClientSocketConnection connection) {
+        System.out.println(TimeStamp.getTimeSTamp() +"Adding " + nickname + " to waiting List for two players"  );
         waitingListForTwo.put(nickname, connection);
             if (waitingListForTwo.size() == 2) {
                 ArrayList<String> nameList = new ArrayList<>(waitingListForTwo.keySet());
                 Collections.shuffle(nameList);
                 String nickname1 = nameList.get(0);
                 String nickname2 = nameList.get(1);
+                System.out.printf(TimeStamp.getTimeSTamp() +"Starting a new game for %s,%s\n" ,nickname1 , nickname2);
                 ClientSocketConnection connection1 = waitingListForTwo.get(nickname1);
                 ClientSocketConnection connection2 = waitingListForTwo.get(nickname2);
 
@@ -154,6 +160,7 @@ public class Server {
      */
 
     public synchronized void lobbyForThreePlayer(String nickname,ClientSocketConnection connection){
+        System.out.println(TimeStamp.getTimeSTamp() +"Adding " + nickname + " to waiting list for three players"  );
         waitingListForThree.put(nickname, connection);
         if(waitingListForThree.size()==3) {
             ArrayList<String> nameList = new ArrayList<>(waitingListForThree.keySet());
@@ -161,6 +168,7 @@ public class Server {
             String nickname1 = nameList.get(0);
             String nickname2 = nameList.get(1);
             String nickname3 = nameList.get(2);
+            System.out.printf(TimeStamp.getTimeSTamp() +"Starting a new game for %s,%s,%s\n" ,nickname1 , nickname2, nickname3);
             ClientSocketConnection connection1 = waitingListForThree.get(nickname1);
             ClientSocketConnection connection2 = waitingListForThree.get(nickname2);
             ClientSocketConnection connection3 = waitingListForThree.get(nickname3);
@@ -227,7 +235,7 @@ public class Server {
                 ClientSocketConnection socketConnection = new ClientSocketConnection(newClientSocket, this);
                 executor.submit(socketConnection);
             } catch (IOException e) {
-                System.err.println("Cannot connect the client " + e.getMessage() + "!");
+                System.err.println(TimeStamp.getTimeSTamp() + "Cannot connect the client " + e.getMessage() + "!");
             }
         }
     }

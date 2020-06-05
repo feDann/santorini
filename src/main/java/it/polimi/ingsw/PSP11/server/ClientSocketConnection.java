@@ -6,6 +6,7 @@ import it.polimi.ingsw.PSP11.messages.Message;
 import it.polimi.ingsw.PSP11.messages.Ping;
 import it.polimi.ingsw.PSP11.messages.WelcomeMessage;
 import it.polimi.ingsw.PSP11.observer.Observable;
+import it.polimi.ingsw.PSP11.utils.TimeStamp;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -71,7 +72,7 @@ public class ClientSocketConnection extends Observable<Message> implements Runna
                 out.notifyAll();
             }
         } catch(Exception e){
-            System.err.println("error during send");
+            System.err.println(TimeStamp.getTimeSTamp() + "Error during send of " + clientSocket.getInetAddress().toString());
         }
     }
 
@@ -81,11 +82,12 @@ public class ClientSocketConnection extends Observable<Message> implements Runna
      */
 
     public synchronized void closeConnection(String message) {
+        System.out.println(TimeStamp.getTimeSTamp() + "Closing connection for " + clientSocket.getInetAddress().toString());
         send(new ConnectionClosedMessage(message));
         try {
             clientSocket.close();
         } catch (IOException e) {
-            System.err.println("Error when closing socket! ");
+            System.err.println(TimeStamp.getTimeSTamp() + "Error when closing socket!");
         }
         active = false;
     }
@@ -137,7 +139,7 @@ public class ClientSocketConnection extends Observable<Message> implements Runna
                     out.notifyAll();
                 }
             } catch (IOException e) {
-                System.err.println("Error writing to client: " + e.getMessage());
+                System.err.println(TimeStamp.getTimeSTamp() + "Error writing to client: " + e.getMessage());
                 killPinger();
             }
         };
@@ -151,6 +153,7 @@ public class ClientSocketConnection extends Observable<Message> implements Runna
     public void run() {
         Message message;
         try {
+            System.out.println(TimeStamp.getTimeSTamp() + clientSocket.getInetAddress().toString() + " connected to the server");
             out = new ObjectOutputStream(clientSocket.getOutputStream());
             in = new ObjectInputStream(clientSocket.getInputStream());
             clientSocket.setSoTimeout(6000);
@@ -164,7 +167,7 @@ public class ClientSocketConnection extends Observable<Message> implements Runna
                 }
             }
         } catch (IOException | ClassNotFoundException e ) {
-            System.err.println(e.getMessage());
+            System.out.println(TimeStamp.getTimeSTamp() + "Error with + " + clientSocket.getInetAddress().toString() + ": "+ e.getMessage());
             server.killLobby(nickname);
         }
         finally {
