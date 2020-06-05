@@ -12,6 +12,11 @@ public class SelectGameGodsRequest extends SimpleMessage {
     private int numOfDeckCards;
     private ArrayList<Card> gods;
 
+    /**
+     * message used to display the possible gods to be picked to the player
+     * @param deck contains all the god card
+     * @param numOfPlayers number of player in the game
+     */
     public SelectGameGodsRequest(Deck deck,int numOfPlayers){
         super("");
         this.numOfPlayers = numOfPlayers;

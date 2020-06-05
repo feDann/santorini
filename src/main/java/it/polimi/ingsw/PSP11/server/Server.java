@@ -41,7 +41,7 @@ public class Server {
      * Check if a nickname is already in use and if it's not, add them in {@link Server#waitingNameList}
      * @param connection the {@link ClientSocketConnection} of the player
      * @param nickname the nickname of the player
-     * @return true if the nickname is not in the {@link Server#waitingNameList}, false otherwise
+     * @return true if the nickname is not in the {@link Server#waitingNameList} or {@link Server#playingNameList}, false otherwise
      */
 
     public synchronized boolean insertInWaitingList(ClientSocketConnection connection, String nickname){

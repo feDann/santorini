@@ -9,6 +9,13 @@ public class OpponentMessage extends SimpleMessage {
 
     private Color color;
     private ArrayList<PlayerInfo> opponents = new ArrayList<>();
+
+    /**
+     * message used to communicate the name of the opponent to the current player at the start of the game
+     * also used to print the color of the current player
+     * @param opponent1 name of the opponent
+     * @param color of the current player
+     */
     public OpponentMessage(PlayerInfo opponent1, Color color) {
         super("\n" +
                 "▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬\n"+
@@ -18,7 +25,13 @@ public class OpponentMessage extends SimpleMessage {
         opponents.add(opponent1);
         this.color = color;
     }
-
+    /**
+     * message used to communicate the names of the opponents to the current player at the start of the game
+     * also used to print the color of the current player
+     * @param opponent1 name of the first opponent
+     * @param opponent2 name of the second opponent
+     * @param color of the current player
+     */
     public OpponentMessage(PlayerInfo opponent1, PlayerInfo opponent2, Color color){
         super("\n\n" +
                 "▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬"+
