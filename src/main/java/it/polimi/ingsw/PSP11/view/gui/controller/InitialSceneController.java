@@ -136,7 +136,7 @@ public class InitialSceneController extends GUIController{
     }
 
     /**
-     * change the visibility for {@link InitialSceneController#connectionPane} (false) and {@link InitialSceneController#setupPane} (false)
+     * change the visibility for {@link InitialSceneController#connectionPane} (false) and {@link InitialSceneController#setupPane} (true)
      */
 
     private void setupInfoScene() {
