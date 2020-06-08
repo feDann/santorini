@@ -7,7 +7,7 @@ public class TimeStamp {
 
     /**
      *
-     * @return the a string representing the current day and time formatted as [yyyy-mm-dd_hh:mm:ss]
+     * @return a string representing the current day and time formatted as [yyyy-mm-dd_hh:mm:ss]
      */
     public static String getTimeSTamp(){
         String timeStamp = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss").format(Calendar.getInstance().getTime());
