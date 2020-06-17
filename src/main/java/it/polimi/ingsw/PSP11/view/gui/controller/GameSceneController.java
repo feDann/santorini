@@ -435,7 +435,7 @@ public class GameSceneController extends GUIController {
     }
 
     /**
-     * Called when a {@link ConnectionClosedMessage} is sent by the server, set the  {@link InitialSceneController#disconnectionPane} visible
+     * Called when a {@link ConnectionClosedMessage} is sent by the server, set the  {@link GameSceneController#disconnectionPane} visible
      * @param message the disconnection message of the server
      */
 
