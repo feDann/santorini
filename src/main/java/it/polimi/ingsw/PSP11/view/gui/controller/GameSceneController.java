@@ -449,8 +449,10 @@ public class GameSceneController extends GUIController {
      */
 
     private void heroRequestView(String message){
-        requestText.setText(message.toUpperCase());
-        heroPowerPane.setVisible(true);
+        Platform.runLater(()->{
+            requestText.setText(message.toUpperCase());
+            heroPowerPane.setVisible(true);
+        });
     }
 
     /**
@@ -567,6 +569,16 @@ public class GameSceneController extends GUIController {
         return message.replaceAll("\n", "").replaceAll("\\[31m","").replaceAll("\\[32m","").replaceAll("\\[33m","").replaceAll("\\[34m","").replaceAll("\\[35m","").replaceAll("\\[0m","").replaceAll(">>>","").replaceAll("y / n","");
     }
 
+    /**
+     * Update the serverLog
+     * @param logMessage the message from the server
+     */
+    private void updateLog(String logMessage){
+        Platform.runLater(() ->{
+            serverLog.appendText("[SERVER]: " + formatString(logMessage) +"\n");
+        });
+    }
+
 
     /**
      * {@inheritDoc}
@@ -628,7 +640,7 @@ public class GameSceneController extends GUIController {
             endView(false);
         }
         else if(message instanceof SimpleMessage){
-            serverLog.appendText("[SERVER]: " + formatString(message.getMessage()) +"\n");
+            updateLog(message.getMessage());
         }
 
     }
