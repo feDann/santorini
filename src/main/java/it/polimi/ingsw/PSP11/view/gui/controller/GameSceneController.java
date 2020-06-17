@@ -39,6 +39,7 @@ public class GameSceneController extends GUIController {
     private final String font = "/font/LillyBelle400.ttf";
     private boolean gameEnded = false;
 
+
     @FXML
     private Pane initPane,actionPane,imagePane,heroPowerPane,descriptionPane,serverLogPane,disconnectionPane,endPane;
 
@@ -53,6 +54,9 @@ public class GameSceneController extends GUIController {
 
     @FXML
     private ImageView cardView,endImage;
+
+    @FXML
+    private Image baseBlockImage,middleBlockImage,topBlockImage,domeImage,greenWorkerImage, blueWorkerImage, redWorkerImage;
 
     @FXML
     private Text requestText,turnText,cardDescription,log,disconnectionText;
@@ -77,6 +81,7 @@ public class GameSceneController extends GUIController {
         endPane.setVisible(false);
         initializeActionGridButtons();
         initializeImageGrid();
+        initializeImages();
         actionPane.setVisible(false);
         serverLog.setWrapText(true);
         serverLog.setEditable(false);
@@ -92,7 +97,20 @@ public class GameSceneController extends GUIController {
 
 
 
+    }
 
+    /**
+     * Load graphics assets for images
+     */
+
+    private void initializeImages(){
+        baseBlockImage = new Image(getClass().getResource("/images/blocks/base_block1.png").toString());
+        middleBlockImage = new Image(getClass().getResource("/images/blocks/mid_block1.png").toString());
+        topBlockImage = new Image(getClass().getResource("/images/blocks/top_block1.png").toString());
+        domeImage = new Image(getClass().getResource("/images/blocks/dome.png").toString());
+        redWorkerImage = new Image(getClass().getResource("/images/worker/redWorker.png").toString());
+        greenWorkerImage = new Image(getClass().getResource("/images/worker/greenWorker.png").toString());
+        blueWorkerImage = new Image(getClass().getResource("/images/worker/blueWorker.png").toString());
     }
 
     /**
@@ -314,22 +332,21 @@ public class GameSceneController extends GUIController {
 
 
     /**
-     * Return the resource path of the worker with the color equals {@code color}
+     * Return the image of the worker with the color equals {@code color}
      * @param color the color of the worker
-     * @return the resource path ot the worker as a string
+     * @return the image of the worker
      */
 
-    private String chooseWorker(Color color){
+    private Image chooseWorker(Color color){
         if(color == Color.RED){
-            return "/images/worker/redWorker.png";
+            return redWorkerImage;
         }
         else if(color == Color.BLUE){
-            return "/images/worker/blueWorker.png";
+            return blueWorkerImage;
         }
-        else if(color == Color.GREEN){
-            return "/images/worker/greenWorker.png";
+        else{
+            return greenWorkerImage;
         }
-        return null;
     }
 
 
@@ -368,6 +385,8 @@ public class GameSceneController extends GUIController {
             for(Worker worker : workers){
                 Point workerPosition = worker.getPosition();
                 Button button = (Button )actionGrid.getChildren().get(workerPosition.x * 5 + workerPosition.y);
+                button.getStyleClass().clear();
+                button.getStyleClass().add("moveButton");//TODO style da cambiare?
                 button.setId(String.valueOf(worker.getId()));
                 button.setOnAction(this::selectWorker);
                 button.setVisible(true);
@@ -485,28 +504,29 @@ public class GameSceneController extends GUIController {
                 for(int y = 0; y<5; y++){
                     Point position = new Point(x,y);
                     StackPane stack = ((StackPane)imageGrid.getChildren().get(x*5+y));
+                    double stackWidth = stack.getWidth();
+                    double stackHeight = stack.getHeight();
                     //set the blocks
                     if(board.getCurrentLevel(position).ordinal() >= 1) {
                         ImageView baseBlock = new ImageView();
-                        baseBlock.setFitWidth(stack.getWidth()*0.9);
-                        baseBlock.setFitHeight(stack.getHeight()*0.9);
+                        baseBlock.setFitWidth(stackWidth*0.9);
+                        baseBlock.setFitHeight(stackHeight*0.9);
                         baseBlock.setPreserveRatio(true);
-                        baseBlock.setImage(new Image(getClass().getResource("/images/blocks/base_block1.png").toString()));
-
+                        baseBlock.setImage(baseBlockImage);
                         stack.getChildren().add(baseBlock);
                         if (board.getCurrentLevel(position).ordinal() >= 2) {
                             ImageView middleBlock = new ImageView();
-                            middleBlock.setFitWidth(stack.getWidth()*0.80);
-                            middleBlock.setFitHeight(stack.getHeight()*0.80);
+                            middleBlock.setFitWidth(stackWidth*0.80);
+                            middleBlock.setFitHeight(stackHeight*0.80);
                             middleBlock.setPreserveRatio(true);
-                            middleBlock.setImage(new Image(getClass().getResource("/images/blocks/mid_block1.png").toString()));
+                            middleBlock.setImage(middleBlockImage);
                             stack.getChildren().add(middleBlock);
                             if (board.getCurrentLevel(position).ordinal() == 3) {
                                 ImageView topBlock = new ImageView();
-                                topBlock.setFitWidth(stack.getWidth()*0.67);
-                                topBlock.setFitHeight(stack.getHeight() *0.67);
+                                topBlock.setFitWidth(stackWidth*0.67);
+                                topBlock.setFitHeight(stackHeight *0.67);
                                 topBlock.setPreserveRatio(true);
-                                topBlock.setImage(new Image(getClass().getResource("/images/blocks/top_block1.png").toString()));
+                                topBlock.setImage(topBlockImage);
                                 stack.getChildren().add(topBlock);
                             }
                         }
@@ -516,19 +536,19 @@ public class GameSceneController extends GUIController {
 
                     if(board.hasWorkerOnTop(position)){
                         ImageView workerImage = new ImageView();
-                        workerImage.setFitWidth(stack.getWidth()*0.9);
-                        workerImage.setFitHeight(stack.getHeight()*0.9);
+                        workerImage.setFitWidth(stackWidth*0.9);
+                        workerImage.setFitHeight(stackHeight*0.9);
                         workerImage.setSmooth(true);
                         workerImage.setPreserveRatio(true);
-                        workerImage.setImage(new Image(getClass().getResource(chooseWorker(board.getWorker(position).getColor())).toString()));
+                        workerImage.setImage(chooseWorker(board.getWorker(position).getColor()));
                         stack.getChildren().add(workerImage);
                     }
                     else if(board.hasDomeOnTop(position)){
                         ImageView dome = new ImageView();
-                        dome.setFitWidth(stack.getWidth()*0.60);
-                        dome.setFitHeight(stack.getHeight()*0.60);
+                        dome.setFitWidth(stackWidth*0.60);
+                        dome.setFitHeight(stackHeight*0.60);
                         dome.setPreserveRatio(true);
-                        dome.setImage(new Image(getClass().getResource("/images/blocks/dome.png").toString()));
+                        dome.setImage(domeImage);
                         stack.getChildren().add(dome);
                     }
 
