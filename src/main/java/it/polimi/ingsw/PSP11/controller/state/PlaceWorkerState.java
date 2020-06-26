@@ -99,9 +99,9 @@ public class PlaceWorkerState implements GameState{
     }
 
     /**
-     * if is the first time that this method is called print a welcome message for all the players
-     * if the player insert an invalid position return a error message
-     * @return
+     *
+     * @return an invalid worker position message if the position chosen to place the worker is invalid,
+     *         otherwise return a place worker request message
      */
     @Override
     public Message stateMessage() {

@@ -88,7 +88,9 @@ public class Controller implements Observer<ControllerMessage> {
         }
     }
 
-
+    /**
+     * function used to start the game, 
+     */
     public void start (){
         ClientSocketConnection firstPlayerConnection;
         game.startGame();
