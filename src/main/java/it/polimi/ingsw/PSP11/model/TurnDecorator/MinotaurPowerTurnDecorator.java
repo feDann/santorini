@@ -19,7 +19,8 @@ public class MinotaurPowerTurnDecorator extends GodTurn {
         if(newPositionX >= 0 && newPositionX <5 && newPositionY >= 0 && newPositionY <5 ){
             Point newPosition = new Point(newPositionX, newPositionY);
             if(!board.hasDomeOnTop(newPosition) && !board.hasWorkerOnTop(newPosition)){
-                return board.getCurrentLevel(newPosition).ordinal() - board.getCurrentLevel(villainWorkerPosition).ordinal() <= 1;
+                //return board.getCurrentLevel(newPosition).ordinal() - board.getCurrentLevel(villainWorkerPosition).ordinal() <= 1;
+                return true;
             }
         }
         return false;

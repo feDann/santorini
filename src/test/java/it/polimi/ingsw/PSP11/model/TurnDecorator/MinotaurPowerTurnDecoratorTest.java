@@ -1,7 +1,7 @@
 package it.polimi.ingsw.PSP11.model.TurnDecorator;
 
-import it.polimi.ingsw.PSP11.model.*;
 import it.polimi.ingsw.PSP11.model.Color;
+import it.polimi.ingsw.PSP11.model.*;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -98,7 +98,7 @@ public class MinotaurPowerTurnDecoratorTest {
     public void minotaur_Board_With_Worker_And_Blocks_Move_Test() {
         //In this case minotaur can't push the opposite worker because there is a middle block in front
         ArrayList<Point> actualPosition;
-        ArrayList<Point> expectedPosition =  new ArrayList<>(Arrays.asList(new Point[]{new Point(1,1),new Point(1,2),new Point(1,3),new Point(3,2),new Point(3,1),new Point(3,3)}));
+        ArrayList<Point> expectedPosition =  new ArrayList<>(Arrays.asList(new Point[]{new Point(1,1),new Point(1,2),new Point(2,3),new Point(1,3),new Point(3,2),new Point(3,1),new Point(3,3)}));
         Worker villainWorker = new Worker(Color.BLUE);
         Worker otherWorker = new Worker(Color.RED);
         Point workerPosition = new Point(2,2);
