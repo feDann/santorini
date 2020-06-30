@@ -8,15 +8,15 @@ To start the server use the following command:
 java -jar ServerApp.jar
 ```
 
-at this point "The Santorini server is up and running..." should be displayed on the terminal.
+at this point "The Santorini [server](https://github.com/feDann/ing-sw-2020-fadini-ferrazzo-figini/blob/master/Derivelables/final/jar/ServerApp.jar) is up and running..." should be displayed on the terminal.
 ## Client
 ### CLI
-A player that wishes to play with a CLI interface should run the following command in the terminal:
+A player that wishes to play with a [CLI](https://github.com/feDann/ing-sw-2020-fadini-ferrazzo-figini/blob/master/Derivelables/final/jar/ClientApp.jar) interface should run the following command in the terminal:
 ```
 java -jar ClientApp.jar -nogui
 ```
 ### GUI
-a player that wished to play with a GUI interface should be able to simply double click on the jar to start playing,
+a player that wished to play with a [GUI](https://github.com/feDann/ing-sw-2020-fadini-ferrazzo-figini/blob/master/Derivelables/final/jar/ClientApp.jar) interface should be able to simply double click on the jar to start playing,
 otherwise run the following command in the terminal:
 ```
 java -jar ClientApp.jar
@@ -45,6 +45,11 @@ java -jar ClientApp.jar
 | Advanced Gods | [![RED](https://placehold.it/15/f03c15/f03c15)](#)|
 | Persistency | [![RED](https://placehold.it/15/f03c15/f03c15)](#)|
 | Undo | [![RED](https://placehold.it/15/f03c15/f03c15)](#)|
+
+#Documentation
+##UML
+##Javadoc
+##Report
 
 
 # Group Members
