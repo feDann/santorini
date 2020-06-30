@@ -46,17 +46,17 @@ java -jar ClientApp.jar
 | Persistency | [![RED](https://placehold.it/15/f03c15/f03c15)](#)|
 | Undo | [![RED](https://placehold.it/15/f03c15/f03c15)](#)|
 
-#Documentation
+# Documentation
 ## UML
 The following UML diagrams give an overview of the project, with a different levels of abstraction:
--[Project Uml](https://github.com/feDann/ing-sw-2020-fadini-ferrazzo-figini/blob/master/Derivelables/final/uml/ProjectUml.svg)
--[Summary UML](https://github.com/feDann/ing-sw-2020-fadini-ferrazzo-figini/blob/master/Derivelables/final/uml/Summary%20Uml.svg)
--[Package Specific UMLs](https://github.com/feDann/ing-sw-2020-fadini-ferrazzo-figini/tree/master/Derivelables/final/uml/Package%20Specific%20UMLs)
+- [Project Uml](https://github.com/feDann/ing-sw-2020-fadini-ferrazzo-figini/blob/master/Derivelables/final/uml/ProjectUml.svg)
+- [Summary UML](https://github.com/feDann/ing-sw-2020-fadini-ferrazzo-figini/blob/master/Derivelables/final/uml/Summary%20Uml.svg)
+- [Package Specific UMLs](https://github.com/feDann/ing-sw-2020-fadini-ferrazzo-figini/tree/master/Derivelables/final/uml/Package%20Specific%20UMLs)
 ## Javadoc
 Project documentation available at this [link]()
 ## Report
-Some statistics of final coverage [report]():
--Model Package line coverage: 91%
+Some statistics of final coverage [report]() :
+- Model Package line coverage: 91%
 
 
 # Group Members
