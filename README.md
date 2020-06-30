@@ -21,19 +21,19 @@ otherwise run the following command in the terminal:
 ```
 java -jar ClientApp.jar
 ```
-## How to Play
-### To play locally
+# How to Play
+## To play locally
 - start the server;
 - start two or more clients (CLI or GUI);
 - during server ip selection, insert 127.0.0.1 (or just leave blank);
 - you are all set up to play a local game!
-### To play with the remote server
+## To play with the remote server
 - start two or more clients (CLI or GUI);
 - during server ip selection, insert 13.58.138.117;
 - you are set up to play an online game!
 
 
-### Implemented Features
+# Implemented Features
 | Feature | State |
 |:-----------------------|:------------------------------------:|
 | Simplified Rules | [![GREEN](https://placehold.it/15/44bb44/44bb44)](#)|
@@ -47,7 +47,7 @@ java -jar ClientApp.jar
 | Undo | [![RED](https://placehold.it/15/f03c15/f03c15)](#)|
 
 
-### Group Members
+# Group Members
 - ###       Francesco Fadini ([@frafad](https://github.com/frafad))
 - ###       Daniele Francesco Antonio Ferrazzo ([@feDann](https://github.com/feDann))
 - ###       Andrea Figini ([@anath3m98](https://github.com/anath3m98))
