@@ -3,12 +3,12 @@
 # Game Setup
 
 ## Server
-To start the server use the following command:
+To start the [server](https://github.com/feDann/ing-sw-2020-fadini-ferrazzo-figini/blob/master/Derivelables/final/jar/ServerApp.jar) use the following command:
 ```
 java -jar ServerApp.jar
 ```
 
-at this point "The Santorini [server](https://github.com/feDann/ing-sw-2020-fadini-ferrazzo-figini/blob/master/Derivelables/final/jar/ServerApp.jar) is up and running..." should be displayed on the terminal.
+at this point "The Santorini server is up and running..." should be displayed on the terminal.
 ## Client
 ### CLI
 A player that wishes to play with a [CLI](https://github.com/feDann/ing-sw-2020-fadini-ferrazzo-figini/blob/master/Derivelables/final/jar/ClientApp.jar) interface should run the following command in the terminal:
@@ -23,13 +23,13 @@ java -jar ClientApp.jar
 ```
 # How to Play
 ## To play locally
-- start the server;
-- start two or more clients (CLI or GUI);
-- during server ip selection, insert 127.0.0.1 (or just leave blank);
+- start the server
+- start two or more clients (CLI or GUI)
+- during server ip selection, insert 127.0.0.1 (or just leave blank)
 - you are all set up to play a local game!
 ## To play with the remote server
-- start two or more clients (CLI or GUI);
-- during server ip selection, insert 13.58.138.117;
+- start two or more clients (CLI or GUI)
+- during server ip selection, insert 13.58.138.117
 - you are set up to play an online game!
 
 
@@ -56,7 +56,7 @@ The following UML diagrams give an overview of the project, with a different lev
 Project documentation available at this [link]()
 ## Report
 Some statistics of final coverage [report]() :
-- Model Package line coverage: 91%
+- Model Package line coverage: 92%
 
 
 # Group Members
