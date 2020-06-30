@@ -1,8 +1,8 @@
 # Prova Finale Ingegneria del Software 2020 - Gruppo PSP11
 
-## Game Setup
+# Game Setup
 
-### Server
+## Server
 To start the server use the following command:
 ```
 java -jar ServerApp.jar
