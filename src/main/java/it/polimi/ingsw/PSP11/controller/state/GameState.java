@@ -83,7 +83,7 @@ public interface GameState {
 
     /**
      * method used to decide witch action to do within the game state, based on the god's power
-     * @param message the player last received
+     * @param message message received from the client
      * @param virtualView of the current player
      * @return the new state of the game
      */
