@@ -1,0 +1,201 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: Player</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">it.polimi.ingsw.PSP11.model</a> ]
+</div>
+
+<h1>Coverage Summary for Class: Player (it.polimi.ingsw.PSP11.model)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Player</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (14/ 14)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (26/ 26)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package it.polimi.ingsw.PSP11.model;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;
+<i>4</i>&nbsp;import it.polimi.ingsw.PSP11.utils.PlayerInfo;
+<i>5</i>&nbsp;
+<i>6</i>&nbsp;import java.io.Serializable;
+<i>7</i>&nbsp;import java.util.ArrayList;
+<i>8</i>&nbsp;
+<i>9</i>&nbsp;/**
+<i>10</i>&nbsp; * Class for the players
+<i>11</i>&nbsp; */
+<i>12</i>&nbsp;public class Player implements Serializable {
+<i>13</i>&nbsp;
+<i>14</i>&nbsp;    private String nickname;
+<i>15</i>&nbsp;    private boolean eliminated;
+<i>16</i>&nbsp;    private GodTurn playerTurn;
+<i>17</i>&nbsp;    private Card god;
+<i>18</i>&nbsp;    private ArrayList&lt;Worker&gt; workers;
+<i>19</i>&nbsp;    private Color color;
+<i>20</i>&nbsp;
+<i>21</i>&nbsp;
+<i>22</i>&nbsp;    /**
+<i>23</i>&nbsp;     * Class constructor
+<i>24</i>&nbsp;     * @param chosenName nickname chosen by the player
+<i>25</i>&nbsp;     */
+<b class="fc"><i>26</i>&nbsp;    public Player (String chosenName) {</b>
+<b class="fc"><i>27</i>&nbsp;        this.nickname = chosenName;</b>
+<b class="fc"><i>28</i>&nbsp;        this.eliminated = false;</b>
+<b class="fc"><i>29</i>&nbsp;        this.playerTurn = null;</b>
+<b class="fc"><i>30</i>&nbsp;        this.god = null;</b>
+<b class="fc"><i>31</i>&nbsp;        this.workers = new ArrayList&lt;&gt;();</b>
+<b class="fc"><i>32</i>&nbsp;    }</b>
+<i>33</i>&nbsp;
+<i>34</i>&nbsp;
+<i>35</i>&nbsp;    /**
+<i>36</i>&nbsp;     * Eliminates the player by setting eliminated parameter to true
+<i>37</i>&nbsp;     */
+<i>38</i>&nbsp;    public void eliminate() {
+<b class="fc"><i>39</i>&nbsp;        this.eliminated = true;</b>
+<b class="fc"><i>40</i>&nbsp;    }</b>
+<i>41</i>&nbsp;
+<i>42</i>&nbsp;
+<i>43</i>&nbsp;    /**
+<i>44</i>&nbsp;     * Setter method for god attribute
+<i>45</i>&nbsp;     * @param chosenGod god card chosen by the player
+<i>46</i>&nbsp;     */
+<i>47</i>&nbsp;    public void setGod(Card chosenGod) {
+<b class="fc"><i>48</i>&nbsp;        this.god = chosenGod;</b>
+<b class="fc"><i>49</i>&nbsp;    }</b>
+<i>50</i>&nbsp;
+<i>51</i>&nbsp;
+<i>52</i>&nbsp;    /**
+<i>53</i>&nbsp;     * Setter method for playerTurn attribute
+<i>54</i>&nbsp;     * @param sharedTurn shared turn to decorate
+<i>55</i>&nbsp;     */
+<i>56</i>&nbsp;    public void setPlayerTurn (StandardTurn sharedTurn) {
+<b class="fc"><i>57</i>&nbsp;        god.setTurn(sharedTurn);</b>
+<b class="fc"><i>58</i>&nbsp;        this.playerTurn = god.getGodTurnDecorator();</b>
+<b class="fc"><i>59</i>&nbsp;    }</b>
+<i>60</i>&nbsp;
+<i>61</i>&nbsp;
+<i>62</i>&nbsp;    /**
+<i>63</i>&nbsp;     * Method to select a player worker
+<i>64</i>&nbsp;     * @param workerIndex index of the worker to return
+<i>65</i>&nbsp;     * @return worker at the specified index
+<i>66</i>&nbsp;     */
+<i>67</i>&nbsp;    public Worker chooseWorker (int workerIndex) {
+<b class="fc"><i>68</i>&nbsp;        return workers.get(workerIndex);</b>
+<i>69</i>&nbsp;    }
+<i>70</i>&nbsp;
+<i>71</i>&nbsp;
+<i>72</i>&nbsp;    /**
+<i>73</i>&nbsp;     * Method to check if the player is eliminated
+<i>74</i>&nbsp;     * @return true if player is eliminated
+<i>75</i>&nbsp;     */
+<i>76</i>&nbsp;    public boolean isEliminated() {
+<b class="fc"><i>77</i>&nbsp;        return this.eliminated;</b>
+<i>78</i>&nbsp;    }
+<i>79</i>&nbsp;
+<i>80</i>&nbsp;
+<i>81</i>&nbsp;    /**
+<i>82</i>&nbsp;     * Method to add a worker to the player
+<i>83</i>&nbsp;     * @param workerToAdd the worker to add
+<i>84</i>&nbsp;     */
+<i>85</i>&nbsp;    public void addWorker (Worker workerToAdd) {
+<b class="fc"><i>86</i>&nbsp;        this.workers.add(workerToAdd);</b>
+<b class="fc"><i>87</i>&nbsp;    }</b>
+<i>88</i>&nbsp;
+<i>89</i>&nbsp;
+<i>90</i>&nbsp;    public String getNickname() {
+<b class="fc"><i>91</i>&nbsp;        return nickname;</b>
+<i>92</i>&nbsp;    }
+<i>93</i>&nbsp;
+<i>94</i>&nbsp;    public GodTurn getPlayerTurn() {
+<b class="fc"><i>95</i>&nbsp;        return playerTurn;</b>
+<i>96</i>&nbsp;    }
+<i>97</i>&nbsp;
+<i>98</i>&nbsp;    public Card getGod() {
+<b class="fc"><i>99</i>&nbsp;        return god;</b>
+<i>100</i>&nbsp;    }
+<i>101</i>&nbsp;
+<i>102</i>&nbsp;    public ArrayList&lt;Worker&gt; getWorkers() {
+<b class="fc"><i>103</i>&nbsp;        return workers;</b>
+<i>104</i>&nbsp;    }
+<i>105</i>&nbsp;
+<i>106</i>&nbsp;    public Color getColor() {
+<b class="fc"><i>107</i>&nbsp;        return color;</b>
+<i>108</i>&nbsp;    }
+<i>109</i>&nbsp;
+<i>110</i>&nbsp;    public void setColor(Color color) {
+<b class="fc"><i>111</i>&nbsp;        this.color = color;</b>
+<b class="fc"><i>112</i>&nbsp;    }</b>
+<i>113</i>&nbsp;
+<i>114</i>&nbsp;    public PlayerInfo playerClone() {
+<b class="fc"><i>115</i>&nbsp;        return new PlayerInfo(nickname, color);</b>
+<i>116</i>&nbsp;    }
+<i>117</i>&nbsp;
+<i>118</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2020-07-01 21:39</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,730 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: GameSceneController</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">it.polimi.ingsw.PSP11.view.gui.controller</a> ]
+</div>
+
+<h1>Coverage Summary for Class: GameSceneController (it.polimi.ingsw.PSP11.view.gui.controller)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">GameSceneController</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 44)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 267)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package it.polimi.ingsw.PSP11.view.gui.controller;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;
+<i>4</i>&nbsp;import it.polimi.ingsw.PSP11.messages.*;
+<i>5</i>&nbsp;import it.polimi.ingsw.PSP11.model.Board;
+<i>6</i>&nbsp;
+<i>7</i>&nbsp;import it.polimi.ingsw.PSP11.model.Color;
+<i>8</i>&nbsp;import it.polimi.ingsw.PSP11.model.Player;
+<i>9</i>&nbsp;import it.polimi.ingsw.PSP11.model.Worker;
+<i>10</i>&nbsp;import it.polimi.ingsw.PSP11.utils.PlayerInfo;
+<i>11</i>&nbsp;import javafx.animation.FadeTransition;
+<i>12</i>&nbsp;import javafx.event.ActionEvent;
+<i>13</i>&nbsp;import javafx.fxml.FXML;
+<i>14</i>&nbsp;import javafx.application.Platform;
+<i>15</i>&nbsp;import javafx.geometry.Pos;
+<i>16</i>&nbsp;import javafx.scene.Node;
+<i>17</i>&nbsp;import javafx.scene.control.Button;
+<i>18</i>&nbsp;import javafx.scene.control.TextArea;
+<i>19</i>&nbsp;
+<i>20</i>&nbsp;import javafx.scene.effect.GaussianBlur;
+<i>21</i>&nbsp;import javafx.scene.image.Image;
+<i>22</i>&nbsp;import javafx.scene.image.ImageView;
+<i>23</i>&nbsp;import javafx.scene.input.MouseEvent;
+<i>24</i>&nbsp;import javafx.scene.layout.GridPane;
+<i>25</i>&nbsp;import javafx.scene.layout.Pane;
+<i>26</i>&nbsp;import javafx.scene.layout.StackPane;
+<i>27</i>&nbsp;import javafx.scene.layout.VBox;
+<i>28</i>&nbsp;import javafx.scene.paint.Paint;
+<i>29</i>&nbsp;import javafx.scene.text.Font;
+<i>30</i>&nbsp;import javafx.scene.text.Text;
+<i>31</i>&nbsp;import javafx.scene.text.TextAlignment;
+<i>32</i>&nbsp;import javafx.stage.Stage;
+<i>33</i>&nbsp;import javafx.util.Duration;
+<i>34</i>&nbsp;
+<i>35</i>&nbsp;import java.awt.*;
+<i>36</i>&nbsp;import java.util.ArrayList;
+<i>37</i>&nbsp;
+<b class="nc"><i>38</i>&nbsp;public class GameSceneController extends GUIController {</b>
+<b class="nc"><i>39</i>&nbsp;    private final String font = &quot;/font/LillyBelle400.ttf&quot;;</b>
+<b class="nc"><i>40</i>&nbsp;    private boolean gameEnded = false;</b>
+<i>41</i>&nbsp;
+<i>42</i>&nbsp;
+<i>43</i>&nbsp;    @FXML
+<i>44</i>&nbsp;    private Pane initPane,actionPane,imagePane,heroPowerPane,descriptionPane,serverLogPane,disconnectionPane,endPane;
+<i>45</i>&nbsp;
+<i>46</i>&nbsp;    @FXML
+<i>47</i>&nbsp;    private TextArea serverLog;
+<i>48</i>&nbsp;
+<i>49</i>&nbsp;    @FXML
+<i>50</i>&nbsp;    private GridPane imageGrid,actionGrid;
+<i>51</i>&nbsp;
+<i>52</i>&nbsp;    @FXML
+<i>53</i>&nbsp;    private StackPane playerHero;
+<i>54</i>&nbsp;
+<i>55</i>&nbsp;    @FXML
+<i>56</i>&nbsp;    private ImageView cardView,endImage;
+<i>57</i>&nbsp;
+<i>58</i>&nbsp;    @FXML
+<i>59</i>&nbsp;    private Image baseBlockImage,middleBlockImage,topBlockImage,domeImage,greenWorkerImage, blueWorkerImage, redWorkerImage;
+<i>60</i>&nbsp;
+<i>61</i>&nbsp;    @FXML
+<i>62</i>&nbsp;    private Text requestText,turnText,cardDescription,log,disconnectionText;
+<i>63</i>&nbsp;
+<i>64</i>&nbsp;    @FXML
+<i>65</i>&nbsp;    private Button yesButton,noButton, closeButton, closeButton1;
+<i>66</i>&nbsp;
+<i>67</i>&nbsp;    @FXML
+<i>68</i>&nbsp;    private VBox opponentBox;
+<i>69</i>&nbsp;
+<i>70</i>&nbsp;    /**
+<i>71</i>&nbsp;     * Initialize the scene setting the visibility of the panes and loading fonts
+<i>72</i>&nbsp;     */
+<i>73</i>&nbsp;
+<i>74</i>&nbsp;    @FXML
+<i>75</i>&nbsp;    public void initialize(){
+<b class="nc"><i>76</i>&nbsp;        initPane.setVisible(true);</b>
+<b class="nc"><i>77</i>&nbsp;        imagePane.setVisible(true);</b>
+<b class="nc"><i>78</i>&nbsp;        heroPowerPane.setVisible(false);</b>
+<b class="nc"><i>79</i>&nbsp;        descriptionPane.setVisible(false);</b>
+<b class="nc"><i>80</i>&nbsp;        disconnectionPane.setVisible(false);</b>
+<b class="nc"><i>81</i>&nbsp;        endPane.setVisible(false);</b>
+<b class="nc"><i>82</i>&nbsp;        initializeActionGridButtons();</b>
+<b class="nc"><i>83</i>&nbsp;        initializeImageGrid();</b>
+<b class="nc"><i>84</i>&nbsp;        initializeImages();</b>
+<b class="nc"><i>85</i>&nbsp;        actionPane.setVisible(false);</b>
+<b class="nc"><i>86</i>&nbsp;        serverLog.setWrapText(true);</b>
+<b class="nc"><i>87</i>&nbsp;        serverLog.setEditable(false);</b>
+<b class="nc"><i>88</i>&nbsp;        requestText.setFont(Font.loadFont(getClass().getResource(font).toString(),40));</b>
+<b class="nc"><i>89</i>&nbsp;        turnText.setFont(Font.loadFont(getClass().getResource(font).toString(),47));</b>
+<b class="nc"><i>90</i>&nbsp;        cardDescription.setFont(Font.loadFont(getClass().getResource(font).toString(),33));</b>
+<b class="nc"><i>91</i>&nbsp;        disconnectionText.setFont(Font.loadFont(getClass().getResource(font).toString(),33));</b>
+<b class="nc"><i>92</i>&nbsp;        log.setFont(Font.loadFont(getClass().getResource(font).toString(),18));</b>
+<b class="nc"><i>93</i>&nbsp;        playerHero.setStyle(&quot;-fx-background-image: url(&quot; + getClass().getResource(&quot;/images/gods/podium/podium-&quot;+getPlayerCard().getName()+&quot;.png&quot;).toString() + &quot;);&quot;);</b>
+<b class="nc"><i>94</i>&nbsp;        opponentBox.setAlignment(Pos.CENTER);</b>
+<b class="nc"><i>95</i>&nbsp;        opponentBox.setSpacing(3);</b>
+<b class="nc"><i>96</i>&nbsp;        createOpponentBox();</b>
+<i>97</i>&nbsp;
+<i>98</i>&nbsp;
+<i>99</i>&nbsp;
+<i>100</i>&nbsp;    }
+<i>101</i>&nbsp;
+<i>102</i>&nbsp;    /**
+<i>103</i>&nbsp;     * Load graphics assets for images
+<i>104</i>&nbsp;     */
+<i>105</i>&nbsp;
+<i>106</i>&nbsp;    private void initializeImages(){
+<b class="nc"><i>107</i>&nbsp;        baseBlockImage = new Image(getClass().getResource(&quot;/images/blocks/base_block1.png&quot;).toString());</b>
+<b class="nc"><i>108</i>&nbsp;        middleBlockImage = new Image(getClass().getResource(&quot;/images/blocks/mid_block1.png&quot;).toString());</b>
+<b class="nc"><i>109</i>&nbsp;        topBlockImage = new Image(getClass().getResource(&quot;/images/blocks/top_block1.png&quot;).toString());</b>
+<b class="nc"><i>110</i>&nbsp;        domeImage = new Image(getClass().getResource(&quot;/images/blocks/dome.png&quot;).toString());</b>
+<b class="nc"><i>111</i>&nbsp;        redWorkerImage = new Image(getClass().getResource(&quot;/images/worker/redWorker.png&quot;).toString());</b>
+<b class="nc"><i>112</i>&nbsp;        greenWorkerImage = new Image(getClass().getResource(&quot;/images/worker/greenWorker.png&quot;).toString());</b>
+<b class="nc"><i>113</i>&nbsp;        blueWorkerImage = new Image(getClass().getResource(&quot;/images/worker/blueWorker.png&quot;).toString());</b>
+<i>114</i>&nbsp;    }
+<i>115</i>&nbsp;
+<i>116</i>&nbsp;    /**
+<i>117</i>&nbsp;     * Called when a button of the {@link GameSceneController#actionGrid} is pressed, send a {@link PlaceWorkerResponse} to the server with the position of the id of the button
+<i>118</i>&nbsp;     */
+<i>119</i>&nbsp;
+<i>120</i>&nbsp;    @FXML
+<i>121</i>&nbsp;    public void placeWorkerAction(ActionEvent event){
+<b class="nc"><i>122</i>&nbsp;        Platform.runLater(() -&gt; {</b>
+<b class="nc"><i>123</i>&nbsp;            String[] cord = ((Button) event.getSource()).getId().split(&quot;,&quot;);</b>
+<b class="nc"><i>124</i>&nbsp;            Point position = new Point(Integer.parseInt(cord[0]),Integer.parseInt(cord[1]));</b>
+<b class="nc"><i>125</i>&nbsp;            getClient().asyncWrite(new PlaceWorkerResponse(position));</b>
+<b class="nc"><i>126</i>&nbsp;            actionPane.setVisible(false);</b>
+<i>127</i>&nbsp;        });
+<i>128</i>&nbsp;    }
+<i>129</i>&nbsp;
+<i>130</i>&nbsp;
+<i>131</i>&nbsp;    /**
+<i>132</i>&nbsp;     * Called when a button of the {@link GameSceneController#actionGrid} is pressed, send a {@link SelectWorkerResponse} to the server with the position of the id of the button
+<i>133</i>&nbsp;     */
+<i>134</i>&nbsp;
+<i>135</i>&nbsp;    @FXML
+<i>136</i>&nbsp;    public void selectWorker(ActionEvent event){
+<b class="nc"><i>137</i>&nbsp;        Button button = (Button)event.getSource();</b>
+<b class="nc"><i>138</i>&nbsp;        getClient().asyncWrite(new SelectWorkerResponse(Integer.parseInt(button.getId())));</b>
+<b class="nc"><i>139</i>&nbsp;        actionPane.setVisible(false);</b>
+<i>140</i>&nbsp;    }
+<i>141</i>&nbsp;
+<i>142</i>&nbsp;    /**
+<i>143</i>&nbsp;     * Called when a button of the {@link GameSceneController#actionGrid} is pressed, send a {@link MoveResponse} to the server with the position of the id of the button
+<i>144</i>&nbsp;     */
+<i>145</i>&nbsp;
+<i>146</i>&nbsp;    @FXML
+<i>147</i>&nbsp;    public void moveWorker(ActionEvent event) {
+<b class="nc"><i>148</i>&nbsp;        Platform.runLater(() -&gt; {</b>
+<b class="nc"><i>149</i>&nbsp;            Button button = (Button) event.getSource();</b>
+<b class="nc"><i>150</i>&nbsp;            String[] cord = button.getId().split(&quot;,&quot;);</b>
+<b class="nc"><i>151</i>&nbsp;            Point position = new Point(Integer.parseInt(cord[0]), Integer.parseInt(cord[1]));</b>
+<b class="nc"><i>152</i>&nbsp;            getClient().asyncWrite(new MoveResponse(position));</b>
+<b class="nc"><i>153</i>&nbsp;            actionPane.setVisible(false);</b>
+<i>154</i>&nbsp;
+<i>155</i>&nbsp;        });
+<i>156</i>&nbsp;    }
+<i>157</i>&nbsp;
+<i>158</i>&nbsp;    /**
+<i>159</i>&nbsp;     * Called when a button of the {@link GameSceneController#actionGrid} is pressed, send a {@link BuildResponse} to the server with the position of the id of the button
+<i>160</i>&nbsp;     */
+<i>161</i>&nbsp;
+<i>162</i>&nbsp;    @FXML
+<i>163</i>&nbsp;    public void buildBlock(ActionEvent event) {
+<b class="nc"><i>164</i>&nbsp;        Platform.runLater(() -&gt; {</b>
+<b class="nc"><i>165</i>&nbsp;            Button button = (Button) event.getSource();</b>
+<b class="nc"><i>166</i>&nbsp;            String[] cord = button.getId().split(&quot;,&quot;);</b>
+<b class="nc"><i>167</i>&nbsp;            Point position = new Point(Integer.parseInt(cord[0]), Integer.parseInt(cord[1]));</b>
+<b class="nc"><i>168</i>&nbsp;            getClient().asyncWrite(new BuildResponse(position));</b>
+<b class="nc"><i>169</i>&nbsp;            actionPane.setVisible(false);</b>
+<i>170</i>&nbsp;
+<i>171</i>&nbsp;        });
+<i>172</i>&nbsp;    }
+<i>173</i>&nbsp;
+<i>174</i>&nbsp;    /**
+<i>175</i>&nbsp;     * Called when the {@link GameSceneController#yesButton} or {@link GameSceneController#noButton} is pressed, send a {@link BooleanResponse} message to the server
+<i>176</i>&nbsp;     * @param event
+<i>177</i>&nbsp;     */
+<i>178</i>&nbsp;
+<i>179</i>&nbsp;    @FXML
+<i>180</i>&nbsp;    public void booleanResponseHandler(ActionEvent event){
+<b class="nc"><i>181</i>&nbsp;        heroPowerPane.setVisible(false);</b>
+<b class="nc"><i>182</i>&nbsp;        String id = ((Button)event.getSource()).getId();</b>
+<b class="nc"><i>183</i>&nbsp;        if(id.equals(&quot;yesButton&quot;)){</b>
+<b class="nc"><i>184</i>&nbsp;            getClient().asyncWrite(new BooleanResponse(true));</b>
+<i>185</i>&nbsp;        }
+<i>186</i>&nbsp;        else{
+<b class="nc"><i>187</i>&nbsp;            getClient().asyncWrite(new BooleanResponse(false));</b>
+<i>188</i>&nbsp;        }
+<i>189</i>&nbsp;
+<i>190</i>&nbsp;    }
+<i>191</i>&nbsp;
+<i>192</i>&nbsp;    /**
+<i>193</i>&nbsp;     * Called when the {@link GameSceneController#playerHero} or a {@code stack-pane} inside the {@link GameSceneController#opponentBox} is pressed, set the {@link GameSceneController#descriptionPane} to visible and show a description of the card
+<i>194</i>&nbsp;     */
+<i>195</i>&nbsp;
+<i>196</i>&nbsp;    @FXML
+<i>197</i>&nbsp;    public void descriptionView(MouseEvent event){
+<b class="nc"><i>198</i>&nbsp;        Platform.runLater(()-&gt;{</b>
+<b class="nc"><i>199</i>&nbsp;            String id = ((StackPane)event.getSource()).getId();</b>
+<i>200</i>&nbsp;
+<b class="nc"><i>201</i>&nbsp;            if(id.equals(&quot;playerHero&quot;)){</b>
+<b class="nc"><i>202</i>&nbsp;                cardView.setImage(new Image(getClass().getResource(getPlayerCard().getTexture().replaceAll(&quot;cards&quot;, &quot;cards_no_description&quot;)).toString()));</b>
+<b class="nc"><i>203</i>&nbsp;                cardDescription.setText(getPlayerCard().getDescription().toUpperCase());</b>
+<i>204</i>&nbsp;            }
+<i>205</i>&nbsp;            else{
+<b class="nc"><i>206</i>&nbsp;                for(PlayerInfo player: getOpponents()){</b>
+<b class="nc"><i>207</i>&nbsp;                    if(id.equals(player.getName())){</b>
+<b class="nc"><i>208</i>&nbsp;                        cardView.setImage(new Image(getClass().getResource(player.getCard().getTexture().replaceAll(&quot;cards&quot;, &quot;cards_no_description&quot;)).toString()));</b>
+<b class="nc"><i>209</i>&nbsp;                        cardDescription.setText(player.getCard().getDescription().toUpperCase());</b>
+<b class="nc"><i>210</i>&nbsp;                        break;</b>
+<i>211</i>&nbsp;                    }
+<b class="nc"><i>212</i>&nbsp;                }</b>
+<i>213</i>&nbsp;            }
+<b class="nc"><i>214</i>&nbsp;            descriptionPane.setVisible(true);</b>
+<i>215</i>&nbsp;        });
+<i>216</i>&nbsp;    }
+<i>217</i>&nbsp;
+<i>218</i>&nbsp;    /**
+<i>219</i>&nbsp;     * Called when the {@link GameSceneController#descriptionPane} is pressed, set to invisible itself
+<i>220</i>&nbsp;     */
+<i>221</i>&nbsp;
+<i>222</i>&nbsp;    @FXML
+<i>223</i>&nbsp;    public void hide(MouseEvent event){
+<b class="nc"><i>224</i>&nbsp;        descriptionPane.setVisible(false);</b>
+<i>225</i>&nbsp;    }
+<i>226</i>&nbsp;
+<i>227</i>&nbsp;
+<i>228</i>&nbsp;    /**
+<i>229</i>&nbsp;     *Called when the {@link GameSceneController#closeButton} button is pressed, close the stage
+<i>230</i>&nbsp;     */
+<i>231</i>&nbsp;
+<i>232</i>&nbsp;    @FXML
+<i>233</i>&nbsp;    public void closeClient(ActionEvent event){
+<b class="nc"><i>234</i>&nbsp;        Stage stage = (Stage) initPane.getScene().getWindow();</b>
+<b class="nc"><i>235</i>&nbsp;        stage.close();</b>
+<i>236</i>&nbsp;    }
+<i>237</i>&nbsp;
+<i>238</i>&nbsp;    /**
+<i>239</i>&nbsp;     * Initialize the {@link GameSceneController#actionGrid} adding to every cell a button
+<i>240</i>&nbsp;     */
+<i>241</i>&nbsp;
+<i>242</i>&nbsp;    private void initializeActionGridButtons(){
+<b class="nc"><i>243</i>&nbsp;        for(int x = 0;x &lt;5;x++){</b>
+<b class="nc"><i>244</i>&nbsp;            for(int y = 0; y&lt;5; y++){</b>
+<b class="nc"><i>245</i>&nbsp;                Button button = new Button();</b>
+<b class="nc"><i>246</i>&nbsp;                button.setOnAction(this::placeWorkerAction);</b>
+<b class="nc"><i>247</i>&nbsp;                button.setId(x+&quot;,&quot;+y);</b>
+<b class="nc"><i>248</i>&nbsp;                button.getStyleClass().add(&quot;moveButton&quot;);</b>
+<b class="nc"><i>249</i>&nbsp;                button.setPrefWidth(actionGrid.getPrefWidth()/5);</b>
+<b class="nc"><i>250</i>&nbsp;                button.setPrefHeight(actionGrid.getPrefHeight()/5);</b>
+<b class="nc"><i>251</i>&nbsp;                actionGrid.add(button,y,x);</b>
+<i>252</i>&nbsp;            }
+<i>253</i>&nbsp;        }
+<i>254</i>&nbsp;    }
+<i>255</i>&nbsp;
+<i>256</i>&nbsp;    /**
+<i>257</i>&nbsp;     * Initialize the {@link GameSceneController#imageGrid} adding to every cell a {@code stack-pane}
+<i>258</i>&nbsp;     */
+<i>259</i>&nbsp;
+<i>260</i>&nbsp;    private void initializeImageGrid(){
+<b class="nc"><i>261</i>&nbsp;        for(int x = 0;x &lt;5;x++){</b>
+<b class="nc"><i>262</i>&nbsp;            for(int y = 0; y&lt;5; y++){</b>
+<b class="nc"><i>263</i>&nbsp;                StackPane stackpane = new StackPane();</b>
+<b class="nc"><i>264</i>&nbsp;                stackpane.setPrefWidth(imageGrid.getPrefWidth()/5);</b>
+<b class="nc"><i>265</i>&nbsp;                stackpane.setPrefHeight(imageGrid.getPrefHeight()/5);</b>
+<b class="nc"><i>266</i>&nbsp;                stackpane.getStylesheets().add(getClass().getResource(&quot;/css/gameScene.css&quot;).toString());</b>
+<b class="nc"><i>267</i>&nbsp;                stackpane.getStyleClass().add(&quot;stack-pane&quot;);</b>
+<b class="nc"><i>268</i>&nbsp;                stackpane.setVisible(true);</b>
+<b class="nc"><i>269</i>&nbsp;                imageGrid.add(stackpane,y,x);</b>
+<i>270</i>&nbsp;            }
+<i>271</i>&nbsp;        }
+<i>272</i>&nbsp;    }
+<i>273</i>&nbsp;
+<i>274</i>&nbsp;    /**
+<i>275</i>&nbsp;     * Add to the {@link GameSceneController#opponentBox} the opponents information
+<i>276</i>&nbsp;     */
+<i>277</i>&nbsp;
+<i>278</i>&nbsp;    private void createOpponentBox(){
+<i>279</i>&nbsp;
+<b class="nc"><i>280</i>&nbsp;        String styleSheet =&quot;/css/gameScene.css&quot;;</b>
+<b class="nc"><i>281</i>&nbsp;        for(PlayerInfo player: getOpponents()){</b>
+<b class="nc"><i>282</i>&nbsp;            StackPane pane = new StackPane();</b>
+<b class="nc"><i>283</i>&nbsp;            Text opponent = new Text(player.getName().toUpperCase());</b>
+<b class="nc"><i>284</i>&nbsp;            ImageView god = new ImageView();</b>
+<i>285</i>&nbsp;
+<b class="nc"><i>286</i>&nbsp;            pane.setPrefWidth(opponentBox.getPrefWidth());</b>
+<b class="nc"><i>287</i>&nbsp;            pane.setPrefHeight(opponentBox.getPrefHeight());</b>
+<b class="nc"><i>288</i>&nbsp;            pane.getStylesheets().add(getClass().getResource(styleSheet).toString());</b>
+<b class="nc"><i>289</i>&nbsp;            pane.getStyleClass().add(&quot;playerHero&quot;);</b>
+<b class="nc"><i>290</i>&nbsp;            pane.setId(player.getName());</b>
+<b class="nc"><i>291</i>&nbsp;            god.setImage(new Image(getClass().getResource(&quot;/images/gods/podium/podium-&quot;+ player.getCard().getName() +&quot;.png&quot;).toString()));</b>
+<b class="nc"><i>292</i>&nbsp;            pane.setOnMouseClicked(this::descriptionView);</b>
+<i>293</i>&nbsp;
+<b class="nc"><i>294</i>&nbsp;            opponent.setFont(Font.loadFont(getClass().getResource(font).toString(),18));</b>
+<b class="nc"><i>295</i>&nbsp;            opponent.setFill(Paint.valueOf(player.getColor().toString().toLowerCase()));</b>
+<b class="nc"><i>296</i>&nbsp;            opponent.setWrappingWidth(pane.getPrefWidth());</b>
+<b class="nc"><i>297</i>&nbsp;            opponent.setTextAlignment(TextAlignment.CENTER);</b>
+<b class="nc"><i>298</i>&nbsp;            god.setFitHeight(pane.getPrefHeight());</b>
+<b class="nc"><i>299</i>&nbsp;            god.setPreserveRatio(true);</b>
+<i>300</i>&nbsp;
+<b class="nc"><i>301</i>&nbsp;            pane.getChildren().add(god);</b>
+<b class="nc"><i>302</i>&nbsp;            opponentBox.getChildren().add(pane);</b>
+<b class="nc"><i>303</i>&nbsp;            opponentBox.getChildren().add(opponent);</b>
+<i>304</i>&nbsp;
+<i>305</i>&nbsp;
+<b class="nc"><i>306</i>&nbsp;        }</b>
+<i>307</i>&nbsp;    }
+<i>308</i>&nbsp;
+<i>309</i>&nbsp;    /**
+<i>310</i>&nbsp;     * Remove the {@code playerToDelete} from the opponents in {@link GUIController} and rebuild the {@link GameSceneController#opponentBox} using the {@link GameSceneController#createOpponentBox()}
+<i>311</i>&nbsp;     * @param playerToDelete the name of the player to remove
+<i>312</i>&nbsp;     */
+<i>313</i>&nbsp;
+<i>314</i>&nbsp;    private void rebuildOpponentBox(String playerToDelete){
+<b class="nc"><i>315</i>&nbsp;        Platform.runLater(() -&gt;{</b>
+<i>316</i>&nbsp;            //remove loser player
+<b class="nc"><i>317</i>&nbsp;            getOpponents().removeIf(player -&gt; player.getName().equals(playerToDelete));</b>
+<b class="nc"><i>318</i>&nbsp;            opponentBox.getChildren().clear();</b>
+<b class="nc"><i>319</i>&nbsp;            createOpponentBox();</b>
+<i>320</i>&nbsp;        });
+<i>321</i>&nbsp;    }
+<i>322</i>&nbsp;
+<i>323</i>&nbsp;    /**
+<i>324</i>&nbsp;     * Remove al the children of the {@code stackPane} in the {@link GameSceneController#imageGrid}
+<i>325</i>&nbsp;     */
+<i>326</i>&nbsp;
+<i>327</i>&nbsp;    private void clearStackPanes(){
+<b class="nc"><i>328</i>&nbsp;        for(Node node: imageGrid.getChildren()){</b>
+<b class="nc"><i>329</i>&nbsp;            ((StackPane) node).getChildren().clear();</b>
+<b class="nc"><i>330</i>&nbsp;        }</b>
+<i>331</i>&nbsp;    }
+<i>332</i>&nbsp;
+<i>333</i>&nbsp;
+<i>334</i>&nbsp;    /**
+<i>335</i>&nbsp;     * Return the image of the worker with the color equals {@code color}
+<i>336</i>&nbsp;     * @param color the color of the worker
+<i>337</i>&nbsp;     * @return the image of the worker
+<i>338</i>&nbsp;     */
+<i>339</i>&nbsp;
+<i>340</i>&nbsp;    private Image chooseWorker(Color color){
+<b class="nc"><i>341</i>&nbsp;        if(color == Color.RED){</b>
+<b class="nc"><i>342</i>&nbsp;            return redWorkerImage;</b>
+<i>343</i>&nbsp;        }
+<b class="nc"><i>344</i>&nbsp;        else if(color == Color.BLUE){</b>
+<b class="nc"><i>345</i>&nbsp;            return blueWorkerImage;</b>
+<i>346</i>&nbsp;        }
+<i>347</i>&nbsp;        else{
+<b class="nc"><i>348</i>&nbsp;            return greenWorkerImage;</b>
+<i>349</i>&nbsp;        }
+<i>350</i>&nbsp;    }
+<i>351</i>&nbsp;
+<i>352</i>&nbsp;
+<i>353</i>&nbsp;    /**
+<i>354</i>&nbsp;     * Called when a {@link PlaceWorkerRequest} is sent by the server.
+<i>355</i>&nbsp;     * Set the {@link GameSceneController#actionGrid} and {@link GameSceneController#imageGrid} visible
+<i>356</i>&nbsp;     */
+<i>357</i>&nbsp;
+<i>358</i>&nbsp;    private void placeWorker(){
+<b class="nc"><i>359</i>&nbsp;        Platform.runLater(() -&gt; {</b>
+<b class="nc"><i>360</i>&nbsp;            turnText.setText(&quot;PLACE YOUR WORKERS&quot;);</b>
+<b class="nc"><i>361</i>&nbsp;            actionPane.setVisible(true);</b>
+<b class="nc"><i>362</i>&nbsp;            actionGrid.setVisible(true);</b>
+<i>363</i>&nbsp;        });
+<i>364</i>&nbsp;    }
+<i>365</i>&nbsp;
+<i>366</i>&nbsp;    /**
+<i>367</i>&nbsp;     * Set to invisible all the children of the {@code pane}
+<i>368</i>&nbsp;     */
+<i>369</i>&nbsp;
+<i>370</i>&nbsp;    private void setAllInvisible(GridPane pane){
+<b class="nc"><i>371</i>&nbsp;        for(Node n : pane.getChildren()){</b>
+<b class="nc"><i>372</i>&nbsp;            n.setVisible(false);</b>
+<b class="nc"><i>373</i>&nbsp;        }</b>
+<i>374</i>&nbsp;    }
+<i>375</i>&nbsp;
+<i>376</i>&nbsp;    /**
+<i>377</i>&nbsp;     * Show the available worker on the {@link GameSceneController#actionGrid}
+<i>378</i>&nbsp;     * @param workers the available workers sent by the server
+<i>379</i>&nbsp;     */
+<i>380</i>&nbsp;
+<i>381</i>&nbsp;    private void selectWorkerView(ArrayList&lt;Worker&gt; workers){
+<b class="nc"><i>382</i>&nbsp;        Platform.runLater(()-&gt;{</b>
+<b class="nc"><i>383</i>&nbsp;            setAllInvisible(actionGrid);</b>
+<b class="nc"><i>384</i>&nbsp;            turnText.setText(&quot;SELECT YOUR WORKER!&quot;);</b>
+<b class="nc"><i>385</i>&nbsp;            for(Worker worker : workers){</b>
+<b class="nc"><i>386</i>&nbsp;                Point workerPosition = worker.getPosition();</b>
+<b class="nc"><i>387</i>&nbsp;                Button button = (Button )actionGrid.getChildren().get(workerPosition.x * 5 + workerPosition.y);</b>
+<b class="nc"><i>388</i>&nbsp;                button.getStyleClass().clear();</b>
+<b class="nc"><i>389</i>&nbsp;                button.getStyleClass().add(&quot;moveButton&quot;);//TODO style da cambiare?</b>
+<b class="nc"><i>390</i>&nbsp;                button.setId(String.valueOf(worker.getId()));</b>
+<b class="nc"><i>391</i>&nbsp;                button.setOnAction(this::selectWorker);</b>
+<b class="nc"><i>392</i>&nbsp;                button.setVisible(true);</b>
+<b class="nc"><i>393</i>&nbsp;            }</b>
+<b class="nc"><i>394</i>&nbsp;            actionPane.setVisible(true);</b>
+<i>395</i>&nbsp;        });
+<i>396</i>&nbsp;
+<i>397</i>&nbsp;    }
+<i>398</i>&nbsp;
+<i>399</i>&nbsp;
+<i>400</i>&nbsp;    /**
+<i>401</i>&nbsp;     * Show the possible move position on the {@link GameSceneController#actionGrid}
+<i>402</i>&nbsp;     * @param possibleMoves possible move position sent by the server
+<i>403</i>&nbsp;     */
+<i>404</i>&nbsp;
+<i>405</i>&nbsp;    private void moveView(ArrayList&lt;Point&gt; possibleMoves){
+<i>406</i>&nbsp;
+<b class="nc"><i>407</i>&nbsp;        Platform.runLater(()-&gt;{</b>
+<b class="nc"><i>408</i>&nbsp;            setAllInvisible(actionGrid);</b>
+<b class="nc"><i>409</i>&nbsp;            turnText.setText(&quot;MOVE YOUR WORKER!&quot;);</b>
+<b class="nc"><i>410</i>&nbsp;            for(Point position : possibleMoves){</b>
+<b class="nc"><i>411</i>&nbsp;                Button button = (Button )actionGrid.getChildren().get(position.x * 5 + position.y);</b>
+<b class="nc"><i>412</i>&nbsp;                button.getStyleClass().clear();</b>
+<b class="nc"><i>413</i>&nbsp;                button.getStyleClass().add(&quot;moveButton&quot;);</b>
+<b class="nc"><i>414</i>&nbsp;                button.setId(position.x +&quot;,&quot;+position.y);</b>
+<b class="nc"><i>415</i>&nbsp;                button.setOnAction(this::moveWorker);</b>
+<b class="nc"><i>416</i>&nbsp;                button.setVisible(true);</b>
+<b class="nc"><i>417</i>&nbsp;            }</b>
+<b class="nc"><i>418</i>&nbsp;            actionPane.setVisible(true);</b>
+<i>419</i>&nbsp;        });
+<i>420</i>&nbsp;
+<i>421</i>&nbsp;    }
+<i>422</i>&nbsp;
+<i>423</i>&nbsp;    /**
+<i>424</i>&nbsp;     * Show the possible build position on the {@link GameSceneController#actionGrid}
+<i>425</i>&nbsp;     * @param possibleBuilds possible build position sent by the server
+<i>426</i>&nbsp;     */
+<i>427</i>&nbsp;
+<i>428</i>&nbsp;    private void buildView(ArrayList&lt;Point&gt; possibleBuilds){
+<i>429</i>&nbsp;
+<b class="nc"><i>430</i>&nbsp;        Platform.runLater(()-&gt;{</b>
+<b class="nc"><i>431</i>&nbsp;            setAllInvisible(actionGrid);</b>
+<b class="nc"><i>432</i>&nbsp;            turnText.setText(&quot;BUILD!&quot;);</b>
+<b class="nc"><i>433</i>&nbsp;            for(Point position : possibleBuilds){</b>
+<b class="nc"><i>434</i>&nbsp;                Button button = (Button )actionGrid.getChildren().get(position.x * 5 + position.y);</b>
+<b class="nc"><i>435</i>&nbsp;                button.getStyleClass().clear();</b>
+<b class="nc"><i>436</i>&nbsp;                button.getStyleClass().add(&quot;buildButton&quot;);</b>
+<b class="nc"><i>437</i>&nbsp;                button.setId(position.x +&quot;,&quot;+position.y);</b>
+<b class="nc"><i>438</i>&nbsp;                button.setOnAction(this::buildBlock);</b>
+<b class="nc"><i>439</i>&nbsp;                button.setVisible(true);</b>
+<b class="nc"><i>440</i>&nbsp;            }</b>
+<b class="nc"><i>441</i>&nbsp;            actionPane.setVisible(true);</b>
+<i>442</i>&nbsp;        });
+<i>443</i>&nbsp;
+<i>444</i>&nbsp;    }
+<i>445</i>&nbsp;
+<i>446</i>&nbsp;    /**
+<i>447</i>&nbsp;     * Set the {@link GameSceneController#heroPowerPane} visible and set the {@link GameSceneController#requestText}
+<i>448</i>&nbsp;     * @param message the hero power request text
+<i>449</i>&nbsp;     */
+<i>450</i>&nbsp;
+<i>451</i>&nbsp;    private void heroRequestView(String message){
+<b class="nc"><i>452</i>&nbsp;        Platform.runLater(()-&gt;{</b>
+<b class="nc"><i>453</i>&nbsp;            requestText.setText(message.toUpperCase());</b>
+<b class="nc"><i>454</i>&nbsp;            heroPowerPane.setVisible(true);</b>
+<i>455</i>&nbsp;        });
+<i>456</i>&nbsp;    }
+<i>457</i>&nbsp;
+<i>458</i>&nbsp;    /**
+<i>459</i>&nbsp;     * Called when a {@link ConnectionClosedMessage} is sent by the server, set the  {@link GameSceneController#disconnectionPane} visible
+<i>460</i>&nbsp;     * @param message the disconnection message of the server
+<i>461</i>&nbsp;     */
+<i>462</i>&nbsp;
+<i>463</i>&nbsp;    private void connectionClosedView(String message){
+<b class="nc"><i>464</i>&nbsp;        Platform.runLater(()-&gt;{</b>
+<b class="nc"><i>465</i>&nbsp;            imagePane.setEffect(new GaussianBlur());</b>
+<b class="nc"><i>466</i>&nbsp;            actionPane.setEffect(new GaussianBlur());</b>
+<b class="nc"><i>467</i>&nbsp;            descriptionPane.setEffect(new GaussianBlur());</b>
+<b class="nc"><i>468</i>&nbsp;            heroPowerPane.setEffect(new GaussianBlur());</b>
+<b class="nc"><i>469</i>&nbsp;            serverLogPane.setEffect(new GaussianBlur());</b>
+<b class="nc"><i>470</i>&nbsp;            disconnectionPane.setVisible(true);</b>
+<b class="nc"><i>471</i>&nbsp;            disconnectionText.setText(message.toUpperCase());</b>
+<i>472</i>&nbsp;        });
+<i>473</i>&nbsp;    }
+<i>474</i>&nbsp;
+<i>475</i>&nbsp;    /**
+<i>476</i>&nbsp;     * Set the {@link GameSceneController#endPane} to visible and load to {@link GameSceneController#endImage} the win_image if {@code win} is true, lose_image otherwise
+<i>477</i>&nbsp;     * @param win true if the player won, false otherwise
+<i>478</i>&nbsp;     */
+<i>479</i>&nbsp;
+<i>480</i>&nbsp;    private void endView(boolean win){
+<b class="nc"><i>481</i>&nbsp;        Platform.runLater(()-&gt;{</b>
+<b class="nc"><i>482</i>&nbsp;            if(win){</b>
+<b class="nc"><i>483</i>&nbsp;                endImage.setImage(new Image(getClass().getResource(&quot;/images/endscreen/endgame_win_screen.png&quot;).toString()));</b>
+<i>484</i>&nbsp;            }
+<i>485</i>&nbsp;            else{
+<b class="nc"><i>486</i>&nbsp;                endImage.setImage(new Image(getClass().getResource(&quot;/images/endscreen/endgame_lose_screen.png&quot;).toString()));</b>
+<i>487</i>&nbsp;            }
+<b class="nc"><i>488</i>&nbsp;            endPane.setVisible(true);</b>
+<b class="nc"><i>489</i>&nbsp;            FadeTransition ft = new FadeTransition(Duration.millis(1000),endPane);</b>
+<b class="nc"><i>490</i>&nbsp;            ft.setFromValue(0.0);</b>
+<b class="nc"><i>491</i>&nbsp;            ft.setToValue(1.0);</b>
+<b class="nc"><i>492</i>&nbsp;            ft.play();</b>
+<i>493</i>&nbsp;        });
+<i>494</i>&nbsp;    }
+<i>495</i>&nbsp;
+<i>496</i>&nbsp;
+<i>497</i>&nbsp;    /**
+<i>498</i>&nbsp;     * Update the {@link GameSceneController#imageGrid} loading into every {@code stack-pane} the correct image
+<i>499</i>&nbsp;     * @param board the board received from the server
+<i>500</i>&nbsp;     */
+<i>501</i>&nbsp;
+<i>502</i>&nbsp;    private void updateBoardView(Board board){
+<b class="nc"><i>503</i>&nbsp;        Platform.runLater( ()-&gt;{</b>
+<b class="nc"><i>504</i>&nbsp;            clearStackPanes();</b>
+<b class="nc"><i>505</i>&nbsp;            for(int x = 0; x &lt;5 ; x++){</b>
+<b class="nc"><i>506</i>&nbsp;                for(int y = 0; y&lt;5; y++){</b>
+<b class="nc"><i>507</i>&nbsp;                    Point position = new Point(x,y);</b>
+<b class="nc"><i>508</i>&nbsp;                    StackPane stack = ((StackPane)imageGrid.getChildren().get(x*5+y));</b>
+<b class="nc"><i>509</i>&nbsp;                    double stackWidth = stack.getWidth();</b>
+<b class="nc"><i>510</i>&nbsp;                    double stackHeight = stack.getHeight();</b>
+<i>511</i>&nbsp;                    //set the blocks
+<b class="nc"><i>512</i>&nbsp;                    if(board.getCurrentLevel(position).ordinal() &gt;= 1) {</b>
+<b class="nc"><i>513</i>&nbsp;                        ImageView baseBlock = new ImageView();</b>
+<b class="nc"><i>514</i>&nbsp;                        baseBlock.setFitWidth(stackWidth*0.9);</b>
+<b class="nc"><i>515</i>&nbsp;                        baseBlock.setFitHeight(stackHeight*0.9);</b>
+<b class="nc"><i>516</i>&nbsp;                        baseBlock.setPreserveRatio(true);</b>
+<b class="nc"><i>517</i>&nbsp;                        baseBlock.setImage(baseBlockImage);</b>
+<b class="nc"><i>518</i>&nbsp;                        stack.getChildren().add(baseBlock);</b>
+<b class="nc"><i>519</i>&nbsp;                        if (board.getCurrentLevel(position).ordinal() &gt;= 2) {</b>
+<b class="nc"><i>520</i>&nbsp;                            ImageView middleBlock = new ImageView();</b>
+<b class="nc"><i>521</i>&nbsp;                            middleBlock.setFitWidth(stackWidth*0.80);</b>
+<b class="nc"><i>522</i>&nbsp;                            middleBlock.setFitHeight(stackHeight*0.80);</b>
+<b class="nc"><i>523</i>&nbsp;                            middleBlock.setPreserveRatio(true);</b>
+<b class="nc"><i>524</i>&nbsp;                            middleBlock.setImage(middleBlockImage);</b>
+<b class="nc"><i>525</i>&nbsp;                            stack.getChildren().add(middleBlock);</b>
+<b class="nc"><i>526</i>&nbsp;                            if (board.getCurrentLevel(position).ordinal() == 3) {</b>
+<b class="nc"><i>527</i>&nbsp;                                ImageView topBlock = new ImageView();</b>
+<b class="nc"><i>528</i>&nbsp;                                topBlock.setFitWidth(stackWidth*0.67);</b>
+<b class="nc"><i>529</i>&nbsp;                                topBlock.setFitHeight(stackHeight *0.67);</b>
+<b class="nc"><i>530</i>&nbsp;                                topBlock.setPreserveRatio(true);</b>
+<b class="nc"><i>531</i>&nbsp;                                topBlock.setImage(topBlockImage);</b>
+<b class="nc"><i>532</i>&nbsp;                                stack.getChildren().add(topBlock);</b>
+<i>533</i>&nbsp;                            }
+<i>534</i>&nbsp;                        }
+<i>535</i>&nbsp;                    }
+<i>536</i>&nbsp;
+<i>537</i>&nbsp;
+<i>538</i>&nbsp;
+<b class="nc"><i>539</i>&nbsp;                    if(board.hasWorkerOnTop(position)){</b>
+<b class="nc"><i>540</i>&nbsp;                        ImageView workerImage = new ImageView();</b>
+<b class="nc"><i>541</i>&nbsp;                        workerImage.setFitWidth(stackWidth*0.9);</b>
+<b class="nc"><i>542</i>&nbsp;                        workerImage.setFitHeight(stackHeight*0.9);</b>
+<b class="nc"><i>543</i>&nbsp;                        workerImage.setSmooth(true);</b>
+<b class="nc"><i>544</i>&nbsp;                        workerImage.setPreserveRatio(true);</b>
+<b class="nc"><i>545</i>&nbsp;                        workerImage.setImage(chooseWorker(board.getWorker(position).getColor()));</b>
+<b class="nc"><i>546</i>&nbsp;                        stack.getChildren().add(workerImage);</b>
+<b class="nc"><i>547</i>&nbsp;                    }</b>
+<b class="nc"><i>548</i>&nbsp;                    else if(board.hasDomeOnTop(position)){</b>
+<b class="nc"><i>549</i>&nbsp;                        ImageView dome = new ImageView();</b>
+<b class="nc"><i>550</i>&nbsp;                        dome.setFitWidth(stackWidth*0.60);</b>
+<b class="nc"><i>551</i>&nbsp;                        dome.setFitHeight(stackHeight*0.60);</b>
+<b class="nc"><i>552</i>&nbsp;                        dome.setPreserveRatio(true);</b>
+<b class="nc"><i>553</i>&nbsp;                        dome.setImage(domeImage);</b>
+<b class="nc"><i>554</i>&nbsp;                        stack.getChildren().add(dome);</b>
+<i>555</i>&nbsp;                    }
+<i>556</i>&nbsp;
+<i>557</i>&nbsp;                }
+<i>558</i>&nbsp;            }
+<i>559</i>&nbsp;        });
+<i>560</i>&nbsp;    }
+<i>561</i>&nbsp;
+<i>562</i>&nbsp;    /**
+<i>563</i>&nbsp;     * Format the server message for a better visualization in {@link GameSceneController#serverLog}
+<i>564</i>&nbsp;     * @param message the message from the server
+<i>565</i>&nbsp;     * @return the formatted string
+<i>566</i>&nbsp;     */
+<i>567</i>&nbsp;
+<i>568</i>&nbsp;    private String formatString(String message){
+<b class="nc"><i>569</i>&nbsp;        return message.replaceAll(&quot;\n&quot;, &quot;&quot;).replaceAll(&quot;\\[31m&quot;,&quot;&quot;).replaceAll(&quot;\\[32m&quot;,&quot;&quot;).replaceAll(&quot;\\[33m&quot;,&quot;&quot;).replaceAll(&quot;\\[34m&quot;,&quot;&quot;).replaceAll(&quot;\\[35m&quot;,&quot;&quot;).replaceAll(&quot;\\[0m&quot;,&quot;&quot;).replaceAll(&quot;&gt;&gt;&gt;&quot;,&quot;&quot;).replaceAll(&quot;y / n&quot;,&quot;&quot;);</b>
+<i>570</i>&nbsp;    }
+<i>571</i>&nbsp;
+<i>572</i>&nbsp;    /**
+<i>573</i>&nbsp;     * Update the serverLog
+<i>574</i>&nbsp;     * @param logMessage the message from the server
+<i>575</i>&nbsp;     */
+<i>576</i>&nbsp;    private void updateLog(String logMessage){
+<b class="nc"><i>577</i>&nbsp;        Platform.runLater(() -&gt;{</b>
+<b class="nc"><i>578</i>&nbsp;            serverLog.appendText(&quot;[SERVER]: &quot; + formatString(logMessage) +&quot;\n&quot;);</b>
+<i>579</i>&nbsp;        });
+<i>580</i>&nbsp;    }
+<i>581</i>&nbsp;
+<i>582</i>&nbsp;
+<i>583</i>&nbsp;    /**
+<i>584</i>&nbsp;     * {@inheritDoc}
+<i>585</i>&nbsp;     */
+<i>586</i>&nbsp;
+<i>587</i>&nbsp;    @Override
+<i>588</i>&nbsp;    public void changeStage() {
+<i>589</i>&nbsp;
+<i>590</i>&nbsp;    }
+<i>591</i>&nbsp;
+<i>592</i>&nbsp;
+<i>593</i>&nbsp;    /**
+<i>594</i>&nbsp;     * {@inheritDoc}
+<i>595</i>&nbsp;     */
+<i>596</i>&nbsp;
+<i>597</i>&nbsp;    @Override
+<i>598</i>&nbsp;    public void handleMessage(Message message) {
+<b class="nc"><i>599</i>&nbsp;        if(message instanceof PlaceWorkerRequest){</b>
+<b class="nc"><i>600</i>&nbsp;            placeWorker();</b>
+<i>601</i>&nbsp;        }
+<b class="nc"><i>602</i>&nbsp;        else if(message instanceof BoardUpdate){</b>
+<b class="nc"><i>603</i>&nbsp;            updateBoardView(((BoardUpdate) message).getBoard());</b>
+<i>604</i>&nbsp;        }
+<b class="nc"><i>605</i>&nbsp;        else if(message instanceof EndTurnMessage){</b>
+<b class="nc"><i>606</i>&nbsp;            serverLog.appendText(&quot;[SERVER] Your turn is ended!\n&quot;);</b>
+<i>607</i>&nbsp;        }
+<b class="nc"><i>608</i>&nbsp;        else if (message instanceof SelectWorkerRequest){</b>
+<b class="nc"><i>609</i>&nbsp;            selectWorkerView(((SelectWorkerRequest) message).getAvailableWorkers());</b>
+<i>610</i>&nbsp;        }
+<b class="nc"><i>611</i>&nbsp;        else if (message instanceof MoveRequest){</b>
+<b class="nc"><i>612</i>&nbsp;            moveView(((MoveRequest) message).getPossibleMoves());</b>
+<i>613</i>&nbsp;        }
+<b class="nc"><i>614</i>&nbsp;        else if(message instanceof BuildRequest){</b>
+<b class="nc"><i>615</i>&nbsp;            buildView(((BuildRequest) message).getPossibleBuilds());</b>
+<i>616</i>&nbsp;        }
+<b class="nc"><i>617</i>&nbsp;        else if(message instanceof BuildAgainRequest || message instanceof BuildBeforeMoveRequest || message instanceof MoveAgainRequest|| message instanceof BuildDomeRequest){</b>
+<b class="nc"><i>618</i>&nbsp;            heroRequestView(formatString(message.getMessage()));</b>
+<i>619</i>&nbsp;        }
+<b class="nc"><i>620</i>&nbsp;        else if(message instanceof InvalidWorkerPosition){</b>
+<b class="nc"><i>621</i>&nbsp;            serverLog.appendText(&quot;[SERVER]: &quot; + formatString(message.getMessage()) +&quot;\n&quot;);</b>
+<b class="nc"><i>622</i>&nbsp;            placeWorker();</b>
+<i>623</i>&nbsp;        }
+<b class="nc"><i>624</i>&nbsp;        else if (message instanceof UpdateLoseMessage){</b>
+<b class="nc"><i>625</i>&nbsp;            serverLog.appendText(&quot;[SERVER]: &quot; + formatString(message.getMessage()) +&quot;\n&quot;);</b>
+<b class="nc"><i>626</i>&nbsp;            rebuildOpponentBox(((UpdateLoseMessage) message).getPlayer());</b>
+<i>627</i>&nbsp;        }
+<b class="nc"><i>628</i>&nbsp;        else if(message instanceof ConnectionClosedMessage){</b>
+<b class="nc"><i>629</i>&nbsp;            getClient().setActive(false);</b>
+<b class="nc"><i>630</i>&nbsp;            if(!gameEnded){</b>
+<b class="nc"><i>631</i>&nbsp;                connectionClosedView(message.getMessage());</b>
+<i>632</i>&nbsp;            }
+<i>633</i>&nbsp;        }
+<b class="nc"><i>634</i>&nbsp;        else if(message instanceof WinMessage){</b>
+<b class="nc"><i>635</i>&nbsp;            gameEnded = true;</b>
+<b class="nc"><i>636</i>&nbsp;            endView(true);</b>
+<i>637</i>&nbsp;        }
+<b class="nc"><i>638</i>&nbsp;        else if (message instanceof LoseMessage){</b>
+<b class="nc"><i>639</i>&nbsp;            gameEnded = true;</b>
+<b class="nc"><i>640</i>&nbsp;            endView(false);</b>
+<i>641</i>&nbsp;        }
+<b class="nc"><i>642</i>&nbsp;        else if(message instanceof SimpleMessage){</b>
+<b class="nc"><i>643</i>&nbsp;            updateLog(message.getMessage());</b>
+<i>644</i>&nbsp;        }
+<i>645</i>&nbsp;
+<i>646</i>&nbsp;    }
+<i>647</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2020-07-01 21:39</div>
+</div>
+</body>
+</html>
