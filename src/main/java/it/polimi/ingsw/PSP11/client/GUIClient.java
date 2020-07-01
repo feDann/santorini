@@ -62,6 +62,7 @@ public class GUIClient extends Client{
                 }
                 catch (Exception e){
                     System.err.println("Error: " + e.getMessage());
+                    guiController.handleMessage(new ConnectionClosedMessage("A network error has occurred"));
                 }
                 finally {
                     setActive(false);

@@ -58,6 +58,7 @@ public class CLIClient extends Client{
                     killPinger();
                     setActive(false);
                 }catch (Exception e){
+                    System.out.println("A network error has occurred\nConnection closed.\n");
                     setActive(false);
                 }
             }
