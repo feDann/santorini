@@ -72,9 +72,20 @@ public interface GameState {
      */
     public void applyBuild(Point point, boolean forceBuildDome);
 
+
     public void endTurn();
 
+    /**
+     * method used to send the player the right message
+     * @return the message to send to the player
+     */
     public Message stateMessage();
 
+    /**
+     * method used to decide witch action to do within the game state, based on the god's power
+     * @param message the player last received
+     * @param virtualView of the current player
+     * @return the new state of the game
+     */
     public GameState execute(Message message, VirtualView virtualView);
 }
