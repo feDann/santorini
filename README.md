@@ -16,7 +16,7 @@ A player that wishes to play with a [CLI](https://github.com/feDann/ing-sw-2020-
 java -jar ClientApp.jar -nogui
 ```
 ### GUI
-a player that wished to play with a [GUI](https://github.com/feDann/ing-sw-2020-fadini-ferrazzo-figini/blob/master/Derivelables/final/jar/ClientApp.jar) interface should be able to simply double click on the jar to start playing,
+a player that wishes to play with a [GUI](https://github.com/feDann/ing-sw-2020-fadini-ferrazzo-figini/blob/master/Derivelables/final/jar/ClientApp.jar) interface should be able to simply double click on the jar to start playing,
 otherwise run the following command in the terminal:
 ```
 java -jar ClientApp.jar
@@ -48,14 +48,14 @@ java -jar ClientApp.jar
 
 # Documentation
 ## UML
-The following UML diagrams give an overview of the project, with a different levels of abstraction:
+The following UML diagrams give an overview of the project, with different levels of abstraction:
 - [Project Uml](https://github.com/feDann/ing-sw-2020-fadini-ferrazzo-figini/blob/master/Derivelables/final/uml/ProjectUml.svg)
 - [Summary UML](https://github.com/feDann/ing-sw-2020-fadini-ferrazzo-figini/blob/master/Derivelables/final/uml/Summary%20Uml.svg)
 - [Package Specific UMLs](https://github.com/feDann/ing-sw-2020-fadini-ferrazzo-figini/tree/master/Derivelables/final/uml/Package%20Specific%20UMLs)
 ## Javadoc
-Project documentation available at this [link]()
+Project documentation available at this [link](https://github.com/feDann/ing-sw-2020-fadini-ferrazzo-figini/tree/master/Derivelables/final/JavaDoc)
 ## Report
-Some statistics of final coverage [report]() :
+Some statistics of final coverage [report](https://github.com/feDann/ing-sw-2020-fadini-ferrazzo-figini/tree/master/Derivelables/final/Report) :
 - Model Package line coverage: 92%
 
 
