@@ -20,36 +20,57 @@ public class MoveState implements GameState {
         this.askToMoveAgain = false;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void selectGameGods(ArrayList<Integer> ids) {
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void selectPlayerGod(int index) {
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void placeWorker(Point point) {
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void startTurn() {
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void selectWorker() {
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void moveWorker() {
         possibleMoves = game.move(chosenWorkerID);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean checkLose() {
         if (possibleMoves.isEmpty()){
@@ -59,31 +80,49 @@ public class MoveState implements GameState {
         return false;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void applyMove(Point point) {
         game.applyMove(point, chosenWorkerID);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean checkWin() {
         return game.checkWinner(chosenWorkerID);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void workerBuild() {
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void applyBuild(Point point, boolean forceBuildDome) {
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void endTurn() {
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Message stateMessage() {
         if (checkWin()){
@@ -100,6 +139,9 @@ public class MoveState implements GameState {
         return new MoveRequest(possibleMoves);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public GameState execute(Message message, VirtualView virtualView) {
         if (message instanceof MoveResponse){

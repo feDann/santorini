@@ -26,65 +26,104 @@ public class SelectGameGodsState implements GameState{
         game.nextPlayer();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void selectPlayerGod(int index) {
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void placeWorker(Point point) {
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void startTurn() {
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void selectWorker() {
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void moveWorker() {
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean checkLose() {
         return false;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void applyMove(Point point) {
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean checkWin() {
         return false;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void workerBuild() {
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void applyBuild(Point point, boolean forceBuildDome) {
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void endTurn() {
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Message stateMessage() {
         return new SelectGameGodsRequest(game.getDeck().deckClone(),game.getNumOfPlayers());
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public GameState execute(Message message, VirtualView virtualView) {
         selectGameGods(((SelectGameGodResponse)message).getIdOfChosenGods());

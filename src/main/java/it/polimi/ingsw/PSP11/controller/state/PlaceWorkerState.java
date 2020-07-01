@@ -28,16 +28,25 @@ public class PlaceWorkerState implements GameState{
         this.isNew = true;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void selectGameGods(ArrayList<Integer> ids) {
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void selectPlayerGod(int index) {
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void placeWorker(Point point) {
         if(game.getBoard().hasWorkerOnTop(point)){
@@ -53,55 +62,80 @@ public class PlaceWorkerState implements GameState{
         numOfWorker++;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void startTurn() {
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void selectWorker() {
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void moveWorker() {
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean checkLose() {
         return false;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void applyMove(Point point) {
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean checkWin() {
         return false;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void workerBuild() {
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void applyBuild(Point point, boolean forceBuildDome) {
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void endTurn() {
 
     }
 
     /**
-     *
-     * @return an invalid worker position message if the position chosen to place the worker is invalid,
-     *         otherwise return a place worker request message
+     * {@inheritDoc}
      */
     @Override
     public Message stateMessage() {
@@ -115,6 +149,9 @@ public class PlaceWorkerState implements GameState{
         return new PlaceWorkerRequest();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public GameState execute(Message message, VirtualView virtualView) {
         invalidPoint = false;

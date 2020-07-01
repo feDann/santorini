@@ -22,37 +22,53 @@ public class BuildState implements GameState {
         this.askToBuildAgain = false;
         this.askToBuildDome = false;
     }
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void selectGameGods(ArrayList<Integer> ids) {
 
     }
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void selectPlayerGod(int index) {
 
     }
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void placeWorker(Point point) {
 
     }
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void startTurn() {
 
     }
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void selectWorker() {
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void moveWorker() {
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean checkLose() {
         if (possibleBuilds.isEmpty()){
@@ -62,31 +78,49 @@ public class BuildState implements GameState {
         return false;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void applyMove(Point point) {
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean checkWin() {
         return game.checkWinner(chosenWorkerID);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void workerBuild() {
         possibleBuilds = game.build(chosenWorkerID);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void applyBuild(Point point, boolean forceBuildDome) {
         game.applyBuild(point, chosenWorkerID, forceBuildDome);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void endTurn() {
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Message stateMessage() {
         if (checkWin()){
@@ -107,6 +141,9 @@ public class BuildState implements GameState {
         return new BuildRequest(possibleBuilds);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public GameState execute(Message message, VirtualView virtualView) {
         if (message instanceof BuildResponse){

@@ -20,19 +20,29 @@ public class Controller implements Observer<ControllerMessage> {
     private Map<String, ClientSocketConnection> currentPlayers = new HashMap<>();
     private VirtualView requestingView;
 
-
+    /**
+     * Allocate a new Controller object
+     * @param game the current game
+     * @param currentPlayers the current player
+     */
     public Controller(Game game, Map<String, ClientSocketConnection> currentPlayers) {
         this.game = game;
         this.currentPlayers = currentPlayers;
     }
 
+    /**
+     * This method kill the ga,e
+     */
     private void endGame(){
         String nickname = game.getCurrentPlayer().getNickname();
         currentPlayers.get(nickname).killGame(nickname);
         currentPlayers.clear();
     }
 
-    private void looseConditionHandler() {
+    /**
+     * This method is called when someone lose, if is a three player game kicks out the loser, otherwise kill the game
+     */
+    private void loseConditionHandler() {
         if (game.getNumOfPlayers() == 2){
             game.nextPlayer();
             currentPlayers.get(game.getCurrentPlayer().getNickname()).send(new WinMessage());
@@ -57,6 +67,9 @@ public class Controller implements Observer<ControllerMessage> {
         game.setThereIsALoser(false);
     }
 
+    /**
+     * This method is called when someone won the game, send to the all non-winning player the LoseMessage
+     */
     private void winConditionHandler(){
         String winner = game.getCurrentPlayer().getNickname();
         for (String player : currentPlayers.keySet()){
@@ -67,7 +80,10 @@ public class Controller implements Observer<ControllerMessage> {
         endGame();
     }
 
-
+    /**
+     * This method handle the message received from the client and manage the state machine
+     * @param message from the client
+     */
     public synchronized void readMessage(ControllerMessage message){
         requestingView = message.getVirtualView();
         requestingPlayer = requestingView.getPlayer().getName();
@@ -75,7 +91,7 @@ public class Controller implements Observer<ControllerMessage> {
             gameState = gameState.execute(message.getMessage(),requestingView);
             currentPlayers.get(game.getCurrentPlayer().getNickname()).send(gameState.stateMessage());
             if (game.isThereIsALoser()){
-                looseConditionHandler();
+                loseConditionHandler();
                 gameState = new StartTurnState(game);
                 currentPlayers.get(game.getCurrentPlayer().getNickname()).send(gameState.stateMessage());
             }
@@ -89,7 +105,7 @@ public class Controller implements Observer<ControllerMessage> {
     }
 
     /**
-     * function used to start the game, 
+     * function used to start the game
      */
     public void start (){
         ClientSocketConnection firstPlayerConnection;
@@ -99,6 +115,9 @@ public class Controller implements Observer<ControllerMessage> {
         firstPlayerConnection.send(gameState.stateMessage());
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void update(ControllerMessage message) {
         readMessage(message);

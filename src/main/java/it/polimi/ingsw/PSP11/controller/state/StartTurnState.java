@@ -23,37 +23,58 @@ public class StartTurnState implements GameState{
     }
 
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void selectGameGods(ArrayList<Integer> ids) {
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void selectPlayerGod(int index) {
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void placeWorker(Point point) {
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void startTurn() {
         game.startTurn();
         this.canBuildBeforeMove = game.getSharedTurn().isCanBuildBeforeMove();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void selectWorker() {
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void moveWorker() {
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean checkLose() {
         for (Worker worker : game.getCurrentPlayer().getWorkers()){
@@ -68,31 +89,49 @@ public class StartTurnState implements GameState{
         return false;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void applyMove(Point point) {
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean checkWin() {
         return false;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void workerBuild() {
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void applyBuild(Point point, boolean forceBuildDome) {
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void endTurn() {
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Message stateMessage() {
         if (isNew) {
@@ -109,6 +148,9 @@ public class StartTurnState implements GameState{
         return null;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public GameState execute(Message message, VirtualView virtualView) {
         if (message instanceof SelectWorkerResponse){
