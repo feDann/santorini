@@ -1,0 +1,15 @@
+module:it.polimi.ingsw.PSP11
+it.polimi.ingsw.PSP11
+it.polimi.ingsw.PSP11.client
+it.polimi.ingsw.PSP11.controller
+it.polimi.ingsw.PSP11.controller.state
+it.polimi.ingsw.PSP11.exception
+it.polimi.ingsw.PSP11.messages
+it.polimi.ingsw.PSP11.model
+it.polimi.ingsw.PSP11.model.TurnDecorator
+it.polimi.ingsw.PSP11.observer
+it.polimi.ingsw.PSP11.server
+it.polimi.ingsw.PSP11.utils
+it.polimi.ingsw.PSP11.view
+it.polimi.ingsw.PSP11.view.gui
+it.polimi.ingsw.PSP11.view.gui.controller
