@@ -31,7 +31,7 @@ public class Controller implements Observer<ControllerMessage> {
     }
 
     /**
-     * This method kill the ga,e
+     * This method kill the game
      */
     private void endGame(){
         String nickname = game.getCurrentPlayer().getNickname();

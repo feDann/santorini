@@ -5,6 +5,9 @@ import it.polimi.ingsw.PSP11.utils.TimeStamp;
 
 public class ServerApp {
 
+    /**
+     *Launch the server
+     */
     public static void main(String[] args) {
         Server server;
         try {

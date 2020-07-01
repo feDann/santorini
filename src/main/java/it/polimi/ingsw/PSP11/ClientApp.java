@@ -9,6 +9,9 @@ import java.util.Scanner;
 
 public class ClientApp {
 
+    /**
+     *Launches GUI or CLI according to args parameters
+     */
     public static void main(String[] args) {
         if (args.length == 0) {
             Application.launch(Gui.class);
