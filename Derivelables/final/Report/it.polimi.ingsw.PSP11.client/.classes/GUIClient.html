@@ -1,0 +1,251 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: GUIClient</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">it.polimi.ingsw.PSP11.client</a> ]
+</div>
+
+<h1>Coverage Summary for Class: GUIClient (it.polimi.ingsw.PSP11.client)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">GUIClient</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 7)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 17)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">GUIClient$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 16)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">GUIClient$2</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 9)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 11)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 42)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package it.polimi.ingsw.PSP11.client;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import it.polimi.ingsw.PSP11.messages.ConnectionClosedMessage;
+<i>4</i>&nbsp;import it.polimi.ingsw.PSP11.messages.Message;
+<i>5</i>&nbsp;import it.polimi.ingsw.PSP11.messages.Ping;
+<i>6</i>&nbsp;import it.polimi.ingsw.PSP11.view.gui.controller.GUIController;
+<i>7</i>&nbsp;
+<i>8</i>&nbsp;import java.io.IOException;
+<i>9</i>&nbsp;import java.io.ObjectInputStream;
+<i>10</i>&nbsp;import java.io.ObjectOutputStream;
+<i>11</i>&nbsp;import java.net.Socket;
+<i>12</i>&nbsp;import java.net.SocketTimeoutException;
+<i>13</i>&nbsp;
+<i>14</i>&nbsp;/**
+<i>15</i>&nbsp; * This class implements features for a player who chooses to play with GUI
+<i>16</i>&nbsp; */
+<i>17</i>&nbsp;public class GUIClient extends Client{
+<i>18</i>&nbsp;
+<i>19</i>&nbsp;    private GUIController guiController;
+<i>20</i>&nbsp;
+<i>21</i>&nbsp;    /**
+<i>22</i>&nbsp;     * Constructs a GUI client
+<i>23</i>&nbsp;     */
+<i>24</i>&nbsp;    public GUIClient(){
+<b class="nc"><i>25</i>&nbsp;        super(&quot;&quot;, 50000);</b>
+<i>26</i>&nbsp;    }
+<i>27</i>&nbsp;
+<i>28</i>&nbsp;    /**
+<i>29</i>&nbsp;     * Setter method for the client&#39;s {@link GUIController}
+<i>30</i>&nbsp;     * @param controller the appropriate controller for the current game scene
+<i>31</i>&nbsp;     */
+<i>32</i>&nbsp;    public void setController(GUIController controller) {
+<b class="nc"><i>33</i>&nbsp;        this.guiController = controller;</b>
+<i>34</i>&nbsp;    }
+<i>35</i>&nbsp;
+<i>36</i>&nbsp;    /**
+<i>37</i>&nbsp;     * Getter method for the client&#39;s {@link GUIController}
+<i>38</i>&nbsp;     * @return the current scene controller
+<i>39</i>&nbsp;     */
+<i>40</i>&nbsp;    public GUIController getGuiController() {
+<b class="nc"><i>41</i>&nbsp;        return guiController;</b>
+<i>42</i>&nbsp;    }
+<i>43</i>&nbsp;
+<i>44</i>&nbsp;    /**
+<i>45</i>&nbsp;     * Creates and starts a Thread, as a daemon, that continuously reads incoming messages from the server, as long as the client is active
+<i>46</i>&nbsp;     */
+<i>47</i>&nbsp;    public void asyncRead(){
+<b class="nc"><i>48</i>&nbsp;        Thread t = new Thread(){</b>
+<i>49</i>&nbsp;            @Override
+<i>50</i>&nbsp;            public void run() {
+<i>51</i>&nbsp;                try{
+<b class="nc"><i>52</i>&nbsp;                    setSocketTimeout(6000);</b>
+<b class="nc"><i>53</i>&nbsp;                    while(isActive()){</b>
+<b class="nc"><i>54</i>&nbsp;                        Message msg = (Message) getSocketIn().readObject();</b>
+<b class="nc"><i>55</i>&nbsp;                        if(!(msg instanceof Ping)) {</b>
+<b class="nc"><i>56</i>&nbsp;                            guiController.handleMessage(msg);</b>
+<i>57</i>&nbsp;                        }
+<b class="nc"><i>58</i>&nbsp;                    }</b>
+<b class="nc"><i>59</i>&nbsp;                }catch(SocketTimeoutException t){</b>
+<b class="nc"><i>60</i>&nbsp;                    System.out.println(&quot;Server Down&quot;);</b>
+<b class="nc"><i>61</i>&nbsp;                    guiController.handleMessage(new ConnectionClosedMessage(&quot;Server Down. &quot;));</b>
+<i>62</i>&nbsp;                }
+<b class="nc"><i>63</i>&nbsp;                catch (Exception e){</b>
+<b class="nc"><i>64</i>&nbsp;                    System.err.println(&quot;Error: &quot; + e.getMessage());</b>
+<b class="nc"><i>65</i>&nbsp;                    guiController.handleMessage(new ConnectionClosedMessage(&quot;A network error has occurred&quot;));</b>
+<i>66</i>&nbsp;                }
+<i>67</i>&nbsp;                finally {
+<b class="nc"><i>68</i>&nbsp;                    setActive(false);</b>
+<b class="nc"><i>69</i>&nbsp;                    killPinger();</b>
+<b class="nc"><i>70</i>&nbsp;                }</b>
+<i>71</i>&nbsp;            }
+<i>72</i>&nbsp;        };
+<b class="nc"><i>73</i>&nbsp;        t.setDaemon(true);</b>
+<b class="nc"><i>74</i>&nbsp;        t.start();</b>
+<i>75</i>&nbsp;    }
+<i>76</i>&nbsp;
+<i>77</i>&nbsp;
+<i>78</i>&nbsp;    /**
+<i>79</i>&nbsp;     * Creates and starts a Thread that sends a message to the server
+<i>80</i>&nbsp;     * @param message the message to send to the server
+<i>81</i>&nbsp;     */
+<i>82</i>&nbsp;    public void asyncWrite(Message message) {
+<b class="nc"><i>83</i>&nbsp;        new Thread(){</b>
+<i>84</i>&nbsp;            @Override
+<i>85</i>&nbsp;            public void run() {
+<i>86</i>&nbsp;                try {
+<b class="nc"><i>87</i>&nbsp;                    synchronized (getSocketOut()) {</b>
+<b class="nc"><i>88</i>&nbsp;                        getSocketOut().writeObject(message);</b>
+<b class="nc"><i>89</i>&nbsp;                        getSocketOut().flush();</b>
+<b class="nc"><i>90</i>&nbsp;                        getSocketOut().notifyAll();</b>
+<b class="nc"><i>91</i>&nbsp;                    }</b>
+<b class="nc"><i>92</i>&nbsp;                } catch (IOException e) {</b>
+<b class="nc"><i>93</i>&nbsp;                    System.err.println(&quot;Error: &quot; + e.getMessage());</b>
+<b class="nc"><i>94</i>&nbsp;                }</b>
+<i>95</i>&nbsp;            }
+<b class="nc"><i>96</i>&nbsp;        }.start();</b>
+<i>97</i>&nbsp;    }
+<i>98</i>&nbsp;
+<i>99</i>&nbsp;    /**
+<i>100</i>&nbsp;     * Marks this client as inactive and closes its resources
+<i>101</i>&nbsp;     * @throws IOException when there is a problem closing this client&#39;s resources
+<i>102</i>&nbsp;     */
+<i>103</i>&nbsp;    public void close() throws IOException {
+<b class="nc"><i>104</i>&nbsp;        setActive(false);</b>
+<b class="nc"><i>105</i>&nbsp;        killPinger();</b>
+<b class="nc"><i>106</i>&nbsp;        super.close();</b>
+<i>107</i>&nbsp;    }
+<i>108</i>&nbsp;
+<i>109</i>&nbsp;    /**
+<i>110</i>&nbsp;     * Allocates resources for this client and initializes the Thread for server communication
+<i>111</i>&nbsp;     * @throws IOException when there is a problem initialising resources for this client
+<i>112</i>&nbsp;     */
+<i>113</i>&nbsp;    public void start() throws IOException{
+<b class="nc"><i>114</i>&nbsp;        setClientSocket(new Socket(getIp(),getPort())) ;</b>
+<b class="nc"><i>115</i>&nbsp;        setSocketIn(new ObjectInputStream(getClientSocket().getInputStream()));</b>
+<b class="nc"><i>116</i>&nbsp;        setSocketOut( new ObjectOutputStream(getClientSocket().getOutputStream()));</b>
+<b class="nc"><i>117</i>&nbsp;        setActive(true);</b>
+<b class="nc"><i>118</i>&nbsp;        asyncRead();</b>
+<b class="nc"><i>119</i>&nbsp;        pinger();</b>
+<i>120</i>&nbsp;
+<i>121</i>&nbsp;    }
+<i>122</i>&nbsp;
+<i>123</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2020-07-02 16:32</div>
+</div>
+</body>
+</html>
