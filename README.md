@@ -1,4 +1,8 @@
 # Prova Finale Ingegneria del Software 2020 - Gruppo PSP11
+<p align=center >
+  <img src = "https://i.ibb.co/2MMyXZ5/Screenshot-2021-03-15-160222.jpg" width=70%>
+  <img src = "https://i.ibb.co/H40X6vC/Screenshot-2021-03-15-160305.jpg" width=70%>
+</p>
 
 # Game Setup
 
